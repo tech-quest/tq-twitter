@@ -16,7 +16,7 @@ $tweets = $tweetsDao->findByAllTweets();
         <div class="container">
             <h1>Topページ</h1>
             <form method="post" action="tweetComplete.php">
-                <input type="text" name="tweet" placeholder="いまなにしてる?" />
+                <input type="text" name="tweet" required placeholder="いまなにしてる?" />
                 <input type="submit" value="ツイートする" />
             </form>
             <?php foreach ($tweets as $tweet) : ?>
