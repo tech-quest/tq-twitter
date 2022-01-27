@@ -1,5 +1,9 @@
 <?php
 
+namespace Dao;
+
+use pdo;
+
 abstract class Dao
 {
     const DB_HOST = 'localhost';
