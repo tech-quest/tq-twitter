@@ -1,5 +1,4 @@
 <?php
-require_once __DIR__ . '/Dao/TweetsDao.php';
 
 require_once __DIR__ . '/Dao/TweetDao.php';
 
