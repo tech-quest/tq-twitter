@@ -1,8 +1,10 @@
 <?php
 require_once __DIR__ . '/Dao/TweetsDao.php';
 
-$tweetsDao = new TweetsDao();
-$tweets = $tweetsDao->findByAllTweets();
+require_once __DIR__ . '/Dao/TweetDao.php';
+
+$tweetDao = new TweetDao();
+$tweets = $tweetDao->findByAllTweets();
 ?>
 <!DOCTYPE html>
 
