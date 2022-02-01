@@ -20,7 +20,7 @@ $tweets = $tweetDao->findByAllTweets();
                 <input type="text" name="tweet" required placeholder="いまなにしてる?" />
                 <input type="submit" value="ツイートする" />
             </form>
-            <?php foreach ($tweets as $tweet) : ?>
+            <?php foreach ($tweets as $tweet): ?>
                 <p><?php echo $tweet['tweet']; ?></p>
             <?php endforeach; ?>
         </div>

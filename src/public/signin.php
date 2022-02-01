@@ -3,7 +3,6 @@ session_start();
 
 $errors = $_SESSION['errors'] ?? [];
 unset($_SESSION['errors']);
-
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -16,7 +15,7 @@ unset($_SESSION['errors']);
 </head>
 
 <body>
-    <?php foreach ($errors as $error) : ?>
+    <?php foreach ($errors as $error): ?>
         <p><?php echo $error; ?></p>
     <?php endforeach; ?>
     <h1>Twitterにログイン</h1>

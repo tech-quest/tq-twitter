@@ -8,7 +8,6 @@ session_start();
 
 $email = filter_input(INPUT_POST, 'email');
 
-
 try {
     $errors = [];
 
@@ -25,7 +24,7 @@ try {
     $user = $userDao->findByEmail($email);
 
     if (is_null($user)) {
-        $errors['error'] = "Emailまたはパスワードが違います";
+        $errors['error'] = 'Emailまたはパスワードが違います';
         $_SESSION['errors'] = $errors;
         Redirect::handler('/tq-twitter/signin.php');
     }
@@ -33,11 +32,11 @@ try {
     $_SESSION['auth'] = [
         'userId' => $user['id'],
         'userName' => $user['name'],
-        'email' => $user['email']
+        'email' => $user['email'],
     ];
 
     Redirect::handler('/tq-twitter/signin.php');
 } catch (Exception $e) {
     echo $e->getMessage();
-    die;
+    die();
 }
