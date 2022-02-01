@@ -1,0 +1,10 @@
+
+.nav-link {
+    color: black;
+}
+
+.radius-pixel-20 {
+  border-radius: 20px;
+  color: white;
+  background-color: #1E90FF;
+}
