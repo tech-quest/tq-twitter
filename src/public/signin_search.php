@@ -5,8 +5,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\Lib\Redirect;
 use App\Dao\UserDao;
-// require_once __DIR__ . '/Lib/Redilect.php';
-// require_once __DIR__ . '/Dao/UserDao.php';
 
 session_start();
 

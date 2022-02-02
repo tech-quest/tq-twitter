@@ -4,8 +4,6 @@ namespace App\Dao;
 use App\Dao\Dao;
 use PDO;
 use App\ValueObject\Email;
-// require_once __DIR__ . '/Dao.php';
-// require_once __DIR__ . '/../ValueObject/Email.php';
 
 final class UserDao extends Dao
 {
