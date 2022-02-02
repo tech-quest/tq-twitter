@@ -20,7 +20,6 @@ abstract class Dao
             self::DB_NAME,
             self::DB_HOST
         );
-        var_dump('dsn', $dsn);
         $this->pdo = new PDO($dsn, self::DB_USER, self::DB_PASSWORD);
     }
 }
