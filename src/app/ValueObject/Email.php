@@ -1,10 +1,14 @@
 <?php
 
+namespace App\ValueObject;
+
 final class Email
 {
     public function __construct(string $value)
     {
-        if (empty($value)) throw new Exception("値を入力してください");
+        if (empty($value)) {
+            throw new Exception('値を入力してください');
+        }
 
         $this->value = $value;
     }
