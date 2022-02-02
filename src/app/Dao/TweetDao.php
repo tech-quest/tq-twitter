@@ -19,7 +19,7 @@ final class TweetDao extends Dao
     ) {
         $sql = <<<EOF
         INSERT INTO 
-            Tweets 
+            tweets 
         (user_id, tweet, reply_Tweet_Id, device)
         VALUES
         (:user_id, :tweet, :reply_Tweet_Id, :device)
