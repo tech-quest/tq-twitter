@@ -13,7 +13,7 @@ final class UserDao extends Dao
     {
         parent::__construct();
     }
-    
+
     public function findByEmail(string $email): ?array
     {
         $sql = "
