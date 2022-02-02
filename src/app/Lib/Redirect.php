@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Lib;
+
 /**
  * リダイレクトを扱うクラス
  */
@@ -13,6 +15,6 @@ final class Redirect
     public static function handler(string $path): void
     {
         header('Location: ' . $path);
-        die();
+        die;
     }
 }

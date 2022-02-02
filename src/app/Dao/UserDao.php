@@ -1,10 +1,19 @@
 <?php
+namespace App\Dao;
 
-require_once __DIR__ . '/Dao.php';
-require_once __DIR__ . '/../ValueObject/Email.php';
+use App\Dao\Dao;
+use PDO;
+use App\ValueObject\Email;
+// require_once __DIR__ . '/Dao.php';
+// require_once __DIR__ . '/../ValueObject/Email.php';
 
 final class UserDao extends Dao
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+    
     public function findByEmail(string $email): ?array
     {
         $sql = "

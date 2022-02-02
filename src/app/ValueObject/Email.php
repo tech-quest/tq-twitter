@@ -1,5 +1,7 @@
 <?php
 
+namespace App\ValueObject;
+
 final class Email
 {
     public function __construct(string $value)
