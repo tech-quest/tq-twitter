@@ -1,7 +1,8 @@
 <?php
-require 'vendor/autoload.php';
+namespace App\Dao;
 
-use Dao\Dao;
+use App\Dao\Dao;
+use PDO;
 
 final class TweetDao extends Dao
 {

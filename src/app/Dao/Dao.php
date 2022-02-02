@@ -1,12 +1,12 @@
 <?php
 
-namespace Dao;
+namespace App\Dao;
 
-use pdo;
+use PDO;
 
 abstract class Dao
 {
-    const DB_HOST = 'localhost';
+    const DB_HOST = 'mysql';
     const DB_NAME = 'twitter';
     const DB_USER = 'root';
     const DB_PASSWORD = 'password';
@@ -20,6 +20,7 @@ abstract class Dao
             self::DB_NAME,
             self::DB_HOST
         );
+        var_dump("dsn", $dsn);
         $this->pdo = new PDO($dsn, self::DB_USER, self::DB_PASSWORD);
     }
 }

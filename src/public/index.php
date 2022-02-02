@@ -1,6 +1,8 @@
 <?php
 
-require_once __DIR__ . '/Dao/TweetDao.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use App\Dao\TweetDao;
 
 $tweetDao = new TweetDao();
 $tweets = $tweetDao->findByAllTweets();
