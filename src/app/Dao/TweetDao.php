@@ -1,7 +1,8 @@
 <?php
-require('vendor/autoload.php');
+namespace App\Dao;
 
-use Dao\Dao;
+use App\Dao\Dao;
+use PDO;
 
 final class TweetDao extends Dao
 {
@@ -18,7 +19,7 @@ final class TweetDao extends Dao
     ) {
         $sql = <<<EOF
         INSERT INTO 
-            Tweets 
+            tweets 
         (user_id, tweet, reply_Tweet_Id, device)
         VALUES
         (:user_id, :tweet, :reply_Tweet_Id, :device)
