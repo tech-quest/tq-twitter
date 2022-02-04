@@ -32,8 +32,5 @@ final class UserDao extends Dao
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return empty($user) ? null : $user;
-        if (!$res) {
-            throw new Exception('ユーザー情報の登録に失敗しました');
-        }
     }
 }
