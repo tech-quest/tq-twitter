@@ -24,6 +24,7 @@ $tweets = $tweetDao->findByAllTweets();
             </form>
             <?php foreach ($tweets as $tweet): ?>
                 <p><?php echo $tweet['tweet']; ?></p>
+                <p><?php echo $tweet['created_at']; ?></p>
             <?php endforeach; ?>
         </div>
     </main>
