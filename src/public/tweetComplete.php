@@ -9,5 +9,5 @@ $tweet = filter_input(INPUT_POST, 'tweet');
 $replyTweetId = 1;
 $device = 'iphone';
 $tweetsDao = new TweetDao();
-$tweetsDao->insert($user_id, $tweet, $replyTweetId, $device);
-header('Location: /index.php');
+$path = '/index.php';
+Redirect::handler($path);
