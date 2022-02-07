@@ -9,9 +9,9 @@ use App\Lib\Device;
 $user_id = 1;
 $tweet = filter_input(INPUT_POST, 'tweet');
 $replyTweetId = 1;
-$deviceName = filter_input(INPUT_POST, 'device');
+$deviceInfo = filter_input(INPUT_POST, 'device');
 
-$device = new Device($deviceName);
+$device = new Device($deviceInfo);
 $tweetsDao = new TweetDao();
 $tweetsDao->insert($user_id, $tweet, $replyTweetId, $device->tweetDevice());
 
