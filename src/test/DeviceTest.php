@@ -55,13 +55,13 @@ class DeviceTest extends TestCase
     }
 
     /** @test */
-    public function win()
+    public function android()
     {
         $device = new Device(
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:62.0) Gecko/20100101 Firefox/62.0'
+            'Mozilla/5.0 (Linux; Android 8.0; Pixel 2 Build/OPD3.170816.012) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.53 Mobile Safari/537.36'
         );
         $actual = $device->tweetDevice();
-        $expected = 'Win';
+        $expected = 'Android';
 
         $this->assertSame($expected, $actual);
     }
