@@ -6,7 +6,7 @@ use App\Dao\TweetDao;
 use App\Lib\Redirect;
 use App\Lib\Device;
 
-$user_id = 1;
+$user_id = 2;
 $tweet = filter_input(INPUT_POST, 'tweet');
 $replyTweetId = 1;
 $deviceInfo = filter_input(INPUT_POST, 'device');
