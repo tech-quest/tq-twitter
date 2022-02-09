@@ -29,11 +29,7 @@ $device = $_SERVER['HTTP_USER_AGENT'];
                   'id'
               ]; ?>,<?php echo $tweet['user_id']; ?>">
                 <p><?php echo $tweet['tweet']; ?></p>
-                <p><?php echo $tweet['created_at'] .
-                    ' ' .
-                    'Twitter for' .
-                    ' ' .
-                    $tweet['device']; ?></p>
+              </a>
             <?php endforeach; ?>
         </div>
     </main>
