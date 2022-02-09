@@ -49,23 +49,23 @@ EOF;
 
     public function findById($id, $user_id)
     {
-      $sql = <<<EOF
-      SELECT
-        tweet,
-        device,
-        created_at
-      FROM
-        tweets
-      WHERE
-        id = :id
-      AND
-        user_id = :user_id
+		$sql = <<<EOF
+		SELECT
+			tweet,
+			device,
+			created_at
+		FROM
+        	tweets
+      	WHERE
+        	id = :id
+      	AND
+        	user_id = :user_id
 EOF;
-      $stmt = $this->pdo->prepare($sql);
-      $stmt->bindValue(':id', $id);
-      $stmt->bindValue(':user_id', $user_id);
-      $stmt->execute();
-      $tweet = $stmt->fetch(PDO::FETCH_ASSOC);
-      return $tweet;
+			$stmt = $this->pdo->prepare($sql);
+			$stmt->bindValue(':id', $id);
+			$stmt->bindValue(':user_id', $user_id);
+			$stmt->execute();
+			$tweet = $stmt->fetch(PDO::FETCH_ASSOC);
+			return $tweet;
     }
 }
