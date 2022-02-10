@@ -2,6 +2,7 @@
 namespace App\Dao;
 
 use App\Dao\Dao;
+use App\ValueObject\UserId;
 use PDO;
 
 final class TweetDao extends Dao
@@ -45,5 +46,29 @@ EOF;
         $stmt->execute();
         $tweets = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $tweets;
+    }
+
+    /**
+     * 対象ユーザーのツイートを全件取得
+     *
+     * @param UserId $userId
+     * @return array
+     */
+    public function findAllByUserId(UserId $userId): array
+    {
+        $sql = "
+        SELECT 
+            *
+        FROM 
+            tweets
+        WHERE
+            user_id = :user_id";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':user_id', $userId->value(), PDO::PARAM_STR);
+        $stmt->execute();
+
+        $tweets = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return empty($tweets) ? [] : $tweets;
     }
 }
