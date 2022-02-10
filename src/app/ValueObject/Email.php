@@ -2,6 +2,8 @@
 
 namespace App\ValueObject;
 
+use Exception;
+
 final class Email
 {
     public function __construct(string $value)
