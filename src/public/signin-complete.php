@@ -37,7 +37,7 @@ try {
         'email' => $user['email'],
     ];
 
-    Redirect::handler('/index.php');
+    Redirect::handler('/profile.php');
 } catch (Exception $e) {
     echo $e->getMessage();
     die();
