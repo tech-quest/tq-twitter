@@ -1,21 +1,24 @@
 <?php
 
-session_start();
-
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\Lib\Redirect;
+use App\Lib\Session;
 use App\Dao\TweetDao;
-use App\ValueObject\UserId;
 
-$loginUser = $_SESSION['auth'] ?? null;
-$userId = $loginUser['userId'] ?? null;
+$session = Session::getInstance();
+$authUser = $session->auth();
 
-unset($_SESSION['errors']);
+if (is_null($authUser)) {
+    Redirect::handler('/signin.php');
+}
 
-$userIdObject = new UserId($userId);
+$userId = $authUser->userId();
+
+$session->clearErrors();
+
 $tweetDao = new TweetDao();
-$tweets = $tweetDao->findAllByUserId($userIdObject);
+$tweets = $tweetDao->findAllByUserId($userId);
 ?>
 
 <head>

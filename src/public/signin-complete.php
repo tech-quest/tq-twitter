@@ -4,7 +4,11 @@ ini_set('display_errors', 'on');
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\Lib\Redirect;
+use App\Lib\Session;
 use App\Dao\UserDao;
+use App\ValueObject\AuthUser;
+use App\ValueObject\UserId;
+use App\ValueObject\Email;
 
 session_start();
 
@@ -31,11 +35,14 @@ try {
         Redirect::handler('/signin.php');
     }
 
-    $_SESSION['auth'] = [
-        'userId' => $user['id'],
-        'userName' => $user['name'],
-        'email' => $user['email'],
-    ];
+    $authUser = new AuthUser(
+        new UserId($user['id']),
+        $user['name'],
+        new Email($user['email'])
+    );
+
+    $session = Session::getInstance();
+    $session->setAuth($authUser);
 
     Redirect::handler('/profile.php');
 } catch (Exception $e) {
