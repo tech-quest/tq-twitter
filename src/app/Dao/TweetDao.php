@@ -64,8 +64,8 @@ EOF;
         	  user_id = :user_id
 EOF;
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':id', $id);
-        $stmt->bindValue(':user_id', $user_id);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
         $tweet = $stmt->fetch(PDO::FETCH_ASSOC);
         return $tweet;
