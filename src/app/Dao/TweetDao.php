@@ -40,6 +40,8 @@ EOF;
             *
         FROM
             tweets
+        ORDER BY
+          id DESC
 EOF;
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
