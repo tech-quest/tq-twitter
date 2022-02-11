@@ -33,7 +33,7 @@ EOF;
         $stmt->execute();
     }
 
-    public function findByAllTweets()
+    public function findByAllTweets(): array
     {
         $sql = <<<EOF
         SELECT
