@@ -4,7 +4,14 @@ namespace App\Lib;
 
 final class Device
 {
-    private $device;
+	const IPHONE = 'iPhone';
+	const IPAD = 'iPad';
+	const MAC = 'Mac';
+	const ANDROID = 'Android';
+	const WINDOWS = 'Windows';
+	const MOBILE = 'Mobile';
+
+    private $device;    
 
     public function __construct(string $device)
     {
@@ -14,46 +21,46 @@ final class Device
     public function tweetDevice()
     {
         if ($this->iPhone()) {
-            return 'iPhone';
+            return SELF::IPHONE;
         }
         if ($this->iPad()) {
-            return 'iPad';
+            return SELF::IPAD;
         }
         if ($this->mac()) {
-            return 'Mac';
+            return SELF::MAC;
         }
         if ($this->android()) {
-            return 'Android';
+            return SELF::ANDROID;
         }
         if ($this->windows()) {
-            return 'Win';
+            return SELF::WINDOWS;
         }
     }
 
     private function iPhone()
     {
-        return strpos($this->device, 'iPhone') !== false &&
-            strpos($this->device, 'Mobile') !== false;
+        return strpos($this->device, SELF::IPHONE) !== false &&
+            strpos($this->device, SELF::MOBILE) !== false;
     }
 
     private function iPad()
     {
-        return strpos($this->device, 'iPad') !== false &&
-            strpos($this->device, 'Mobile') !== false;
+        return strpos($this->device, SELF::IPAD) !== false &&
+            strpos($this->device, SELF::MOBILE) !== false;
     }
 
     private function mac()
     {
-        return strpos($this->device, 'Mac') !== false;
+        return strpos($this->device, SELF::MAC) !== false;
     }
 
     private function android()
     {
-        return strpos($this->device, 'Android') !== false;
+        return strpos($this->device, SELF::ANDROID) !== false;
     }
 
     private function windows()
     {
-        return strpos($this->device, 'Windows') !== false;
+        return strpos($this->device, SELF::WINDOWS) !== false;
     }
 }
