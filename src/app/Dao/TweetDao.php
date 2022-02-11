@@ -49,7 +49,7 @@ EOF;
         return $tweets;
     }
 
-    public function findById($id, $user_id)
+    public function findById(int $id, int $user_id): array
     {
         $sql = <<<EOF
 		    SELECT
