@@ -4,14 +4,14 @@ namespace App\Lib;
 
 final class Device
 {
-	const IPHONE = 'iPhone';
-	const IPAD = 'iPad';
-	const MAC = 'Mac';
-	const ANDROID = 'Android';
-	const WINDOWS = 'Windows';
-	const MOBILE = 'Mobile';
+    const IPHONE = 'iPhone';
+    const IPAD = 'iPad';
+    const MAC = 'Mac';
+    const ANDROID = 'Android';
+    const WINDOWS = 'Windows';
+    const MOBILE = 'Mobile';
 
-    private $device;    
+    private $device;
 
     public function __construct(string $device)
     {
@@ -21,46 +21,46 @@ final class Device
     public function tweetDevice()
     {
         if ($this->iPhone()) {
-            return SELF::IPHONE;
+            return self::IPHONE;
         }
         if ($this->iPad()) {
-            return SELF::IPAD;
+            return self::IPAD;
         }
         if ($this->mac()) {
-            return SELF::MAC;
+            return self::MAC;
         }
         if ($this->android()) {
-            return SELF::ANDROID;
+            return self::ANDROID;
         }
         if ($this->windows()) {
-            return SELF::WINDOWS;
+            return self::WINDOWS;
         }
     }
 
     private function iPhone()
     {
-        return strpos($this->device, SELF::IPHONE) !== false &&
-            strpos($this->device, SELF::MOBILE) !== false;
+        return strpos($this->device, self::IPHONE) !== false &&
+            strpos($this->device, self::MOBILE) !== false;
     }
 
     private function iPad()
     {
-        return strpos($this->device, SELF::IPAD) !== false &&
-            strpos($this->device, SELF::MOBILE) !== false;
+        return strpos($this->device, self::IPAD) !== false &&
+            strpos($this->device, self::MOBILE) !== false;
     }
 
     private function mac()
     {
-        return strpos($this->device, SELF::MAC) !== false;
+        return strpos($this->device, self::MAC) !== false;
     }
 
     private function android()
     {
-        return strpos($this->device, SELF::ANDROID) !== false;
+        return strpos($this->device, self::ANDROID) !== false;
     }
 
     private function windows()
     {
-        return strpos($this->device, SELF::WINDOWS) !== false;
+        return strpos($this->device, self::WINDOWS) !== false;
     }
 }
