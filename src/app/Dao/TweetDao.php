@@ -20,15 +20,15 @@ final class TweetDao extends Dao
         $sql = <<<EOF
         INSERT INTO 
             tweets 
-        (user_id, tweet, reply_tweet_Id, device)
+        (user_id, tweet, reply_tweet_id, device)
         VALUES
-        (:user_id, :tweet, :reply_tweet_Id, :device)
+        (:user_id, :tweet, :reply_tweet_id, :device)
 EOF;
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->bindValue(':tweet', $tweet, PDO::PARAM_STR);
-        $stmt->bindValue(':reply_tweet_Id', $replyTweetId, PDO::PARAM_INT);
+        $stmt->bindValue(':reply_tweet_id', $replyTweetId, PDO::PARAM_INT);
         $stmt->bindValue(':device', $device, PDO::PARAM_STR);
         $stmt->execute();
     }
