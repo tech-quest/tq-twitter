@@ -20,30 +20,54 @@ final class TweetDao extends Dao
         $sql = <<<EOF
         INSERT INTO 
             tweets 
-        (user_id, tweet, reply_Tweet_Id, device)
+        (user_id, tweet, reply_tweet_id, device)
         VALUES
-        (:user_id, :tweet, :reply_Tweet_Id, :device)
+        (:user_id, :tweet, :reply_tweet_id, :device)
 EOF;
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->bindValue(':tweet', $tweet, PDO::PARAM_STR);
-        $stmt->bindValue(':reply_Tweet_Id', $replyTweetId, PDO::PARAM_INT);
+        $stmt->bindValue(':reply_tweet_id', $replyTweetId, PDO::PARAM_INT);
         $stmt->bindValue(':device', $device, PDO::PARAM_STR);
         $stmt->execute();
     }
 
-    public function findByAllTweets()
+    public function findByAllTweets(): array
     {
         $sql = <<<EOF
         SELECT
             *
         FROM
             tweets
+        ORDER BY
+          id DESC
 EOF;
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         $tweets = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $tweets;
+    }
+
+    public function findById(int $id, int $user_id): array
+    {
+        $sql = <<<EOF
+		    SELECT
+			    tweet,
+			    device,
+			    created_at
+		    FROM
+        	  tweets
+      	WHERE
+        	  id = :id
+      	AND
+        	  user_id = :user_id
+EOF;
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $tweet = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $tweet;
     }
 }
