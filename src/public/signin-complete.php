@@ -5,24 +5,22 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\Lib\Redirect;
 use App\Lib\Session;
+use App\Validator\SignInInputValidator;
 use App\Dao\UserDao;
 use App\ValueObject\AuthUser;
 use App\ValueObject\UserId;
 use App\ValueObject\Email;
 
-session_start();
+$session = Session::getInstance();
 
 $email = filter_input(INPUT_POST, 'email');
 
 try {
-    $errors = [];
-
-    if (empty($email)) {
-        $errors['email'] = 'Emailが空です';
-    }
+    $signInInputError = new SignInInputValidator($email);
+    $errors = $signInInputError->allErrors();
 
     if (!empty($errors)) {
-        $_SESSION['errors'] = $errors;
+        $session->setErrors($errors);
         Redirect::handler('/signin.php');
     }
 
@@ -30,8 +28,8 @@ try {
     $user = $userDao->findByEmail($email);
 
     if (is_null($user)) {
-        $errors['error'] = 'Emailまたはパスワードが違います';
-        $_SESSION['errors'] = $errors;
+        $errors = ['Emailまたはパスワードが違います'];
+        $session->setErrors($errors);
         Redirect::handler('/signin.php');
     }
 
@@ -41,7 +39,6 @@ try {
         new Email($user['email'])
     );
 
-    $session = Session::getInstance();
     $session->setAuth($authUser);
 
     Redirect::handler('/profile.php');
