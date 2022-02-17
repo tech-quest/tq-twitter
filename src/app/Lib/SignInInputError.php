@@ -32,6 +32,11 @@ final class SignInInputError
         return $this->password;
     }
 
+    /**
+     * ログインできなかったときにエラーメッセージを返す
+     *
+     * @return array
+     */
     public function outputAllMessage(): array
     {
         $messages = [];

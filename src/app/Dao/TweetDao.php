@@ -12,6 +12,15 @@ final class TweetDao extends Dao
         parent::__construct();
     }
 
+    /**
+     * ツイートの追加
+     *
+     * @param integer $user_id
+     * @param string $tweet
+     * @param integer $replyTweetId
+     * @param string $device
+     * @return void
+     */
     public function insert(
         int $user_id,
         string $tweet,
@@ -34,6 +43,11 @@ EOF;
         $stmt->execute();
     }
 
+    /**
+     * ツイートの全件取得
+     *
+     * @return void
+     */
     public function findByAllTweets()
     {
         $sql = <<<EOF
