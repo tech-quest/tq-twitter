@@ -39,3 +39,13 @@ $tweetDate = new TweetDate($tweet['created_at']);
   </main>
 </body>
 </html>
+
+<script>
+  const buttonOpen = document.querySelector('.modalOpen');
+  const modal = document.querySelector('.modal');
+  buttonOpen.addEventListener('click', function(e) {
+    e.preventDefault();
+    modal.classList.add('active');
+    overlay.classList.add('active');
+  });
+</script>
