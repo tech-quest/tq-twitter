@@ -25,13 +25,17 @@ final class SignInInputValidator
             return 'Emailが空です';
         }
 
-        // TODO: メルアドの書式かチェックする処理
+        $pattern =
+            "/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$/";
+        if (preg_match($pattern, $this->email)) {
+            return '不正な形式のメールアドレスです';
+        }
 
         return null;
     }
 
     /**
-     * 発生したエラメッセ時を全件取得する
+     * 発生したエラ-メッセージを全件取得する
      *
      * @return array
      */
