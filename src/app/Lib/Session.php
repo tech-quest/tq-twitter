@@ -2,7 +2,6 @@
 
 namespace App\Lib;
 
-use App\Lib\SignInInputError;
 use App\ValueObject\AuthUser;
 
 final class Session
@@ -23,6 +22,11 @@ final class Session
         return self::$instance;
     }
 
+    /**
+     * セッションが開始されていなかったら開始する
+     *
+     * @return void
+     */
     private static function start(): void
     {
         if (!isset($_SESSION)) {
@@ -30,6 +34,12 @@ final class Session
         }
     }
 
+    /**
+     * ログインユーザーの情報をセッションに登録する
+     *
+     * @param AuthUser $authUser
+     * @return void
+     */
     public function setAuth(AuthUser $authUser): void
     {
         $_SESSION[self::AUTH_KEY] = $authUser;
@@ -44,37 +54,34 @@ final class Session
         return $_SESSION[self::AUTH_KEY] ?? null;
     }
 
+    /**
+     * エラー情報をセッションに登録する
+     *
+     * @param array $errors
+     * @return void
+     */
     public function setErrors(array $errors): void
     {
         $_SESSION[self::ERRORS_KEY] = $errors;
     }
 
+    /**
+     * セッションに保存したエラー情報を返す
+     * 存在しなければnullを返す
+     * @return array
+     */
     public function errors(): array
     {
         return $_SESSION[self::ERRORS_KEY] ?? [];
     }
 
+    /**
+     * セッション情報を破棄する
+     *
+     * @return void
+     */
     public function clearErrors(): void
     {
         unset($_SESSION[self::ERRORS_KEY]);
-    }
-
-    /**
-     * $_SESSION['errors']にログイン時のエラーメッセージをセットしている
-     * $_SESSION['formInputs']にログイン入力フォームに表示させるemailをセットしている
-     *
-
-     * @param SignInInputError $signInInputError
-     * @param string $email
-     * @return void
-     */
-    public function setSignInInputErrorMessages(
-        SignInInputError $signInInputError,
-        string $email
-    ): void {
-        $_SESSION['errors'] = $signInInputError;
-        $_SESSION['formInputs'] = [
-            'email' => $email,
-        ];
     }
 }
