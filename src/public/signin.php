@@ -19,7 +19,7 @@ unset($_SESSION['errors']);
         <p><?php echo $error; ?></p>
     <?php endforeach; ?>
     <h1>Twitterにログイン</h1>
-    <form action="signin_search.php" method="post">
+    <form action="signin-complete.php" method="post">
         <p><input type="text" name="email" placeholder="Email"></p>
         <p><input type="submit" value="次へ"></p>
     </form>
