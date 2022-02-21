@@ -33,9 +33,24 @@ $tweetDate = new TweetDate($tweet['created_at']);
         <a href="">Reply</a>
         <a href="">Retweet</a>
         <a href="">Like</a>
-        <a href="">Share</a>
+        <a href="" class="modalOpen">Share</a>
+      </div>
+      <div class="modal">
+        <a href="">ダイレクトメッセージで送信</a>
+        <a href="">ブックマーク</a>
+        <a href="">リンク</a> 
       </div>
     </div>
   </main>
 </body>
 </html>
+
+<script>
+  const buttonOpen = document.querySelector('.modalOpen');
+  const modal = document.querySelector('.modal');
+  buttonOpen.addEventListener('click', function(e) {
+    e.preventDefault();
+    modal.classList.add('active');
+    overlay.classList.add('active');
+  });
+</script>
