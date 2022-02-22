@@ -25,9 +25,7 @@ $device = $_SERVER['HTTP_USER_AGENT'];
                 <input type="submit" value="ツイートする" />
             </form>
             <?php foreach ($tweets as $tweet): ?>
-              <a href="status.php?<?php echo $tweet['id']; ?>,<?php echo $tweet[
-    'user_id'
-]; ?>">
+              <a href="status.php?<?php echo $tweet['id']; ?>">
                 <p><?php echo $tweet['tweet']; ?></p>
               </a>
             <?php endforeach; ?>
