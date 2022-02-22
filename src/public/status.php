@@ -5,7 +5,6 @@ use App\Dao\TweetDao;
 use App\Lib\TweetDate;
 
 $tweetId = $_SERVER['QUERY_STRING'];
-
 $tweetDao = new TweetDao();
 $tweet = $tweetDao->findById($tweetId);
 $tweetDate = new TweetDate($tweet['created_at']);
