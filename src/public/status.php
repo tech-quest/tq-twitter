@@ -4,12 +4,10 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use App\Dao\TweetDao;
 use App\Lib\TweetDate;
 
-$id = explode(',', $_SERVER['QUERY_STRING']);
-$tweetId = $id[0];
-$userId = $id[1];
+$tweetId = $_SERVER['QUERY_STRING'];
 
 $tweetDao = new TweetDao();
-$tweet = $tweetDao->findById($tweetId, $userId);
+$tweet = $tweetDao->findById($tweetId);
 $tweetDate = new TweetDate($tweet['created_at']);
 ?>
 <!DOCTYPE html>
