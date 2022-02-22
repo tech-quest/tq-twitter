@@ -6,10 +6,10 @@ use App\Lib\TweetDate;
 
 $id = explode(',', $_SERVER['QUERY_STRING']);
 $tweetId = $id[0];
-$user_Id = $id[1];
+$userId = $id[1];
 
 $tweetDao = new TweetDao();
-$tweet = $tweetDao->findById($tweetId, $user_Id);
+$tweet = $tweetDao->findById($tweetId, $userId);
 $tweetDate = new TweetDate($tweet['created_at']);
 ?>
 <!DOCTYPE html>
