@@ -88,21 +88,18 @@ EOF;
         return empty($tweets) ? [] : $tweets;
     }
 
-    public function findById(int $id, int $user_id): array
+    public function findById(int $id): array
     {
         $sql = <<<EOF
 		    SELECT
-          *
+            *
 		    FROM
         	  tweets
       	WHERE
         	  id = :id
-      	AND
-        	  user_id = :user_id
 EOF;
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
         $tweet = $stmt->fetch(PDO::FETCH_ASSOC);
         return $tweet;
