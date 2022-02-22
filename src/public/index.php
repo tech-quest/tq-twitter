@@ -5,7 +5,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use App\Dao\TweetDao;
 
 $tweetDao = new TweetDao();
-$tweets = $tweetDao->findByAllTweets();
+$tweets = $tweetDao->findAllByTweets();
 $device = $_SERVER['HTTP_USER_AGENT'];
 ?>
 <!DOCTYPE html>

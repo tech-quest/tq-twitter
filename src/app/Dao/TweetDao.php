@@ -48,7 +48,7 @@ EOF;
      *
      * @return void
      */
-    public function findByAllTweets(): array
+    public function findAllByTweets(): array
     {
         $sql = <<<EOF
         SELECT
@@ -92,9 +92,7 @@ EOF;
     {
         $sql = <<<EOF
 		    SELECT
-			    tweet,
-			    device,
-			    created_at
+          *
 		    FROM
         	  tweets
       	WHERE
