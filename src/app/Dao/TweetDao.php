@@ -2,7 +2,7 @@
 namespace App\Dao;
 
 use App\Dao\Dao;
-use App\ValueObject\UserId;
+use App\Domain\ValueObject\UserId;
 use PDO;
 
 final class TweetDao extends Dao
@@ -40,7 +40,7 @@ EOF;
         $stmt->bindValue(':tweet', $tweet, PDO::PARAM_STR);
         $stmt->bindValue(':reply_tweet_id', $replyTweetId, PDO::PARAM_INT);
         $stmt->bindValue(':device', $device, PDO::PARAM_STR);
-        $stmt->execute();
+        return $stmt->execute();
     }
 
     /**

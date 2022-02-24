@@ -4,7 +4,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\Dao\TweetDao;
 use App\Lib\Redirect;
-use App\ValueObject\Device;
+use App\Domain\ValueObject\Device;
 
 $user_id = 2;
 $tweet = filter_input(INPUT_POST, 'tweet');
