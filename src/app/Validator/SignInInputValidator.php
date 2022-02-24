@@ -26,8 +26,8 @@ final class SignInInputValidator
         }
 
         $pattern =
-            "/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$/";
-        if (preg_match($pattern, $this->email)) {
+            "/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$/";
+        if (!preg_match($pattern, $this->email)) {
             return '不正な形式のメールアドレスです';
         }
 
