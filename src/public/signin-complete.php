@@ -14,9 +14,10 @@ use App\ValueObject\Email;
 $session = Session::getInstance();
 
 $email = filter_input(INPUT_POST, 'email');
+$password = filter_input(INPUT_POST, 'password');
 
 try {
-    $signInInputError = new SignInInputValidator($email);
+    $signInInputError = new SignInInputValidator($email, $password);
     $errors = $signInInputError->allErrors();
 
     if (!empty($errors)) {
