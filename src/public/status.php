@@ -5,10 +5,7 @@ use App\UseCase\GetTweetDetail\GetTweetDetailInteractor;
 use App\UseCase\GetTweetDetail\GetTweetDetailInput;
 use App\Domain\ValueObject\TweetId;
 
-$tweetId = $_SERVER['QUERY_STRING'];
-$tweetDao = new TweetDao();
-$tweet = $tweetDao->findById($tweetId);
-$tweetDate = new TweetDate($tweet['created_at']);
+$tweetId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 ?>
 <!DOCTYPE html>
 <head>
