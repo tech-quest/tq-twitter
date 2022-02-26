@@ -1,8 +1,9 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use App\Dao\TweetDao;
-use App\Lib\TweetDate;
+use App\UseCase\GetTweetDetail\GetTweetDetailInteractor;
+use App\UseCase\GetTweetDetail\GetTweetDetailInput;
+use App\Domain\ValueObject\TweetId;
 
 $tweetId = $_SERVER['QUERY_STRING'];
 $tweetDao = new TweetDao();
