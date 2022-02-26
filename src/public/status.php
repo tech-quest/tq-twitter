@@ -6,6 +6,11 @@ use App\UseCase\GetTweetDetail\GetTweetDetailInput;
 use App\Domain\ValueObject\TweetId;
 
 $tweetId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+
+$input = new GetTweetDetailInput(new TweetId($tweetId));
+$useCase = new GetTweetDetailInteractor($input);
+$output = $useCase->handler();
+$tweet = $output->tweet();
 ?>
 <!DOCTYPE html>
 <head>
