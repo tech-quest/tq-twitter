@@ -1,10 +1,10 @@
 <?php
 
-namespace App\ValueObject;
+namespace App\Domain\ValueObject;
 
 use Exception;
 
-final class Tweet
+final class TweetDevice
 {
     private $value;
 
