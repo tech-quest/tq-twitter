@@ -1,19 +1,15 @@
 <?php
 
-namespace App\ValueObject;
+namespace App\Domain\ValueObject;
 
 use Exception;
 
-final class TweetId
+final class ReplyTweetId
 {
     private $value;
 
     public function __construct(int $value)
     {
-        if ($value <= 0) {
-            throw new Exception('ReplyTweetIdは1以上で指定してください');
-        }
-
         $this->value = $value;
     }
 
