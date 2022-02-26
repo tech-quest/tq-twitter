@@ -4,25 +4,25 @@ final class Tweet
 {
     private $tweetId;
     private $userId;
-    private $tweet;
+    private $tweetBody;
     private $replyTweetId;
     private $device;
-    // private $createdAt;
+    private $createdAt;
 
     public function __construct(
         TweetId $tweetId,
         UserId $userId,
-        Tweet $tweet,
-        ReplyTweetId $replyTweetId,
-        Device $device
+        TweetBody $tweetBody,
+        ?ReplyTweetId $replyTweetId,
+        TweetDevice $device,
+        TweetDate $createdAt
     ) {
-        // CreatedAt $createdAt
         $this->tweetId = $tweetId;
         $this->userId = $userId;
-        $this->tweet = $tweet;
+        $this->tweetBody = $tweetBody;
         $this->replyTweetId = $replyTweetId;
         $this->device = $device;
-        // $this->createdAt = $createdAt;
+        $this->createdAt = $createdAt;
     }
 
     public function tweetId(): TweetId
