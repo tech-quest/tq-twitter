@@ -50,8 +50,8 @@ final class Tweet
         return $this->device;
     }
 
-    // public function createdAt(): CreatedAt
-    // {
-    //     return $this->createdAt;
-    // }
+    public function createdAt(): TweetDate
+    {
+        return $this->createdAt;
+    }
 }
