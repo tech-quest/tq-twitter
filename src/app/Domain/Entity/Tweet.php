@@ -35,17 +35,17 @@ final class Tweet
         return $this->userId;
     }
 
-    public function tweet(): Tweet
+    public function tweetBody(): TweetBody
     {
-        return $this->tweet;
+        return $this->tweetBody;
     }
 
-    public function replyTweetId(): ReplyTweetId
+    public function replyTweetId(): ?ReplyTweetId
     {
         return $this->replyTweetId;
     }
 
-    public function device(): Device
+    public function device(): TweetDevice
     {
         return $this->device;
     }
