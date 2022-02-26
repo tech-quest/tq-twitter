@@ -1,5 +1,13 @@
 <?php
 
+namespace App\Domain\Entity;
+
+use App\Domain\ValueObject\TweetId;
+use App\Domain\ValueObject\UserId;
+use App\Domain\ValueObject\TweetBody;
+use App\Domain\ValueObject\ReplyTweetId;
+use App\Domain\ValueObject\TweetDevice;
+use App\Domain\ValueObject\TweetDate;
 final class Tweet
 {
     private $tweetId;
