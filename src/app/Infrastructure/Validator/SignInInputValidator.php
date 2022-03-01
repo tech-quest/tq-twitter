@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Validator;
+namespace App\Infrastructure\Validator;
 
 /**
  * ログインフォーム情報のバリデーター

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\ValueObject;
+namespace App\Domain\ValueObject;
 
 final class Device
 {

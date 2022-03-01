@@ -1,15 +1,17 @@
 <?php
 
-namespace App\ValueObject;
+namespace App\Domain\ValueObject;
 
 use Exception;
 
-final class Email
+final class TweetBody
 {
+    private $value;
+
     public function __construct(string $value)
     {
-        if (empty($value)) {
-            throw new Exception('値を入力してください');
+        if (140 <= strlen($value)) {
+            throw new Exception('Tweetは140字以内で投稿してください');
         }
 
         $this->value = $value;
