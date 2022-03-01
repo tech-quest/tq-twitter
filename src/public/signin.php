@@ -23,6 +23,7 @@ unset($_SESSION['errors']);
         <p><input type="text" name="email" placeholder="Email"></p>
         <p><input type="password" name="password" placeholder="password"></p>
         <p><input type="submit" value="次へ"></p>
+        <a href="">パスワードを忘れた方</a>
     </form>
 
 </body>

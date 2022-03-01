@@ -5,11 +5,11 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\Lib\Redirect;
 use App\Lib\Session;
-use App\Validator\SignInInputValidator;
-use App\Dao\UserDao;
-use App\ValueObject\AuthUser;
-use App\ValueObject\UserId;
-use App\ValueObject\Email;
+use App\Infrastructure\Validator\SignInInputValidator;
+use App\Infrastructure\Dao\UserDao;
+use App\Domain\ValueObject\AuthUser;
+use App\Domain\ValueObject\UserId;
+use App\Domain\ValueObject\Email;
 
 $session = Session::getInstance();
 
