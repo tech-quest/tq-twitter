@@ -49,4 +49,24 @@ EOF;
         $stmt->bindValue(':password', $passwordHash);
         return $stmt->execute();
     }
+
+    /**
+     *テストで使用予定
+     *
+     */
+    public function getPassword()
+    {
+        $sql = <<<EOF
+        SELECT
+          *
+        FROM
+          users
+        Where
+          id = 8
+EOF;
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $users;
+    }
 }
