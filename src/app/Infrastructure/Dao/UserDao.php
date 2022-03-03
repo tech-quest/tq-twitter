@@ -34,6 +34,7 @@ final class UserDao extends Dao
 
         return empty($user) ? null : $user;
     }
+
     public function updatePassword(int $id, string $passwordHash)
     {
         $sql = <<<EOF
