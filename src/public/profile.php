@@ -4,7 +4,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\Lib\Redirect;
 use App\Lib\Session;
-use App\Dao\TweetDao;
+use App\Infrastructure\Dao\TweetDao;
 
 $session = Session::getInstance();
 $authUser = $session->auth();

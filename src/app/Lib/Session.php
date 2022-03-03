@@ -2,7 +2,7 @@
 
 namespace App\Lib;
 
-use App\ValueObject\AuthUser;
+use App\Domain\ValueObject\AuthUser;
 
 final class Session
 {
