@@ -1,16 +1,16 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use App\Dao\TweetDao;
-use App\Lib\TweetDate;
+use App\UseCase\GetTweetDetail\GetTweetDetailInteractor;
+use App\UseCase\GetTweetDetail\GetTweetDetailInput;
+use App\Domain\ValueObject\TweetId;
 
-$id = explode(',', $_SERVER['QUERY_STRING']);
-$tweetId = $id[0];
-$user_Id = $id[1];
+$tweetId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
-$tweetDao = new TweetDao();
-$tweet = $tweetDao->findById($tweetId, $user_Id);
-$tweetDate = new TweetDate($tweet['created_at']);
+$input = new GetTweetDetailInput(new TweetId($tweetId));
+$useCase = new GetTweetDetailInteractor($input);
+$output = $useCase->handler();
+$tweet = $output->tweet();
 ?>
 <!DOCTYPE html>
 <head>
@@ -22,18 +22,20 @@ $tweetDate = new TweetDate($tweet['created_at']);
     <div class="container">
       <h1>ツイート詳細ページ</h1> 
       <div class="tweet-status">
-        <p class="tweet-status_tweet"><?php echo $tweet['tweet']; ?></p>
-        <p class="tweet-status_date"><?php echo $tweetDate->date() .
+        <p class="tweet-status__tweet"><?php echo $tweet
+            ->tweetBody()
+            ->value(); ?></p>
+        <p class="tweet-status__date"><?php echo $tweet->createdAt()->date() .
             '・' .
             'Twitter for' .
             ' ' .
-            $tweet['device']; ?></p>
+            $tweet->device()->value(); ?></p>
       </div>
       <div class="tweet-button">
         <a href="">Reply</a>
         <a href="">Retweet</a>
         <a href="">Like</a>
-        <a href="" class="modalOpen">Share</a>
+        <a href="" class="modalopen">Share</a>
       </div>
       <div class="modal">
         <a href="">ダイレクトメッセージで送信</a>
@@ -46,7 +48,7 @@ $tweetDate = new TweetDate($tweet['created_at']);
 </html>
 
 <script>
-  const buttonOpen = document.querySelector('.modalOpen');
+  const buttonOpen = document.querySelector('.modalopen');
   const modal = document.querySelector('.modal');
   buttonOpen.addEventListener('click', function(e) {
     e.preventDefault();

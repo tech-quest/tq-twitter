@@ -1,5 +1,6 @@
 <?php
-namespace App\Lib;
+namespace App\Domain\ValueObject;
+
 use DateTime;
 
 final class TweetDate

@@ -1,8 +1,10 @@
 <?php
-namespace App\Dao;
 
-use App\Dao\Dao;
-use App\ValueObject\UserId;
+namespace App\Infrastructure\Dao;
+
+use App\Infrastructure\Dao\Dao;
+use App\Domain\ValueObject\UserId;
+use App\Domain\ValueObject\TweetId;
 use PDO;
 
 final class TweetDao extends Dao
@@ -40,7 +42,7 @@ EOF;
         $stmt->bindValue(':tweet', $tweet, PDO::PARAM_STR);
         $stmt->bindValue(':reply_tweet_id', $replyTweetId, PDO::PARAM_INT);
         $stmt->bindValue(':device', $device, PDO::PARAM_STR);
-        $stmt->execute();
+        return $stmt->execute();
     }
 
     /**
@@ -48,7 +50,7 @@ EOF;
      *
      * @return void
      */
-    public function findByAllTweets(): array
+    public function findAllByTweets(): array
     {
         $sql = <<<EOF
         SELECT
@@ -88,23 +90,18 @@ EOF;
         return empty($tweets) ? [] : $tweets;
     }
 
-    public function findById(int $id, int $user_id): array
+    public function findById(int $id): array
     {
         $sql = <<<EOF
 		    SELECT
-			    tweet,
-			    device,
-			    created_at
+            *
 		    FROM
         	  tweets
       	WHERE
         	  id = :id
-      	AND
-        	  user_id = :user_id
 EOF;
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
         $tweet = $stmt->fetch(PDO::FETCH_ASSOC);
         return $tweet;

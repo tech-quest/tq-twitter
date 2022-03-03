@@ -1,7 +1,8 @@
 <?php
-namespace App\Dao;
 
-use App\Dao\Dao;
+namespace App\Infrastructure\Dao;
+
+use App\Infrastructure\Dao\Dao;
 use PDO;
 use App\ValueObject\Email;
 
