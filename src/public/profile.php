@@ -5,6 +5,9 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use App\Lib\Redirect;
 use App\Lib\Session;
 use App\Dao\TweetDao;
+use App\UseCase\SearchTweetUseCase\SearchTweetInput;
+use App\UseCase\SearchTweetUseCase\SearchTweetInteractor;
+use App\Repository\TweetRepository;
 
 $session = Session::getInstance();
 $authUser = $session->auth();
@@ -13,12 +16,13 @@ if (is_null($authUser)) {
     Redirect::handler('/signin.php');
 }
 
-$userId = $authUser->userId();
+$input = new SearchTweetInput($authUser);
+$tweetRespository = new TweetRepository();
+$useCase = new SearchTweetInteractor($input, $tweetRespository);
+$output = $useCase->handler();
+$tweets = $output->tweets();
 
 $session->clearErrors();
-
-$tweetDao = new TweetDao();
-$tweets = $tweetDao->findAllByUserId($userId);
 ?>
 
 <head>
