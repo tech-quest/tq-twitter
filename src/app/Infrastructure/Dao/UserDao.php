@@ -34,4 +34,19 @@ final class UserDao extends Dao
 
         return empty($user) ? null : $user;
     }
+    public function updatePassword(int $id, string $passwordHash)
+    {
+        $sql = <<<EOF
+        UPDATE
+          users
+        SET
+          password = :password
+        WHERE
+          id = :id
+EOF;
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id', $id);
+        $stmt->bindValue(':password', $passwordHash);
+        return $stmt->execute();
+    }
 }
