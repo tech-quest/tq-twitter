@@ -2,7 +2,7 @@
 
 namespace App\Domain\ValueObject;
 
-final class SearchTweetCondition
+final class SearchTweetsCondition
 {
     private $userId;
     private $tweet;
