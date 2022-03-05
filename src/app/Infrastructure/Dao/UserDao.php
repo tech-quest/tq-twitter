@@ -4,7 +4,7 @@ namespace App\Infrastructure\Dao;
 
 use App\Infrastructure\Dao\Dao;
 use PDO;
-use App\ValueObject\Email;
+use App\Domain\ValueObject\Email;
 
 final class UserDao extends Dao
 {
