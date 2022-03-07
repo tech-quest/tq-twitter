@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use PHPUnit\Framework\TestCase;
-use App\ValueObject\Device;
+use App\Domain\ValueObject\Device;
 
 class DeviceTest extends TestCase
 {
