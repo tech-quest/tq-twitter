@@ -1,15 +1,15 @@
 <?php
 
-namespace App\ValueObject;
+namespace App\Domain\ValueObject;
 
-final class Email
+use Exception;
+
+final class TweetDevice
 {
+    private $value;
+
     public function __construct(string $value)
     {
-        if (empty($value)) {
-            throw new Exception('値を入力してください');
-        }
-
         $this->value = $value;
     }
 
