@@ -4,7 +4,9 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\Lib\Redirect;
 use App\Lib\Session;
-use App\Infrastructure\Dao\TweetDao;
+use App\UseCase\SearchTweets\SearchTweetsInput;
+use App\UseCase\SearchTweets\SearchTweetsInteractor;
+use App\Adapter\QueryService\TweetQueryService;
 
 $session = Session::getInstance();
 $authUser = $session->auth();
@@ -13,12 +15,13 @@ if (is_null($authUser)) {
     Redirect::handler('/signin.php');
 }
 
-$userId = $authUser->userId();
+$input = new SearchTweetsInput($authUser);
+$tweetQueryService = new TweetQueryService();
+$useCase = new SearchTweetsInteractor($input, $tweetQueryService);
+$output = $useCase->handler();
+$tweets = $output->tweets();
 
 $session->clearErrors();
-
-$tweetDao = new TweetDao();
-$tweets = $tweetDao->findAllByUserId($userId);
 ?>
 
 <head>
@@ -31,6 +34,6 @@ $tweets = $tweetDao->findAllByUserId($userId);
 <body>
   <h1>profile</h1>
    <?php foreach ($tweets as $tweet): ?>
-         <p><?php echo $tweet['tweet']; ?></p>
+         <p><?php echo $tweet->tweetBody()->value(); ?></p>
     <?php endforeach; ?>
 </body>

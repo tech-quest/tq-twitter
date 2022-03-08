@@ -2,6 +2,7 @@
 
 namespace App\Domain\Entity;
 
+use DateTime;
 use App\Domain\ValueObject\TweetId;
 use App\Domain\ValueObject\UserId;
 use App\Domain\ValueObject\TweetBody;
@@ -16,6 +17,7 @@ final class Tweet
     private $replyTweetId;
     private $device;
     private $createdAt;
+    private $deletedAt;
 
     public function __construct(
         TweetId $tweetId,
@@ -23,7 +25,8 @@ final class Tweet
         TweetBody $tweetBody,
         ?ReplyTweetId $replyTweetId,
         TweetDevice $device,
-        TweetDate $createdAt
+        TweetDate $createdAt,
+        ?DateTime $deletedAt
     ) {
         $this->tweetId = $tweetId;
         $this->userId = $userId;
@@ -31,6 +34,7 @@ final class Tweet
         $this->replyTweetId = $replyTweetId;
         $this->device = $device;
         $this->createdAt = $createdAt;
+        $this->deletedAt = $deletedAt;
     }
 
     public function tweetId(): TweetId
@@ -61,5 +65,10 @@ final class Tweet
     public function createdAt(): TweetDate
     {
         return $this->createdAt;
+    }
+
+    public function deletedAt(): ?DateTime
+    {
+        return $this->deletedAt;
     }
 }

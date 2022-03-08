@@ -1,5 +1,6 @@
 <div class="left">
-  <?php include ( dirname(__FILE__) . '/left_nav.php' ); ?>
+  <?php include dirname(__FILE__) . '/left_nav.php'; ?>
 </div>
-<?php echo "Hello"; ?>
+<?php echo 'Hello'; ?>
 
+ ?>
