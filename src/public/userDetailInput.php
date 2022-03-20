@@ -92,3 +92,27 @@ $session->clearErrors();
 </body>
 
 </html>
+<script>
+  const userInfoInput = document.querySelector('.user-info.input');
+  const userSearchSubmit = document.querySelector('.user-search')
+  userInfoInput.addEventListener('change', (e) => {
+    userSearchSubmit.disabled = e.target.value === '';
+  });
+
+  userInfoInput.addEventListener('click', (e) => {
+    const target = e.target
+    const label = target.previousElementSibling
+    target.classList.add('focus')
+    label.classList.add('move', 'focus')
+  })
+
+  userInfoInput.addEventListener('blur', (e) => {
+    const target = e.target
+    const label = target.previousElementSibling
+    if (target.value === '') {
+      label.classList.remove('move')
+    }
+    target.classList.remove('focus')
+    label.classList.remove('focus')
+  })
+</script>
