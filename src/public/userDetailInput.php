@@ -69,6 +69,19 @@ $session->clearErrors();
       </form>
     </div>
   </div>
+
+  <div class="user-password user-password__display">
+    <div class="user-password__input">
+      <h4>新しいパスワードを入力してください</h4>
+      <form action="" method="post">
+        <div class="user-password_box">
+          <input class="user-password__send" type="text" name="name" />
+        </div>
+        <a class="button-password" href="/signin.php">キャンセル</a>
+        <input class="user-password__button" type="submit" value="変更する">
+      </form>
+    </div>
+  </div>
 </body>
 
 </html>
