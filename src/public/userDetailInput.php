@@ -1,8 +1,11 @@
 <?php
-session_start();
+require_once __DIR__ . '/../vendor/autoload.php';
 
-$error = $_SESSION['errors'] ?? [];
-unset($_SESSION['errors']);
+use App\Lib\Session;
+
+$session = Session::getInstance();
+$errors = $session->errors();
+$session->clearErrors();
 ?>
 <!DOCTYPE html>
 <html lang="ja">
