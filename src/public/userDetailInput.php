@@ -220,3 +220,33 @@ $session->clearErrors();
       alert('認証コードを入力してください。');
     }
   }, false);
+
+  const userPasswordButton = document.querySelector('.user-password__button');
+  userPasswordButton.addEventListener('click', async function(event) {
+    event.preventDefault();
+    const userPasswordSend = document.querySelector('.user-password__send');
+    const newPassword = userPasswordSend.value;
+    const obj = {
+      newPassword,
+    };
+    const body = JSON.stringify(obj);
+    const headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    };
+    const response = await fetch(
+      'Api/newPassword.php', {
+        method: "POST",
+        headers,
+        body
+      });
+
+    const json = await response.json();
+    if (json.data['result'] === true) {
+      const userPasswordDisplay = document.querySelector('.user-password__display');
+      const completePassword = document.querySelector('.complete-password');
+      userPasswordDisplay.classList.add('remove3');
+      completePassword.classList.add('show3');
+    }
+  }, false);
+</script>
