@@ -51,23 +51,26 @@ EOF;
         return $stmt->execute();
     }
 
-    /**
-     *テストで使用予定
-     *
-     */
-    public function getPassword()
+    public function insertCertification($user_id, $certificationCode): void
     {
         $sql = <<<EOF
-        SELECT
-          *
-        FROM
-          users
-        Where
-          id = 8
+    INSERT INTO 
+      certifications
+    (user_id, certification_code)
+    VALUES
+    (:user_id, :certification_code)
 EOF;
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute();
-        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $users;
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindValue(
+            ':certification_code',
+            $certificationCode,
+            PDO::PARAM_STR
+        );
+
+        $res = $stmt->execute();
+        if (!$res) {
+            throw new Exception('認証情報の保存に失敗しました');
+        }
     }
 }
