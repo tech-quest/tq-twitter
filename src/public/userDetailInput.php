@@ -190,3 +190,33 @@ $session->clearErrors();
         body
       });
   }, false);
+
+  const sendCertificateButton = document.querySelector('.send-certification__button');
+  sendCertificateButton.addEventListener('click', async function(event) {
+    event.preventDefault();
+    const codeInput = document.querySelector('.send-certification');
+    const code = codeInput.value;
+    const obj = {
+      code,
+    };
+    const body = JSON.stringify(obj);
+    const headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    };
+    const response = await fetch(
+      'Api/confirmUserCertificationCodeInput.php', {
+        method: "POST",
+        headers,
+        body
+      });
+    const json = await response.json();
+    if (json.data['certificationCode']) {
+      const UserCertificationDisplay = document.querySelector('.user-certification__display');
+      const userPassword = document.querySelector('.user-password');
+      UserCertificationDisplay.classList.add('remove2');
+      userPassword.classList.add('show2');
+    } else {
+      alert('認証コードを入力してください。');
+    }
+  }, false);
