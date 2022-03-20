@@ -26,7 +26,7 @@ a {
 }
 
 div.left {
-    text-align: left; 
+  text-align: left;
 }
 
 .container p {
@@ -129,7 +129,6 @@ div.left {
   opacity: 1;
   visibility: visible;
 }
-<<<<<<< HEAD
 /**--userDetail--**/
 .user-detail {
   width: 550px;
@@ -384,5 +383,3 @@ form label.move {
   font-size: 18px;
   text-align: center;
 }
-=======
->>>>>>> main
