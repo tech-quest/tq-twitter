@@ -116,3 +116,50 @@ $session->clearErrors();
     label.classList.remove('focus')
   })
 </script>
+<script>
+  const btn = document.querySelector('.user-search');
+  const userDetailResult = document.querySelector('.user-detail__result');
+  const userDetail = document.querySelector('.user-detail');
+
+  btn.addEventListener('click', async function(event) {
+    event.preventDefault();
+    const searchInput = document.querySelector('.input');
+    const input = searchInput.value;
+    if (!input) {
+      const errorMessage = document.querySelector('.errorMessage');
+      return;
+    }
+    const obj = {
+      input,
+    };
+    const body = JSON.stringify(obj);
+    const headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    };
+    const response = await fetch(
+      'Api/searchUserDetailInput.php', {
+        method: "POST",
+        headers,
+        body
+      });
+
+    const json = await response.json();
+    if (json.data['email']) {
+      userDetailResult.classList.add('active');
+      userDetail.classList.add('active');
+      const email = document.querySelector('.email');
+      const result = document.querySelector('.result');
+      result.innerHTML = 'このアカウントに関する以下の情報が見つかりました。'
+      email.innerHTML = json.data['email'];
+    } else {
+      const errorMessage = document.querySelector('.errorMessage');
+      const output = document.querySelector('.output');
+      output.classList.add('active');
+      errorMessage.innerHTML = 'アカウントが見つかりません。'
+
+      setTimeout(() => {
+        output.classList.remove('active');
+      }, 2000)
+    }
+  }, false);
