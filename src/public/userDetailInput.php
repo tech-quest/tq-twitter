@@ -82,6 +82,13 @@ $session->clearErrors();
       </form>
     </div>
   </div>
+
+  <div class="complete-password">
+    <div class="">
+      <h5>パスワードの変更が完了しました</h5>
+      <a class="button-complete" href="/signin.php">ログイン</a>
+    </div>
+  </div>
 </body>
 
 </html>
