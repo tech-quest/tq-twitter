@@ -163,3 +163,30 @@ $session->clearErrors();
       }, 2000)
     }
   }, false);
+
+  const sendUser = document.querySelector('.send-user');
+  sendUser.addEventListener('click', async function(event) {
+    event.preventDefault();
+    const UserDetailDisplay = document.querySelector('.user-detail__display');
+    const userCertification = document.querySelector('.user-certification');
+
+    UserDetailDisplay.classList.add('remove');
+    userCertification.classList.add('show');
+
+    const searchInput = document.querySelector('.input');
+    const input = searchInput.value;
+    const obj = {
+      input,
+    };
+    const body = JSON.stringify(obj);
+    const headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    };
+    const response = await fetch(
+      'Api/sendMail.php', {
+        method: "POST",
+        headers,
+        body
+      });
+  }, false);
