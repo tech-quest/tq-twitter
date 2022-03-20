@@ -1,6 +1,7 @@
 <?php
 namespace App\Adapter\QueryService;
 
+use DateTime;
 use App\Infrastructure\Dao\TweetDao;
 use App\Domain\Entity\Tweet;
 use App\Domain\ValueObject\TweetId;
@@ -29,7 +30,32 @@ final class TweetQueryService
             new TweetBody($tweetMapper['tweet']),
             new ReplyTweetId($tweetMapper['reply_tweet_id']),
             new TweetDevice($tweetMapper['device']),
-            new TweetDate($tweetMapper['created_at'])
+            new TweetDate($tweetMapper['created_at']),
+            new DateTime($tweetMapper['deleted_at'])
         );
+    }
+
+    /**
+     * ツイートの全件取得
+     *
+     * @return array
+     */
+    public function findAllByUserId(UserId $userId): array
+    {
+        $tweetMappers = $this->tweetDao->findAllByUserId($userId);
+        $tweetEntityes = [];
+
+        foreach ($tweetMappers as $tweetMapper) {
+            $tweetEntityes[] = new Tweet(
+                new TweetId($tweetMapper['id']),
+                new UserId($tweetMapper['user_id']),
+                new TweetBody($tweetMapper['tweet']),
+                new ReplyTweetId($tweetMapper['reply_tweet_id']),
+                new TweetDevice($tweetMapper['device']),
+                new TweetDate($tweetMapper['created_at']),
+                new DateTime($tweetMapper['deleted_at'])
+            );
+        }
+        return $tweetEntityes;
     }
 }

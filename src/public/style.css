@@ -25,6 +25,10 @@ a {
   background-color: #1e90ff;
 }
 
+div.left {
+    text-align: left; 
+}
+
 .container p {
   margin-bottom: 25px;
 }
@@ -125,6 +129,7 @@ a {
   opacity: 1;
   visibility: visible;
 }
+<<<<<<< HEAD
 /**--userDetail--**/
 .user-detail {
   width: 550px;
@@ -379,3 +384,5 @@ form label.move {
   font-size: 18px;
   text-align: center;
 }
+=======
+>>>>>>> main
