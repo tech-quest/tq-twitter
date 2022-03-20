@@ -106,4 +106,18 @@ EOF;
         $tweet = $stmt->fetch(PDO::FETCH_ASSOC);
         return $tweet;
     }
+
+    public function delete(int $tweetId) 
+    {
+        $sql = <<<EOF
+        DELETE
+        FROM
+            tweets
+      	WHERE
+            id = :id
+EOF;
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id', $tweetId, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
 }
