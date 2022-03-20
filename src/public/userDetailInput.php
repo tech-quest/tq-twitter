@@ -55,6 +55,20 @@ $session->clearErrors();
       </form>
     </div>
   </div>
+  <div class="user-certification user-certification__display">
+    <div class="user-certification__input">
+      <h3>メールアドレスを確認する</h3>
+      <p>アカウントパスワードをリセットするための認証コードがこちらに送信されます。</p>
+      <form action="" method="post">
+        <p class="result"></p>
+        <div class="send-box">
+          <input class="send-certification" type="text" name="name" />
+        </div>
+        <a class="button-certification" href="/signin.php">コードが届かない場合</a>
+        <input class="send-certification__button" type="submit" value="認証する">
+      </form>
+    </div>
+  </div>
 </body>
 
 </html>
