@@ -31,6 +31,30 @@ $session->clearErrors();
           </div>
           <input class="user-search" type="submit" value="検索" disabled />
         </form>
+      </div>
+    </div>
+    <div class="message output">
+      <p class="errorMessage"></p>
+    </div>
+  </div>
+
+  <div class="user-detail__result user-detail__display">
+    <div class="user-detail__input">
+      <h2>どのようにパスワードをリセットしますか？</h2>
+      <form action="" method="post">
+        <p class="result"></p>
+        <div class="send-box">
+          <p class="text">
+            認証コードを
+            <span class="email user-email"></span>
+            にメールで送信する
+          </p>
+        </div>
+        <a class="button" href="/signin.php">キャンセル</a>
+        <input class="send-user" type="submit" value="次へ">
+      </form>
+    </div>
+  </div>
 </body>
 
 </html>
