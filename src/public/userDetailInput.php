@@ -55,6 +55,7 @@ $session->clearErrors();
       </form>
     </div>
   </div>
+
   <div class="user-certification user-certification__display">
     <div class="user-certification__input">
       <h3>メールアドレスを確認する</h3>
@@ -92,6 +93,7 @@ $session->clearErrors();
 </body>
 
 </html>
+
 <script>
   const userInfoInput = document.querySelector('.user-info.input');
   const userSearchSubmit = document.querySelector('.user-search')
@@ -163,6 +165,7 @@ $session->clearErrors();
       }, 2000)
     }
   }, false);
+
 
   const sendUser = document.querySelector('.send-user');
   sendUser.addEventListener('click', async function(event) {
