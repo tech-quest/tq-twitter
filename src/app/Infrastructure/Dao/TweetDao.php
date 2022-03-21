@@ -107,7 +107,7 @@ EOF;
         return $tweet;
     }
 
-    public function delete(int $tweetId) 
+    public function delete(int $tweetId)
     {
         $sql = <<<EOF
         DELETE

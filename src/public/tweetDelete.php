@@ -9,4 +9,3 @@ $tweetDao = new TweetDao();
 $tweetDao->delete($tweetId);
 $path = '/index.php';
 Redirect::handler($path);
-
