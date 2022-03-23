@@ -20,7 +20,7 @@ $tweet = $output->tweet();
 <body id="status">
   <main>
     <div class="container">
-      <button type=“button” onclick="location.href='../top.php'">←</button>
+      <button type=“button” onclick="location.href='../index.php'">←</button>
       <h1>ツイート詳細ページ</h1> 
       <div class="tweet-status">
         <p class="tweet-status__tweet"><?php echo $tweet
