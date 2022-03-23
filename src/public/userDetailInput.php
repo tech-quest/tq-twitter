@@ -29,7 +29,7 @@ $session->clearErrors();
             <label for="email">メールアドレスか電話番号かユーザー名を入力してください</label>
             <input class="user-info input" type="text" name="name" />
           </div>
-          <input class="user-search" type="submit" value="検索" disabled />
+          <input class="user-search" type="submit" value="検索" />
         </form>
       </div>
     </div>
@@ -97,16 +97,13 @@ $session->clearErrors();
 <script>
   const userInfoInput = document.querySelector('.user-info.input');
   const userSearchSubmit = document.querySelector('.user-search')
-  userInfoInput.addEventListener('change', (e) => {
-    userSearchSubmit.disabled = e.target.value === '';
-  });
 
   userInfoInput.addEventListener('click', (e) => {
     const target = e.target
     const label = target.previousElementSibling
     target.classList.add('focus')
     label.classList.add('move', 'focus')
-  })
+  });
 
   userInfoInput.addEventListener('blur', (e) => {
     const target = e.target
@@ -116,7 +113,7 @@ $session->clearErrors();
     }
     target.classList.remove('focus')
     label.classList.remove('focus')
-  })
+  });
 </script>
 <script>
   const btn = document.querySelector('.user-search');
