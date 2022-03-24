@@ -1,23 +1,21 @@
 # tq-twitter
 
-## 環境構築手順
+# 環境構築手順
 
-### 1. ローカルに clone する
+1. ローカルに git clone する
+2. [Docker]() のインストール
+3. 以下のコマンドで Docker コンテナの起動
 
-### 2. Docker のインストール
-
-### 3. 「Dockerコンテナの起動」
-
-```
-./docker-compose-local.sh up
+```bash
+$ ./docker-compose-local.sh up
 ```
 
-## ページ紹介
+# ドキュメント
 
-php
+[要件定義書・設計書](https://www.notion.so/Twitter-3333e77a9d8842789957ce3f23046446)
 
-[localhost:8080](http://localhost:8080)
+# ページ紹介
 
-PHPMyAdmin
+[ローカルサーバー](http://localhost:8080)
 
-[localhost:3306](http://localhost:3306)
+[PHPMyAdmin](http://localhost:3306)
