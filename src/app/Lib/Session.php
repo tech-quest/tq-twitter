@@ -3,11 +3,15 @@
 namespace App\Lib;
 
 use App\Domain\ValueObject\AuthUser;
+use App\Domain\ValueObject\Email;
+use App\Domain\ValueObject\UserID;
 
 final class Session
 {
     public const AUTH_KEY = 'auth';
     public const ERRORS_KEY = 'errors';
+    public const CERTIFICATE_EMAIL_KEY = 'certificate_email';
+    public const USER_KEY = 'user_id';
 
     private static $instance;
 
@@ -83,5 +87,23 @@ final class Session
     public function clearErrors(): void
     {
         unset($_SESSION[self::ERRORS_KEY]);
+    }
+
+    public function setCertificateEmail(Email $email): void
+    {
+        $_SESSION[self::CERTIFICATE_EMAIL_KEY] = $email->value();
+    }
+
+    public function setUserId(UserID $userId): void
+    {
+        $_SESSION[self::USER_KEY] = $userId->value();
+    }
+
+    public function certificateEmail(): Email
+    {
+        if (isset($_SESSION[self::CERTIFICATE_EMAIL_KEY])) {
+            throw new Exception('認証用メールアドレスが保存されてません');
+        }
+        return new Email($_SESSION[self::CERTIFICATE_EMAIL_KEY]);
     }
 }
