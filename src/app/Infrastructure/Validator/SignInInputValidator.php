@@ -27,35 +27,38 @@ final class SignInInputValidator
     }
 
     /**
-     * emailがnullでないか、形式が正しいかのチェック
+     * emailの形式が正しくない場合はエラーメッセージを返す
+     * 正しければnullを返す
      *
      * @return string|null
      */
-    private function emailErrorText(): ?string
+    public function isCorrectEmailFormat(): ?string
     {
-        if (empty($this->email)) {
-            return self::ERROR_EMAIL_NULL_TEXT;
-        }
-
         $pattern =
             "/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$/";
-        if (!preg_match($pattern, $this->email)) {
-            return self::ERROR_EMAIL_INVALID_FORMAT;
-        }
-
-        return null;
+        return (!preg_match($pattern, $this->email)) ? self::ERROR_EMAIL_INVALID_FORMAT : null;
     }
 
     /**
-     * passwordがnullでないかのチェック
+     * emailの入力が空の場合はエラーメッセージを返す
+     * 正しければnullを返す
      *
-     * @return void
+     * @return string|null
      */
-    private function passwordErrorText()
+    public function isNullEmailInputForm(): ?string
     {
-        if (empty($this->password)) {
-            return self::ERROR_PASSWORD_NULL_TEXT;
-        }
+        return (empty($this->email)) ? self::ERROR_EMAIL_NULL_TEXT : null;
+    }
+
+    /**
+     * passwordの入力が空の場合はエラーメッセージを返す
+     * 空じゃない場合はnullを返す
+     *
+     * @return string|null
+     */
+    public function isNullPasswordInputForm(): ?string
+    {
+        return (empty($this->password)) ? self::ERROR_PASSWORD_NULL_TEXT : null;
     }
 
     /**

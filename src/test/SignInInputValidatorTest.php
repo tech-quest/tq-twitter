@@ -2,41 +2,44 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use PHPUnit\Framework\TestCase;
-use App\Validator\SignInInputValidator;
+use App\Infrastructure\Validator\SignInInputValidator;
 
 class SignInInputValidatorTest extends TestCase
 {
     /** @test */
-    public function メールアドレスが正しかったとき()
+    public function メールアドレスの形式が正しかったとき_nullを返す()
     {
         $signInInputValidator = new SignInInputValidator(
             'hoge-hoge@email.com',
-            ''
+            null
         );
-        $actual = $signInInputValidator->allErrors();
-
-        $this->assertNull($actual[0]);
+        $actual = $signInInputValidator->isCorrectEmailFormat();
+        $this->assertEmpty($actual);
     }
 
-    public function メールアドレスが空の時のテスト()
+    /** @test */
+    public function メールアドレスの形式が不正だったとき_エラーメッセージを返す()
     {
-        $signInInputValidator = new SignInInputValidator('');
-        $actual = $signInInputValidator->allErrors();
-
-        $this->assertSame(
-            SignInInputValidator::ERROR_EMAIL_NULL_TEXT,
-            $actual[0]
-        );
+        $signInInputValidator = new SignInInputValidator('hoge@email.com', null);
+        $actual = $signInInputValidator->isCorrectEmailFormat();
+        $this->assertEmpty($actual);
     }
 
-    public function メールアドレスの形式が不正だった時のテスト()
+    /** @test */
+    public function メールアドレスの入力フォームが空のとき_エラーメッセージを返す()
     {
-        $signInInputValidator = new SignInInputValidator('a');
-        $actual = $signInInputValidator->allErrors();
+        $signInInputValidator = new SignInInputValidator('hoge@email.com', null);
+        $actual = $signInInputValidator->isNullEmailInputForm();
+        $this->assertEmpty($actual);
+    }
 
-        $this->assertSame(
-            SignInInputValidator::ERROR_EMAIL_INVALID_FORMAT,
-            $actual[0]
-        );
+    /** @test */
+    public function パスワードの入力フォームが空のとき_エラーメッセージを返す()
+    {
+
+        $signInInputValidator = new SignInInputValidator('hoge-hoge@email.com', 'password');
+
+        $actual = $signInInputValidator->isNullPasswordInputForm();
+        $this->assertEmpty($actual);
     }
 }
