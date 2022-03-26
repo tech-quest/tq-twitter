@@ -38,7 +38,7 @@ $session->clearErrors();
     <div class="text-center">
         <h1>profile</h1>
     </div>
-    <?php foreach ($tweets as $tweet) : ?>
+    <?php foreach ($tweets as $tweet): ?>
         <div class="d-flex justify-content-center">
             <div class="p-2 bd-highlight mt-3">
                 <?php echo $tweet->tweetBody()->value(); ?>
@@ -54,7 +54,9 @@ $session->clearErrors();
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <form method="post" action="tweetDelete.php" class="dropdown-item">
-                                    <input type="hidden" name="id" value="<?php echo $tweet->tweetId()->value(); ?>">
+                                    <input type="hidden" name="id" value="<?php echo $tweet
+                                        ->tweetId()
+                                        ->value(); ?>">
                                     <input type="submit" value="削除">
                                 </form>
                             </div>
