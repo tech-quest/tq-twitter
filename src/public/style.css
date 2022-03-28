@@ -1,21 +1,32 @@
-html,body,h1,h2,h3,h4,h5,h6,p,a {
+html,
+body,
+input,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a {
   margin: 0;
   padding: 0;
   text-decoration: none;
   color: black;
 }
 .nav-link {
-    color: black;
+  color: black;
 }
 
 .radius-pixel-20 {
   border-radius: 20px;
   color: white;
-  background-color: #1E90FF;
+  background-color: #1e90ff;
 }
 
 div.left {
-    text-align: left; 
+  text-align: left;
 }
 
 .container p {
@@ -62,7 +73,7 @@ div.left {
   display: inline-block;
   text-decoration: none;
   padding: 10px 20px;
-  background: linear-gradient(to right bottom, #FFA500, #FF6347);
+  background: linear-gradient(to right bottom, #ffa500, #ff6347);
   border-radius: 5px;
   color: #fff;
   margin: 20px;
@@ -70,7 +81,7 @@ div.left {
 }
 
 .btn:hover {
-  opacity: .8;
+  opacity: 0.8;
 }
 
 /* オーバーレイ */
@@ -83,12 +94,12 @@ div.left {
   width: 100%;
   height: 100vh;
   /* rgbaを使って60%の黒いオーバーレイにする */
-  background: rgba(0, 0, 0, 0.6);  
+  background: rgba(0, 0, 0, 0.6);
   /* デフォルトでは見えないようにする */
   opacity: 0;
   visibility: hidden;
   /* 表示する際の変化の所要時間 */
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .overlay.active {
@@ -105,7 +116,7 @@ div.left {
   transform: translate(-50%, -50%);
   opacity: 0;
   visibility: hidden;
-  transition: .3s;
+  transition: 0.3s;
   border: 1px solid black;
 }
 .modal a {
@@ -118,4 +129,257 @@ div.left {
   opacity: 1;
   visibility: visible;
 }
+/**--userDetail--**/
+.user-detail {
+  width: 550px;
+  margin: 100px auto 0px;
+  border: 1px solid;
+  border-radius: 20px;
+}
+.user-detail.active {
+  display: none;
+}
+.user-detail__input {
+  padding: 40px 30px 30px 30px;
+}
+.user-detail__input .user-info {
+  width: 100%;
+  margin: 30px 0px 300px 0px;
+  padding: 15px 0px 15px 10px;
+}
+.user-detail__input .user-search {
+  width: 100%;
+  padding: 10px 0px;
+  border-radius: 20px;
+  color: #ffffff;
+  background-color: gray;
+  border: none;
+}
+.user-detail__result {
+  width: 550px;
+  margin: 0px auto 0px;
+  border: 1px solid black;
+  border-radius: 20px;
+  background: #fff;
+  position: fixed;
+  top: 38%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+}
+.user-detail__result .result {
+  margin: 10px 0px 10px 0px;
+}
+.user-detail__result .email {
+  margin-bottom: 250px;
+}
+.user-detail__result {
+  display: block;
+}
+.user-detail__result a:nth-child(2) {
+  margin: 10px 0px;
+}
+.user-detail__result.active {
+  opacity: 1;
+  visibility: visible;
+}
 
+form .field {
+  margin: 24px 0;
+  position: relative;
+}
+form label,
+form input {
+  display: block;
+  font-size: 16px;
+}
+form label {
+  cursor: text;
+  position: absolute;
+  top: 15px;
+  left: 5px;
+  background: #fff;
+  color: silver;
+  pointer-events: none;
+
+  transform-origin: left;
+  transform: translateY(0);
+  transition: all 0.15s;
+}
+
+form label.move {
+  transform: translateY(-25px) scale(0.8);
+  color: rgb(29, 155, 240);
+}
+.message {
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+}
+.message.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.output {
+  width: 260px;
+  margin: 65px auto 0px;
+  padding: 30px 0px 30px 0px;
+  text-align: center;
+  border: 1px solid rgb(29, 155, 240);
+  background-color: rgb(29, 155, 240);
+  border-radius: 20px;
+}
+.send-box {
+  margin-bottom: 250px;
+  display: flex;
+}
+.send-user {
+  width: 100%;
+  padding: 10px 0px;
+  border-radius: 20px;
+  color: #ffffff;
+  background-color: gray;
+  border: none;
+}
+.button {
+  width: 85px;
+  margin: 0px auto 30px;
+  display: block;
+  text-align: center;
+  border-bottom: solid 2px;
+  font-weight: bolder;
+}
+.button-certification {
+  width: 165px;
+  margin: 0px auto 30px;
+  display: block;
+  text-align: center;
+  border-bottom: solid 2px;
+  font-weight: bolder;
+}
+
+.user-certification {
+  width: 550px;
+  margin: 40px auto 0px;
+  border: 1px solid;
+  border-radius: 20px;
+  padding: 15px 20px;
+  background: #fff;
+  position: fixed;
+  top: 38%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+  border: 1px solid black;
+}
+.user-certification p {
+  margin-bottom: 10px;
+}
+.user-certification.show {
+  opacity: 1;
+  visibility: visible;
+}
+.user-detail__display.remove {
+  display: none;
+}
+.user-certification .send-certification {
+  width: 100%;
+  padding: 18px 0px 15px 10px;
+}
+
+.send-certification__button {
+  width: 100%;
+  padding: 10px 0px;
+  border-radius: 20px;
+  color: #ffffff;
+  background-color: gray;
+  border: none;
+}
+.user-password {
+  width: 550px;
+  margin: 40px auto 0px;
+  border: 1px solid;
+  border-radius: 20px;
+  padding: 15px 20px;
+  background: #fff;
+  position: fixed;
+  top: 38%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+  border: 1px solid black;
+}
+.button-password {
+  width: 81px;
+  margin: 20px auto 30px;
+  display: block;
+  text-align: center;
+  border-bottom: solid 2px;
+  font-weight: bolder;
+}
+.user-password.show2 {
+  opacity: 1;
+  visibility: visible;
+}
+.user-certification__display.remove2 {
+  display: none;
+}
+.user-password__display.remove3 {
+  display: none;
+}
+.user-password h4 {
+  margin-bottom: 29px;
+  font-size: 18px;
+}
+
+.user-password__button {
+  width: 100%;
+  padding: 10px 0px;
+  border-radius: 20px;
+  color: #ffffff;
+  background-color: gray;
+  border: none;
+}
+.user-password__send {
+  width: 100%;
+  padding: 17px 0px 15px 10px;
+}
+.complete-password {
+  width: 550px;
+  margin: 40px auto 0px;
+  border: 1px solid;
+  border-radius: 20px;
+  padding: 15px 20px;
+  background: #fff;
+  position: fixed;
+  top: 38%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+  border: 1px solid black;
+}
+.complete-password.show3 {
+  opacity: 1;
+  visibility: visible;
+}
+.button-complete {
+  width: 70px;
+  margin: 50px auto 30px;
+  display: block;
+  text-align: center;
+  border-bottom: solid 2px;
+  font-weight: bolder;
+}
+.complete-password h5 {
+  font-size: 18px;
+  text-align: center;
+}

@@ -26,13 +26,13 @@ $tweet = $output->tweet();
       <h1>ツイート詳細ページ</h1>
       <div class="tweet-status">
         <p class="tweet-status__tweet"><?php echo $tweet
-            ->tweetBody()
-            ->value(); ?></p>
+                                          ->tweetBody()
+                                          ->value(); ?></p>
         <p class="tweet-status__date"><?php echo $tweet->createdAt()->date() .
-            '・' .
-            'Twitter for' .
-            ' ' .
-            $tweet->device()->value(); ?></p>
+                                        '・' .
+                                        'Twitter for' .
+                                        ' ' .
+                                        $tweet->device()->value(); ?></p>
       </div>
       <div class="tweet-button">
         <a href="">Reply</a>
