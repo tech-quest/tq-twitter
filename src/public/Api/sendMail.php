@@ -2,12 +2,14 @@
 ini_set('display_errors', 1);
 require_once __DIR__ . '/../../vendor/autoload.php';
 
+use Dotenv\Dotenv;
 use App\Lib\Session;
 use App\Domain\ValueObject\Email;
 use App\Infrastructure\Dao\UserDao;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+Dotenv::createImmutable(__DIR__ . '/../../')->load();
 date_default_timezone_set('Asia/Tokyo');
 header('Content-Type: application/json; charset=UTF-8'); //ヘッダー情報の明記。必須。
 
@@ -16,7 +18,6 @@ header('Content-Type: application/json; charset=UTF-8'); //ヘッダー情報の
  * その代わり、「php://input」より受け取ったデータを参照することができます。
  */
 $userEmail = json_decode(file_get_contents('php://input'), true);
-
 $userDao = new UserDao();
 $user = $userDao->findByEmail($userEmail['input']);
 
@@ -37,8 +38,8 @@ try {
     $mail->isSMTP();
     $mail->Host = 'smtp.mailtrap.io';
     $mail->SMTPAuth = true;
-    $mail->Username = 'e2c8d375a4ef64';
-    $mail->Password = 'b11c6ac43b6b7e';
+    $mail->Username = $_ENV['MAILTRAP_USERNAME'];
+    $mail->Password = $_ENV['MAILTRAP_PASSWORD'];
     $mail->SMTPSecure = 'tls';
     $mail->Port = 2525;
 
