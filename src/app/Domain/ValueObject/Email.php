@@ -6,6 +6,9 @@ use Exception;
 
 final class Email
 {
+    const EMAIL_VALIDATION_PATTERN = "/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$/";
+    private $value;
+
     public function __construct(string $value)
     {
         if (empty($value)) {
@@ -18,5 +21,10 @@ final class Email
     public function value(): string
     {
         return $this->value;
+    }
+
+    public static function isValid(string $email): bool
+    {
+        return preg_match(self::EMAIL_VALIDATION_PATTERN, $email);
     }
 }

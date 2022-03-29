@@ -2,6 +2,9 @@
 
 namespace App\Infrastructure\Validator;
 
+use function PHPUnit\Framework\isNull;
+use App\Domain\ValueObject\Email;
+
 /**
  * ログインフォーム情報のバリデーター
  */
@@ -27,38 +30,42 @@ final class SignInInputValidator
     }
 
     /**
-     * emailの形式が正しくない場合はエラーメッセージを返す
-     * 正しければnullを返す
+     * emailの形式が正しければnullを返す
+     * 正しくない場合はエラーメッセージを返す
      *
      * @return string|null
      */
-    public function isCorrectEmailFormat(): ?string
+    public function isValidEmailFormat(): ?string
     {
-        $pattern =
-            "/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$/";
-        return (!preg_match($pattern, $this->email)) ? self::ERROR_EMAIL_INVALID_FORMAT : null;
+        return Email::isValid($this->email)
+            ? null
+            : self::ERROR_EMAIL_INVALID_FORMAT;
     }
 
     /**
-     * emailの入力が空の場合はエラーメッセージを返す
-     * 正しければnullを返す
+     * emailの入力がnullまたは空文字列の場合はエラーメッセージを返す
+     * 正しい場合はnullを返す
      *
      * @return string|null
      */
-    public function isNullEmailInputForm(): ?string
+    public function isEmptyEmailInputForm(): ?string
     {
-        return (empty($this->email)) ? self::ERROR_EMAIL_NULL_TEXT : null;
+        return is_null($this->email) || $this->email === ''
+            ? self::ERROR_EMAIL_NULL_TEXT
+            : null;
     }
 
     /**
-     * passwordの入力が空の場合はエラーメッセージを返す
-     * 空じゃない場合はnullを返す
+     * passwordの入力がnullまたは空文字列の場合はエラーメッセージを返す
+     * 正しい場合はnullを返す
      *
      * @return string|null
      */
-    public function isNullPasswordInputForm(): ?string
+    public function isEmptyPasswordInputForm(): ?string
     {
-        return (empty($this->password)) ? self::ERROR_PASSWORD_NULL_TEXT : null;
+        return is_null($this->password) || $this->password === ''
+            ? self::ERROR_PASSWORD_NULL_TEXT
+            : null;
     }
 
     /**
@@ -68,7 +75,11 @@ final class SignInInputValidator
      */
     public function allErrors(): array
     {
-        $errors = [$this->emailErrorText(), $this->passwordErrorText()];
+        $errors = [
+            $this->isValidEmailFormat(),
+            $this->isEmptyEmailInputForm(),
+            $this->isEmptyPasswordInputForm(),
+        ];
         return array_filter($errors);
     }
 }

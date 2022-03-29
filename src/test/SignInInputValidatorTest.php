@@ -13,33 +13,72 @@ class SignInInputValidatorTest extends TestCase
             'hoge-hoge@email.com',
             null
         );
-        $actual = $signInInputValidator->isCorrectEmailFormat();
-        $this->assertEmpty($actual);
+        $actual = $signInInputValidator->isValidEmailFormat();
+        $this->assertNull($actual);
     }
 
     /** @test */
     public function メールアドレスの形式が不正だったとき_エラーメッセージを返す()
     {
-        $signInInputValidator = new SignInInputValidator('hoge@email.com', null);
-        $actual = $signInInputValidator->isCorrectEmailFormat();
-        $this->assertEmpty($actual);
+        $signInInputValidator = new SignInInputValidator('hogeemail.com', null);
+        $actual = $signInInputValidator->isValidEmailFormat();
+        $this->assertSame(
+            $actual,
+            SignInInputValidator::ERROR_EMAIL_INVALID_FORMAT
+        );
     }
 
     /** @test */
-    public function メールアドレスの入力フォームが空のとき_エラーメッセージを返す()
+    public function メールアドレスの入力フォームが空文字列のとき_エラーメッセージを返す()
     {
-        $signInInputValidator = new SignInInputValidator('hoge@email.com', null);
-        $actual = $signInInputValidator->isNullEmailInputForm();
-        $this->assertEmpty($actual);
+        $signInInputValidator = new SignInInputValidator('', null);
+        $actual = $signInInputValidator->isEmptyEmailInputForm();
+        $this->assertSame($actual, SignInInputValidator::ERROR_EMAIL_NULL_TEXT);
     }
 
     /** @test */
-    public function パスワードの入力フォームが空のとき_エラーメッセージを返す()
+    public function メールアドレスの入力フォームがnullのとき_エラーメッセージを返す()
     {
+        $signInInputValidator = new SignInInputValidator(null, null);
+        $actual = $signInInputValidator->isEmptyEmailInputForm();
+        $this->assertSame($actual, SignInInputValidator::ERROR_EMAIL_NULL_TEXT);
+    }
 
-        $signInInputValidator = new SignInInputValidator('hoge-hoge@email.com', 'password');
+    /** @test */
+    public function メールアドレスの入力が0のとき_nullを返す()
+    {
+        $signInInputValidator = new SignInInputValidator(0, null);
+        $actual = $signInInputValidator->isEmptyEmailInputForm();
+        $this->assertNull($actual);
+    }
 
-        $actual = $signInInputValidator->isNullPasswordInputForm();
-        $this->assertEmpty($actual);
+    /** @test */
+    public function パスワードの入力が空文字列のとき_エラーメッセージを返す()
+    {
+        $signInInputValidator = new SignInInputValidator(null, '');
+        $actual = $signInInputValidator->isEmptyPasswordInputForm();
+        $this->assertSame(
+            $actual,
+            SignInInputValidator::ERROR_PASSWORD_NULL_TEXT
+        );
+    }
+
+    /** @test */
+    public function パスワードの入力がnullのとき_エラーメッセージを返す()
+    {
+        $signInInputValidator = new SignInInputValidator(null, null);
+        $actual = $signInInputValidator->isEmptyPasswordInputForm();
+        $this->assertSame(
+            $actual,
+            SignInInputValidator::ERROR_PASSWORD_NULL_TEXT
+        );
+    }
+
+    /** @test */
+    public function パスワードの入力が0のとき_nullを返す()
+    {
+        $signInInputValidator = new SignInInputValidator(null, 0);
+        $actual = $signInInputValidator->isEmptyPasswordInputForm();
+        $this->assertNull($actual);
     }
 }
