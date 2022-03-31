@@ -49,22 +49,23 @@ div.left {
   display: flex;
   justify-content: space-around;
 }
-#status .tweet-button a {
+#status .share-link {
   color: black;
   border: 1px solid;
   border-radius: 10px;
   padding: 0px 10px 0px 10px;
+  cursor: pointer;
 }
-#status .tweet-button a:nth-child(1) {
+#status .tweet-button span:nth-child(1) {
   color: blue;
 }
-#status .tweet-button a:nth-child(2) {
+#status .tweet-button span:nth-child(2) {
   color: green;
 }
-#status .tweet-button a:nth-child(3) {
+#status .tweet-button span:nth-child(3) {
   color: pink;
 }
-#status .tweet-button a:nth-child(4) {
+#status .tweet-button span:nth-child(4) {
   color: blue;
 }
 
@@ -107,17 +108,21 @@ div.left {
   visibility: visible;
 }
 
+.share-button-wrapper {
+  position: relative;
+}
+
 .modal {
+  visibility: hidden;
+  opacity: 0;
   padding: 15px 20px;
   background: #fff;
-  position: fixed;
-  top: 42%;
-  left: 68%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  visibility: hidden;
-  transition: 0.3s;
+  position: absolute;
+  right: 0;
+  margin-top: 10px;
+  width: 200px;
   border: 1px solid black;
+  transition: opacity 1s, visibility 1s;
 }
 .modal a {
   display: block;
@@ -126,8 +131,8 @@ div.left {
   margin: 10px 0px;
 }
 .modal.active {
-  opacity: 1;
   visibility: visible;
+  opacity: 1;
 }
 /**--userDetail--**/
 .user-detail {
