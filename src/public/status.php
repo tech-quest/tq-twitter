@@ -13,15 +13,17 @@ $output = $useCase->handler();
 $tweet = $output->tweet();
 ?>
 <!DOCTYPE html>
+
 <head>
   <title>ツイート詳細ページ</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body id="status">
   <main>
     <div class="container">
       <button type=“button” onclick="location.href='../index.php'">←</button>
-      <h1>ツイート詳細ページ</h1> 
+      <h1>ツイート詳細ページ</h1>
       <div class="tweet-status">
         <p class="tweet-status__tweet"><?php echo $tweet
             ->tweetBody()
@@ -41,11 +43,12 @@ $tweet = $output->tweet();
       <div class="modal">
         <a href="">ダイレクトメッセージで送信</a>
         <a href="">ブックマーク</a>
-        <a href="">リンク</a> 
+        <a href="">リンク</a>
       </div>
     </div>
   </main>
 </body>
+
 </html>
 
 <script>
