@@ -66,4 +66,21 @@ EOF;
     $certificationCode = $stmt->fetch(PDO::FETCH_ASSOC);
     return empty($certificationCode) ? null : $certificationCode;
   }
+    public function deleteByRegisterCertificationCode(
+        string $hashCertificateRegisterCode
+    ) {
+        $sql = <<<EOF
+    DELETE FROM
+      user_register_certifications
+    WHERE
+      certification_code = :certification_code
+EOF;
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(
+            ':certification_code',
+            $hashCertificateRegisterCode,
+            PDO::PARAM_STR
+        );
+        $stmt->execute();
+    }
 }
