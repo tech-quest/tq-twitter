@@ -113,6 +113,11 @@ final class Session
         $_SESSION[self::USER_KEY] = $userId->value();
     }
 
+    public function setUserName(Name $name): void
+    {
+        $_SESSION[self::NAME_KEY] = $name->value();
+    }
+
     public function certificateEmail(): Email
     {
         if (isset($_SESSION[self::CERTIFICATE_EMAIL_KEY])) {
