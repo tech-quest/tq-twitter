@@ -4,6 +4,7 @@ namespace App\Lib;
 
 use App\Domain\ValueObject\AuthUser;
 use App\Domain\ValueObject\Email;
+use App\Domain\ValueObject\Name;
 use App\Domain\ValueObject\UserID;
 
 final class Session
@@ -11,7 +12,10 @@ final class Session
     public const AUTH_KEY = 'auth';
     public const ERRORS_KEY = 'errors';
     public const CERTIFICATE_EMAIL_KEY = 'certificate_email';
+    public const CERTIFICATE_REGISTER_EMAIL_KEY = 'certificate_register_email';
     public const USER_KEY = 'user_id';
+    public const NAME_KEY = 'name';
+    public const HASH_CERTIFICATE_REGISTER = 'hash_certificate_register';
 
     private static $instance;
 
