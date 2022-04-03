@@ -26,7 +26,7 @@ $session->clearErrors();
         <h1>Twitterアカウントを探す</h1>
         <form action="" method="post">
           <div class="field">
-            <label for="email">メールアドレスか電話番号かユーザー名を入力してください</label>
+            <label for="password-email">メールアドレスか電話番号かユーザー名を入力してください</label>
             <input class="user-info input" type="text" name="name" />
           </div>
           <input class="user-search" type="submit" value="検索" />
@@ -59,7 +59,7 @@ $session->clearErrors();
   <div class="user-certification user-certification__display">
     <div class="user-certification__input">
       <h3>メールアドレスを確認する</h3>
-      <p>アカウントパスワードをリセットするための認証コードがこちらに送信されます。</p>
+      <p class="user-certification__reset">アカウントパスワードをリセットするための認証コードがこちらに送信されます。</p>
       <form action="" method="post">
         <p class="result"></p>
         <div class="send-box">
