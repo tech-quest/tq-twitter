@@ -98,6 +98,16 @@ final class Session
         $_SESSION[self::CERTIFICATE_EMAIL_KEY] = $email->value();
     }
 
+    public function setHashCertificateEmail(string $hashCertificationCode): void
+    {
+        $_SESSION[self::HASH_CERTIFICATE_REGISTER] = $hashCertificationCode;
+    }
+
+    public function setRegisterCertificateEmail(Email $email): void
+    {
+        $_SESSION[self::CERTIFICATE_REGISTER_EMAIL_KEY] = $email->value();
+    }
+
     public function setUserId(UserID $userId): void
     {
         $_SESSION[self::USER_KEY] = $userId->value();
