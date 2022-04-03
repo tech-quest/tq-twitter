@@ -67,8 +67,10 @@ EOF;
         return $stmt->execute();
     }
 
-    public function insertCertification($user_id, $certificationCode): void
-    {
+    public function insertPasswordCertification(
+        $user_id,
+        $certificationCode
+    ): void {
         $sql = <<<EOF
     INSERT INTO 
       certifications
