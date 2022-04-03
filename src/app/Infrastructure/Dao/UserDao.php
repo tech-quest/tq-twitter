@@ -89,6 +89,22 @@ EOF;
             throw new Exception('認証情報の保存に失敗しました');
         }
     }
+
+    public function insertRegisterCertification($certificationCode): void
+    {
+        $sql = <<<EOF
+    INSERT INTO 
+      user_register_certifications
+    (certification_code)
+    VALUES
+    (:certification_code)
+EOF;
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(
+            ':certification_code',
+            $certificationCode,
+            PDO::PARAM_STR
+        );
         $res = $stmt->execute();
         if (!$res) {
             throw new Exception('認証情報の保存に失敗しました');
