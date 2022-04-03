@@ -13,6 +13,22 @@ final class UserDao extends Dao
         parent::__construct();
     }
 
+    public function insertUser(string $name, string $email, string $password)
+    {
+        $sql = <<<EOF
+    INSERT INTO users
+    (name, email, password)
+    VALUES
+    (:name, :email, :password)
+EOF;
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':name', $name, PDO::PARAM_STR);
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+        $stmt->bindValue(':password', $password, PDO::PARAM_STR);
+        return $stmt->execute();
+    }
+
     public function findByEmail(string $email): ?array
     {
         $sql = "
