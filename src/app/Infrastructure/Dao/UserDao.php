@@ -89,4 +89,9 @@ EOF;
             throw new Exception('認証情報の保存に失敗しました');
         }
     }
+        $res = $stmt->execute();
+        if (!$res) {
+            throw new Exception('認証情報の保存に失敗しました');
+        }
+    }
 }
