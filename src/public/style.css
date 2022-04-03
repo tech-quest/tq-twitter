@@ -277,7 +277,7 @@ form label.move {
   transition: 0.3s;
   border: 1px solid black;
 }
-.user-certification p {
+.user-certification__reset {
   margin-bottom: 10px;
 }
 .user-certification.show {
@@ -347,9 +347,14 @@ form label.move {
   background-color: gray;
   border: none;
 }
-.user-password__send {
+.user-password__input {
   width: 100%;
-  padding: 17px 0px 15px 10px;
+  padding: 17px 0px 15px 0px;
+  margin-bottom: 40px;
+}
+.user-password__confirm {
+  width: 100%;
+  padding: 17px 0px 15px 0px;
 }
 .complete-password {
   width: 550px;
@@ -382,4 +387,138 @@ form label.move {
 .complete-password h5 {
   font-size: 18px;
   text-align: center;
+}
+
+.user-create {
+  width: 550px;
+  margin: 100px auto 0px;
+  border: 1px solid;
+  border-radius: 20px;
+}
+.user-create.active {
+  display: none;
+}
+.user-create__input {
+  padding: 40px 30px 30px 30px;
+}
+.user-create__input .name {
+  width: 100%;
+  /* margin: 30px 0px 50px 0px; */
+  padding: 15px 0px 15px 10px;
+}
+.user-create__input .email {
+  width: 100%;
+  /* margin: 30px 0px 50px 0px; */
+  padding: 15px 0px 15px 10px;
+}
+.user-create__input .user-create__next {
+  width: 100%;
+  padding: 10px 0px;
+  border-radius: 20px;
+  color: #ffffff;
+  background-color: gray;
+  border: none;
+}
+
+form .field {
+  margin: 24px 0;
+  position: relative;
+}
+form label,
+form input {
+  display: block;
+  font-size: 16px;
+}
+form label[for='password-name'] {
+  cursor: text;
+  position: absolute;
+  /* top: 15px; */
+  left: 5px;
+  background: #fff;
+  color: silver;
+  pointer-events: none;
+  transform-origin: left;
+  transform: translateY(0);
+  transition: all 0.15s;
+}
+
+form label[for='name'] {
+  cursor: text;
+  position: absolute;
+  top: 15px;
+  left: 5px;
+  background: #fff;
+  color: silver;
+  pointer-events: none;
+  transform-origin: left;
+  transform: translateY(0);
+  transition: all 0.15s;
+}
+
+form label[for='email'] {
+  cursor: text;
+  position: absolute;
+  top: 96px;
+  left: 5px;
+  background: #fff;
+  color: silver;
+  pointer-events: none;
+  transform-origin: left;
+  transform: translateY(0);
+  transition: all 0.15s;
+}
+
+form label.move {
+  transform: translateY(-25px) scale(0.8);
+  color: rgb(29, 155, 240);
+}
+.user-create.remove {
+  display: none;
+}
+.user-certification__register {
+  margin-bottom: 9px;
+}
+.user-create__name {
+  margin-bottom: 30px;
+}
+.name-error__message {
+  display: none;
+}
+.email-error__message {
+  display: none;
+}
+.name-error__output.name {
+  display: inline;
+  font-size: 13px;
+  color: red;
+}
+.email-error__output.email {
+  display: inline;
+  font-size: 13px;
+  color: red;
+}
+.user-register__confirm {
+  width: 100%;
+  padding: 17px 0px 15px 0px;
+}
+
+form label[for='confirm-register'] {
+  cursor: text;
+  position: static;
+  top: 15px;
+  left: 5px;
+  background: #fff;
+  color: silver;
+  pointer-events: none;
+  transform-origin: left;
+  transform: translateY(0);
+  transition: all 0.15s;
+}
+.user-register__button {
+  width: 100%;
+  padding: 10px 0px;
+  border-radius: 20px;
+  color: #ffffff;
+  background-color: gray;
+  border: none;
 }
