@@ -27,7 +27,7 @@ for ($i = 0; $i < 10; $i++) {
 }
 $emailCertificationCode = $user['email'] . $certificationCode;
 $hashCertificationCode = hash('sha3-512', $emailCertificationCode);
-$userDao->insertCertification($user['id'], $hashCertificationCode);
+$userDao->insertPasswordCertification($user['id'], $hashCertificationCode);
 
 $session = Session::getInstance();
 $session->setCertificateEmail(new Email($user['email']));
