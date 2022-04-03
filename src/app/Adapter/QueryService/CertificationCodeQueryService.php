@@ -46,9 +46,11 @@ EOF;
         $stmt->bindValue(':user_id', $userId, PDO::PARAM_INT);
         return $stmt->execute();
     }
-  public function findByRegisterCertificationCode(string $certificationCode): ?array
-  {
-    $sql = <<<EOF
+
+    public function findByRegisterCertificationCode(
+        string $certificationCode
+    ): ?array {
+        $sql = <<<EOF
     SELECT
       *
     FROM
@@ -56,16 +58,17 @@ EOF;
     WHERE
       certification_code = :certification_code
 EOF;
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->bindValue(
-      ':certification_code',
-      $certificationCode,
-      PDO::PARAM_STR
-    );
-    $stmt->execute();
-    $certificationCode = $stmt->fetch(PDO::FETCH_ASSOC);
-    return empty($certificationCode) ? null : $certificationCode;
-  }
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(
+            ':certification_code',
+            $certificationCode,
+            PDO::PARAM_STR
+        );
+        $stmt->execute();
+        $certificationCode = $stmt->fetch(PDO::FETCH_ASSOC);
+        return empty($certificationCode) ? null : $certificationCode;
+    }
+
     public function deleteByRegisterCertificationCode(
         string $hashCertificateRegisterCode
     ) {
