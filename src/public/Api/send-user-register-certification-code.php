@@ -3,6 +3,7 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 
 use Dotenv\Dotenv;
 use App\Infrastructure\Dao\UserDao;
+use App\Infrastructure\Dao\UserRegisterCertificationCodeDao;
 use App\Domain\ValueObject\Email;
 use App\Domain\ValueObject\Name;
 use App\Lib\Session;
@@ -13,8 +14,6 @@ date_default_timezone_set('Asia/Tokyo');
 Dotenv::createImmutable(__DIR__ . '/../../')->load();
 
 $userInput = json_decode(file_get_contents('php://input'), true);
-// var_dump($userInput['email']);
-// die();
 $userDao = new UserDao();
 $user = $userDao->findByEmail($userInput['email']);
 $email = $userInput['email'];
@@ -43,7 +42,10 @@ for ($i = 0; $i < 10; $i++) {
 }
 $emailCertificationCode = $userInput['email'] . $certificationCode;
 $hashCertificationCode = hash('sha3-512', $emailCertificationCode);
-$userDao->insertRegisterCertification($hashCertificationCode);
+$userRegisterCertificationCodeDao = new UserRegisterCertificationCodeDao();
+$userRegisterCertificationCodeDao->insertRegisterCertification(
+    $hashCertificationCode
+);
 $session->setRegisterCertificateEmail(new Email($userInput['email']));
 $session->setUserName(new Name($userInput['name']));
 $session->setHashCertificateEmail($hashCertificationCode);
