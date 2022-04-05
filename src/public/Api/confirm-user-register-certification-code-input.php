@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-use App\Adapter\QueryService\CertificationCodeQueryService;
+use App\Infrastructure\Dao\UserRegisterCertificationCodeDao;
 use App\Lib\Session;
 
 $session = Session::getInstance();
@@ -17,14 +17,15 @@ date_default_timezone_set('Asia/Tokyo');
 $certificationCode = json_decode(file_get_contents('php://input'), true);
 $emailCertificationCode = $email . $certificationCode['code'];
 $hashEmailCertificationCode = hash('sha3-512', $emailCertificationCode);
-$queryService = new CertificationCodeQueryService();
-$findByCertificationCode = $queryService->findByRegisterCertificationCode(
+$userRegisterCertificationCodeDao = new UserRegisterCertificationCodeDao();
+$userRegisterCertificationCode = $userRegisterCertificationCodeDao->findByRegisterCertificationCode(
     $hashEmailCertificationCode
 );
 
 $status = [
     'data' => [
-        'certificationCode' => $findByCertificationCode['certification_code'],
+        'certificationCode' =>
+            $userRegisterCertificationCode['certification_code'],
         'name' => $name,
         'email' => $email,
     ],
