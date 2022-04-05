@@ -6,6 +6,7 @@ use Dotenv\Dotenv;
 use App\Lib\Session;
 use App\Domain\ValueObject\Email;
 use App\Infrastructure\Dao\UserDao;
+use App\Infrastructure\Dao\CertificationCodeDao;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -27,7 +28,11 @@ for ($i = 0; $i < 10; $i++) {
 }
 $emailCertificationCode = $user['email'] . $certificationCode;
 $hashCertificationCode = hash('sha3-512', $emailCertificationCode);
-$userDao->insertPasswordCertification($user['id'], $hashCertificationCode);
+$certificationCodeDao = new CertificationCodeDao();
+$certificationCodeDao->insertPasswordCertification(
+    $user['id'],
+    $hashCertificationCode
+);
 
 $session = Session::getInstance();
 $session->setCertificateEmail(new Email($user['email']));
