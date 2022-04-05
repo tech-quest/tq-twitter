@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 use App\Infrastructure\Dao\UserDao;
-use App\Adapter\QueryService\CertificationCodeQueryService;
+use App\Infrastructure\Dao\UserRegisterCertificationCodeDao;
 use App\Lib\Session;
 
 $session = Session::getInstance();
@@ -16,14 +16,13 @@ $password = json_decode(file_get_contents('php://input'), true);
 $name = $_SESSION['name'];
 $email = $_SESSION['certificate_register_email'];
 $hashCertificateRegisterCode = $_SESSION['hash_certificate_register'];
-// var_dump($hashCertificateRegisterCode);
-// die();
-
 $passwordHash = password_hash($password['password'], PASSWORD_DEFAULT);
 $userDao = new UserDao();
 $result = $userDao->insertUser($name, $email, $passwordHash);
-$queryService = new CertificationCodeQueryService();
-$queryService->deleteByRegisterCertificationCode($hashCertificateRegisterCode);
+$userRegisterCertificationCodeDao = new UserRegisterCertificationCodeDao();
+$userRegisterCertificationCodeDao->deleteByRegisterCertificationCode(
+    $hashCertificateRegisterCode
+);
 
 if ($result === true) {
     $_SESSION = [];
