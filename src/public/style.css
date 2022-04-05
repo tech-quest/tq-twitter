@@ -356,6 +356,10 @@ form label.move {
   width: 100%;
   padding: 17px 0px 15px 0px;
 }
+.user-password__send {
+  width: 100%;
+  padding: 18px 0px 18px 0px;
+}
 .complete-password {
   width: 550px;
   margin: 40px auto 0px;
