@@ -1,12 +1,13 @@
 <?php
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-use App\Infrastructure\Dao\CertificationCodeDao;
+use App\Infrastructure\Dao\UserRegisterCertificationCodeDao;
 use App\Lib\Session;
-use App\Domain\ValueObject\UserId;
 
 $session = Session::getInstance();
-$email = $_SESSION['certificate_email'];
+$name = $_SESSION['name'];
+$email = $_SESSION['certificate_register_email'];
+
 date_default_timezone_set('Asia/Tokyo');
 // header('Content-Type: application/json; charset=UTF-8'); //ヘッダー情報の明記。必須。
 /**
@@ -16,16 +17,17 @@ date_default_timezone_set('Asia/Tokyo');
 $certificationCode = json_decode(file_get_contents('php://input'), true);
 $emailCertificationCode = $email . $certificationCode['code'];
 $hashEmailCertificationCode = hash('sha3-512', $emailCertificationCode);
-$certificationCodeDao = new CertificationCodeDao();
-$userCertificationCode = $certificationCodeDao->findByCertificationCode(
+$userRegisterCertificationCodeDao = new UserRegisterCertificationCodeDao();
+$userRegisterCertificationCode = $userRegisterCertificationCodeDao->findByRegisterCertificationCode(
     $hashEmailCertificationCode
 );
-$session->setUserId(new UserId($userCertificationCode['user_id']));
 
 $status = [
     'data' => [
-        'userId' => $userCertificationCode['user_id'],
-        'certificationCode' => $userCertificationCode['certification_code'],
+        'certificationCode' =>
+            $userRegisterCertificationCode['certification_code'],
+        'name' => $name,
+        'email' => $email,
     ],
 ];
 echo json_encode($status);

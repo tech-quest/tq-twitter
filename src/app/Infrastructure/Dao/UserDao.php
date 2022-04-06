@@ -13,6 +13,22 @@ final class UserDao extends Dao
         parent::__construct();
     }
 
+    public function insertUser(string $name, string $email, string $password)
+    {
+        $sql = <<<EOF
+    INSERT INTO users
+    (name, email, password)
+    VALUES
+    (:name, :email, :password)
+EOF;
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':name', $name, PDO::PARAM_STR);
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+        $stmt->bindValue(':password', $password, PDO::PARAM_STR);
+        return $stmt->execute();
+    }
+
     public function findByEmail(string $email): ?array
     {
         $sql = "
@@ -49,28 +65,5 @@ EOF;
         $stmt->bindValue(':id', $id);
         $stmt->bindValue(':password', $passwordHash);
         return $stmt->execute();
-    }
-
-    public function insertCertification($user_id, $certificationCode): void
-    {
-        $sql = <<<EOF
-    INSERT INTO 
-      certifications
-    (user_id, certification_code)
-    VALUES
-    (:user_id, :certification_code)
-EOF;
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
-        $stmt->bindValue(
-            ':certification_code',
-            $certificationCode,
-            PDO::PARAM_STR
-        );
-
-        $res = $stmt->execute();
-        if (!$res) {
-            throw new Exception('認証情報の保存に失敗しました');
-        }
     }
 }

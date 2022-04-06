@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 use App\Infrastructure\Dao\UserDao;
-use App\Adapter\QueryService\CertificationCodeQueryService;
+use App\Infrastructure\Dao\CertificationCodeDao;
 use App\Lib\Session;
 
 $session = Session::getInstance();
@@ -14,8 +14,8 @@ $passwordHash = password_hash($password['newPassword'], PASSWORD_DEFAULT);
 $user = new UserDao();
 $newPassword = $user->updatePassword($id, $passwordHash);
 
-$queryService = new CertificationCodeQueryService();
-$result = $queryService->deleteByCertificationCode($id);
+$certificationCodeDao = new CertificationCodeDao();
+$result = $certificationCodeDao->deleteByCertificationCode($id);
 
 $status = [
     'data' => [
