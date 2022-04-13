@@ -11,22 +11,22 @@ use App\Domain\ValueObject\Password;
 
 final class UserQueryService
 {
-  private UserDao $userDao;
+    private UserDao $userDao;
 
-  public function __construct()
-  {
-    $this->userDao = new UserDao();
-  }
+    public function __construct()
+    {
+        $this->userDao = new UserDao();
+    }
 
-  public function findById(UserId $id): User
-  {
-    $userMapper = $this->userDao->findById($id->value());
+    public function findById(UserId $id): User
+    {
+        $userMapper = $this->userDao->findById($id->value());
 
-    return new User(
-      new UserId($userMapper['id']),
-      new Name($userMapper['name']),
-      new Email($userMapper['email']),
-      new Password($userMapper['password'])
-    );
-  }
+        return new User(
+            new UserId($userMapper['id']),
+            new Name($userMapper['name']),
+            new Email($userMapper['email']),
+            new Password($userMapper['password'])
+        );
+    }
 }
