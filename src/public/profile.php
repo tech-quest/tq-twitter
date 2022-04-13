@@ -42,6 +42,43 @@ $session->clearErrors();
     <div class="text-center">
         <h1>profile</h1>
     </div>
+  <div class="profile-wrapper">
+    <div class="profile-content">
+      <div class="profile-image">
+        <image src=""></image>
+      </div>
+      <div class="profile-content001">
+        <div class="profile-content002">
+          <div class="profile-content002__icon">
+            <img src="./image/twittericon13.jpeg"></img>
+          </div>
+          <div class="profile-content002__edit">
+            <p>プロフィールを編集</p>
+          </div>
+        </div>
+        <div class="profile-content003">
+          <div class="display-name">
+            <p><?php echo $userName; ?></p>
+            <p>@moritaaa</p>
+          </div>
+        </div>
+        <div class="profile-content004">
+          <div class="profile-introduction">
+            <p>自自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介己紹介自自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介自己紹介己紹介</p>
+          </div>
+        </div>
+        <div class="profile-content005">
+          <div class="profile-web">
+            <a href="/">twitter.com</a>
+          </div>
+          <div class="profile-start">
+            <p>2000年1月からTwitterを利用しています</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
     <?php foreach ($tweets as $tweet): ?>
         <div class="d-flex justify-content-center">
             <div class="p-2 bd-highlight mt-3">
