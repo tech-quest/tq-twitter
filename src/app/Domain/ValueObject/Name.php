@@ -6,15 +6,15 @@ use Exception;
 
 final class Name
 {
-  private $value;
+    private $value;
 
-  public function __construct(string $value)
-  {
-    $this->value = $value;
-  }
+    public function __construct(string $value)
+    {
+        $this->value = $value;
+    }
 
-  public function value(): string
-  {
-    return $this->value;
-  }
+    public function value(): string
+    {
+        return $this->value;
+    }
 }
