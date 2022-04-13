@@ -526,3 +526,62 @@ form label[for='confirm-register'] {
   background-color: gray;
   border: none;
 }
+/**-- profile --**/
+.profile-wrapper {
+  width: 650px;
+  margin: 0px auto;
+  border-left: solid 1px rgb(207, 217, 222);
+  border-right: solid 1px rgb(207, 217, 222);
+}
+.profile-image {
+  height: 200px;
+  background-color: rgb(207, 217, 222);
+}
+.profile-content001 {
+  padding: 10px 16px 0px 16px;
+}
+.profile-content002 {
+  height: 90px;
+  display: flex;
+  justify-content: space-between;
+}
+.profile-content002__icon {
+  width: 25%;
+  min-width: 48px;
+  position: relative;
+}
+.profile-content002__icon img {
+  width: calc(100% - 5px);
+  border-radius: 50%;
+  border: solid 5px #ffffff;
+  position: absolute;
+  transform: translateY(-50%);
+}
+.profile-content002__edit {
+  height: 37px;
+  padding: 5px 15px 0px 15px;
+  border: solid 1px rgb(207, 217, 222);
+  border-radius: 20px 20px 20px 20px;
+}
+.profile-content003 {
+  margin-bottom: 12px;
+}
+.profile-content003 .display-name p:nth-child(1) {
+  font-size: 20px;
+  font-weight: 800;
+}
+.profile-content003 .display-name p:nth-child(2) {
+  font-size: 15px;
+  color: rgb(83, 100, 113);
+}
+.profile-content004 {
+  margin-bottom: 12px;
+  display: flex;
+}
+.profile-content005 {
+  display: flex;
+  gap: 6px 4px;
+}
+.profile-content005 .profile-web a {
+  color: rgb(29, 155, 240);
+}
