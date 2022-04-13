@@ -6,19 +6,15 @@ use Exception;
 
 final class Name
 {
-    private $value;
+  private $value;
 
-    public function __construct(string $value)
-    {
-        if ($value > 5) {
-            throw new Exception('Nameは1以上,5以下で指定してください');
-        }
+  public function __construct(string $value)
+  {
+    $this->value = $value;
+  }
 
-        $this->value = $value;
-    }
-
-    public function value(): string
-    {
-        return $this->value;
-    }
+  public function value(): string
+  {
+    return $this->value;
+  }
 }
