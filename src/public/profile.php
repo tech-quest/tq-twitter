@@ -7,6 +7,7 @@ use App\Lib\Session;
 use App\UseCase\SearchTweets\SearchTweetsInput;
 use App\UseCase\SearchTweets\SearchTweetsInteractor;
 use App\Adapter\QueryService\TweetQueryService;
+use App\Adapter\QueryService\UserQueryService;
 use App\Domain\ValueObject\TweetId;
 
 $session = Session::getInstance();
@@ -22,6 +23,9 @@ $useCase = new SearchTweetsInteractor($input, $tweetQueryService);
 $output = $useCase->handler();
 $tweets = $output->tweets();
 
+$userQueryService = new UserQueryService();
+$user = $userQueryService->findById($authUser->userId());
+$userName = $user->name()->value();
 $session->clearErrors();
 ?>
 
