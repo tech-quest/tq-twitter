@@ -9,6 +9,7 @@ use App\Domain\ValueObject\TweetBody;
 use App\Domain\ValueObject\ReplyTweetId;
 use App\Domain\ValueObject\TweetDevice;
 use App\Domain\ValueObject\TweetDate;
+
 final class Tweet
 {
     private $tweetId;
