@@ -29,5 +29,5 @@ $ ./docker-compose-local.sh up
 
 [Mailtrap 設定方法](https://taupe.site/entry/mailtrap/)
 
-$phpmailer->Username の値を .env MAILTRAP_USERNAME に設定
-$phpmailer->Password の値を .env MAILTRAP_PASSWORD に設定
+1. $phpmailer->Username の値を .env MAILTRAP_USERNAME に設定
+2. $phpmailer->Password の値を .env MAILTRAP_PASSWORD に設定
