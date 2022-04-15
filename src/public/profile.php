@@ -12,9 +12,12 @@ use App\Domain\ValueObject\TweetId;
 
 $session = Session::getInstance();
 $authUser = $session->auth();
+$userQueryService = new UserQueryService();
+$user = $userQueryService->findById($authUser->userId());
+$userName = $user->name()->value();
 
 if (is_null($authUser)) {
-    Redirect::handler('/signin.php');
+  Redirect::handler('/signin.php');
 }
 
 $input = new SearchTweetsInput($authUser);
@@ -23,9 +26,6 @@ $useCase = new SearchTweetsInteractor($input, $tweetQueryService);
 $output = $useCase->handler();
 $tweets = $output->tweets();
 
-$userQueryService = new UserQueryService();
-$user = $userQueryService->findById($authUser->userId());
-$userName = $user->name()->value();
 $session->clearErrors();
 ?>
 
@@ -79,7 +79,7 @@ $session->clearErrors();
     </div>
   </div>
   </div>
-  <?php foreach ($tweets as $tweet): ?>
+  <?php foreach ($tweets as $tweet) : ?>
     <div class="d-flex justify-content-center">
       <div class="p-2 bd-highlight mt-3">
         <?php echo $tweet->tweetBody()->value(); ?>
@@ -96,8 +96,8 @@ $session->clearErrors();
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <form method="post" action="tweetDelete.php" class="dropdown-item">
                   <input type="hidden" name="id" value="<?php echo $tweet
-                      ->tweetId()
-                      ->value(); ?>">
+                                                          ->tweetId()
+                                                          ->value(); ?>">
                   <input type="submit" value="削除">
                 </form>
               </div>
