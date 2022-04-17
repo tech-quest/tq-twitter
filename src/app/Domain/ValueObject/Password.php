@@ -4,7 +4,7 @@ namespace App\Domain\ValueObject;
 
 use Exception;
 
-final class Name
+final class Password
 {
     private $value;
 

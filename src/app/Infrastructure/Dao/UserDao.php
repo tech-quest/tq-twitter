@@ -5,6 +5,7 @@ namespace App\Infrastructure\Dao;
 use App\Infrastructure\Dao\Dao;
 use PDO;
 use App\Domain\ValueObject\Email;
+use App\Domain\ValueObject\UserId;
 
 final class UserDao extends Dao
 {
@@ -27,6 +28,23 @@ EOF;
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);
         $stmt->bindValue(':password', $password, PDO::PARAM_STR);
         return $stmt->execute();
+    }
+
+    public function findById($id): ?array
+    {
+        $sql = "
+        SELECT 
+            *
+        FROM 
+            users
+        WHERE
+            id = :id";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_STR);
+        $res = $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        return empty($user) ? null : $user;
     }
 
     public function findByEmail(string $email): ?array
