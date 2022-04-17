@@ -12,9 +12,6 @@ use App\Domain\ValueObject\TweetId;
 
 $session = Session::getInstance();
 $authUser = $session->auth();
-$userQueryService = new UserQueryService();
-$user = $userQueryService->findById($authUser->userId());
-$userName = $user->name()->value();
 
 if (is_null($authUser)) {
     Redirect::handler('/signin.php');
@@ -25,8 +22,9 @@ $tweetQueryService = new TweetQueryService();
 $useCase = new SearchTweetsInteractor($input, $tweetQueryService);
 $output = $useCase->handler();
 $tweets = $output->tweets();
-
-$session->clearErrors();
+$userQueryService = new UserQueryService();
+$user = $userQueryService->findById($authUser->userId());
+$userName = $user->name()->value();
 ?>
 
 <head>
