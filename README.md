@@ -29,5 +29,5 @@ $ ./docker-compose-local.sh up
 
 [Mailtrap 設定方法](https://taupe.site/entry/mailtrap/)
 
-1. .env ファイルの MAILTRAP_USERNAME に設定
-2. .env ファイルの MAILTRAP_PASSWORD に設定
+1. .env ファイルの MAILTRAP_USERNAME に値を設定
+2. .env ファイルの MAILTRAP_PASSWORD に値を設定
