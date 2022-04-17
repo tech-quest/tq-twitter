@@ -8,13 +8,12 @@ use App\UseCase\SearchTweets\SearchTweetsInput;
 use App\UseCase\SearchTweets\SearchTweetsInteractor;
 use App\Adapter\QueryService\TweetQueryService;
 use App\Adapter\QueryService\UserQueryService;
-use App\Domain\ValueObject\TweetId;
 
 $session = Session::getInstance();
 $authUser = $session->auth();
 
 if (is_null($authUser)) {
-    Redirect::handler('/signin.php');
+  Redirect::handler('/signin.php');
 }
 
 $input = new SearchTweetsInput($authUser);
@@ -77,7 +76,7 @@ $userName = $user->name()->value();
     </div>
   </div>
   </div>
-  <?php foreach ($tweets as $tweet): ?>
+  <?php foreach ($tweets as $tweet) : ?>
     <div class="d-flex justify-content-center">
       <div class="p-2 bd-highlight mt-3">
         <?php echo $tweet->tweetBody()->value(); ?>
@@ -94,8 +93,8 @@ $userName = $user->name()->value();
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <form method="post" action="tweetDelete.php" class="dropdown-item">
                   <input type="hidden" name="id" value="<?php echo $tweet
-                      ->tweetId()
-                      ->value(); ?>">
+                                                          ->tweetId()
+                                                          ->value(); ?>">
                   <input type="submit" value="削除">
                 </form>
               </div>
