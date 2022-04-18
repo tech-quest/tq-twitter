@@ -126,6 +126,10 @@ $session->clearErrors();
     const input = searchInput.value;
     if (!input) {
       const errorMessage = document.querySelector('.errorMessage');
+      const output = document.querySelector('.output');
+      output.classList.add('active');
+      errorMessage.innerHTML = 'メールアドレスが空です'
+      // TODO: メールアドレスがからだったときにエラーメッセージを表示する（innerHTML）
       return;
     }
     const obj = {
@@ -142,8 +146,10 @@ $session->clearErrors();
         headers,
         body
       });
+    console.log('response', response);
 
     const json = await response.json();
+    console.log('json', json);
     if (json.data['email']) {
       userDetailResult.classList.add('active');
       userDetail.classList.add('active');
