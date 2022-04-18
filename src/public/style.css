@@ -590,3 +590,11 @@ form label[for='confirm-register'] {
 .profile-content005 .profile-web a {
   color: rgb(29, 155, 240);
 }
+
+/**-- index --**/
+.wrapper {
+  display: flex;
+}
+.left-bar {
+  width: 275px;
+}
