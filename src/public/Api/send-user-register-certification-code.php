@@ -6,6 +6,7 @@ use App\Infrastructure\Dao\UserDao;
 use App\Infrastructure\Dao\UserRegisterCertificationCodeDao;
 use App\Domain\ValueObject\Email;
 use App\Domain\ValueObject\Name;
+use App\Domain\ValueObject\SignUpCertificationCode;
 use App\Lib\Session;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -16,7 +17,8 @@ Dotenv::createImmutable(__DIR__ . '/../../')->load();
 $userInput = json_decode(file_get_contents('php://input'), true);
 $userDao = new UserDao();
 $user = $userDao->findByEmail($userInput['email']);
-$email = $userInput['email'];
+$email = new Email($userInput['email']);
+
 if (!is_null($user)) {
     $response = [
         'data' => [
@@ -37,7 +39,9 @@ $userRegisterCertificationCodeDao = new UserRegisterCertificationCodeDao();
 $userRegisterCertificationCodeDao->insertRegisterCertification(
     $hashCertificationCode
 );
-$session->setRegisterCertificateEmail(new Email($userInput['email']));
+
+$session = Session::getInstance();
+$session->setRegisterCertificateEmail($email);
 $session->setUserName(new Name($userInput['name']));
 $session->setHashCertificateEmail($hashCertificationCode);
 
@@ -68,10 +72,7 @@ try {
 EOF;
     //送信
     $mail->send();
-
-    // echo 'send';
 } catch (Exception $e) {
-    // echo 'error:' . $mail->ErrorInfo;
 }
 
 $response = [
