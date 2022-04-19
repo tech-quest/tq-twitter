@@ -19,3 +19,15 @@ $ ./docker-compose-local.sh up
 [ローカルサーバー](http://localhost:8080)
 
 [PHPMyAdmin](http://localhost:3306)
+
+# .env ファイル設定手順
+
+1. src ディレクトリにある.env.example をコピー
+2. コピーした.env.example のファイル名を.env に変更
+
+# Mailtrap
+
+[Mailtrap 設定方法](https://taupe.site/entry/mailtrap/)
+
+1. .env ファイルの MAILTRAP_USERNAME に値を設定
+2. .env ファイルの MAILTRAP_PASSWORD に値を設定
