@@ -129,7 +129,6 @@ $session->clearErrors();
       const output = document.querySelector('.output');
       output.classList.add('active');
       errorMessage.innerHTML = 'メールアドレスが空です'
-      // TODO: メールアドレスがからだったときにエラーメッセージを表示する（innerHTML）
       return;
     }
     const obj = {
