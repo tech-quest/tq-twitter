@@ -28,21 +28,11 @@ if (!is_null($user)) {
     die();
 }
 
-$session = Session::getInstance();
-$status = [
-    'data' => [
-        'name' => $userInput['name'],
-        'email' => $user['email'],
-    ],
-];
-echo json_encode($status);
-
-$certificationCode = chr(mt_rand(97, 122));
-for ($i = 0; $i < 10; $i++) {
-    $certificationCode .= chr(mt_rand(97, 122));
-}
-$emailCertificationCode = $userInput['email'] . $certificationCode;
-$hashCertificationCode = hash('sha3-512', $emailCertificationCode);
+$signUpCertificationCode = new SignUpCertificationCode($email);
+$certificationCode = $signUpCertificationCode->generateCode();
+$hashCertificationCode = $signUpCertificationCode->generateHash(
+    $certificationCode
+);
 $userRegisterCertificationCodeDao = new UserRegisterCertificationCodeDao();
 $userRegisterCertificationCodeDao->insertRegisterCertification(
     $hashCertificationCode
