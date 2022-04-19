@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Adapter\QueryService;
 
 use DateTime;
@@ -13,49 +14,50 @@ use App\Domain\ValueObject\TweetDate;
 
 final class TweetQueryService
 {
-    private $tweetDao;
+  private $tweetDao;
 
-    public function __construct()
-    {
-        $this->tweetDao = new TweetDao();
+  public function __construct()
+  {
+    $this->tweetDao = new TweetDao();
+  }
+
+  public function findById(TweetId $id): Tweet
+  {
+    $tweetMapper = $this->tweetDao->findById($id->value());
+
+    return new Tweet(
+      new TweetId($tweetMapper['id']),
+      new UserId($tweetMapper['user_id']),
+      new TweetBody($tweetMapper['tweet']),
+      new ReplyTweetId($tweetMapper['reply_tweet_id']),
+      new TweetDevice($tweetMapper['device']),
+      new TweetDate($tweetMapper['created_at']),
+      new DateTime($tweetMapper['deleted_at'])
+    );
+  }
+
+  /**
+   * ツイートの全件取得
+   *
+   * @return array
+   */
+  public function findAllByUserId(UserId $userId): array
+  {
+    $tweetMappers = $this->tweetDao->findAllByUserId($userId);
+    $tweetEntityes = [];
+
+    foreach ($tweetMappers as $tweetMapper) {
+      $deletedAt = !is_null($tweetMapper['deleted_at']) ? new DateTime($tweetMapper['deleted_at']) : null;
+      $tweetEntityes[] = new Tweet(
+        new TweetId($tweetMapper['id']),
+        new UserId($tweetMapper['user_id']),
+        new TweetBody($tweetMapper['tweet']),
+        new ReplyTweetId($tweetMapper['reply_tweet_id']),
+        new TweetDevice($tweetMapper['device']),
+        new TweetDate($tweetMapper['created_at']),
+        $deletedAt
+      );
     }
-
-    public function findById(TweetId $id): Tweet
-    {
-        $tweetMapper = $this->tweetDao->findById($id->value());
-
-        return new Tweet(
-            new TweetId($tweetMapper['id']),
-            new UserId($tweetMapper['user_id']),
-            new TweetBody($tweetMapper['tweet']),
-            new ReplyTweetId($tweetMapper['reply_tweet_id']),
-            new TweetDevice($tweetMapper['device']),
-            new TweetDate($tweetMapper['created_at']),
-            new DateTime($tweetMapper['deleted_at'])
-        );
-    }
-
-    /**
-     * ツイートの全件取得
-     *
-     * @return array
-     */
-    public function findAllByUserId(UserId $userId): array
-    {
-        $tweetMappers = $this->tweetDao->findAllByUserId($userId);
-        $tweetEntityes = [];
-
-        foreach ($tweetMappers as $tweetMapper) {
-            $tweetEntityes[] = new Tweet(
-                new TweetId($tweetMapper['id']),
-                new UserId($tweetMapper['user_id']),
-                new TweetBody($tweetMapper['tweet']),
-                new ReplyTweetId($tweetMapper['reply_tweet_id']),
-                new TweetDevice($tweetMapper['device']),
-                new TweetDate($tweetMapper['created_at']),
-                new DateTime($tweetMapper['deleted_at'])
-            );
-        }
-        return $tweetEntityes;
-    }
+    return $tweetEntityes;
+  }
 }
