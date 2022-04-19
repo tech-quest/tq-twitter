@@ -18,12 +18,13 @@ $userDao = new UserDao();
 $user = $userDao->findByEmail($userInput['email']);
 $email = $userInput['email'];
 if (!is_null($user)) {
-    $status = [
+    $response = [
         'data' => [
-            'email' => 'メールアドレスが登録されています。',
+            'status' => false,
+            'message' => 'メールアドレスが登録されています。',
         ],
     ];
-    echo json_encode($status);
+    echo json_encode($response);
     die();
 }
 
@@ -82,3 +83,11 @@ EOF;
 } catch (Exception $e) {
     // echo 'error:' . $mail->ErrorInfo;
 }
+
+$response = [
+    'data' => [
+        'status' => true,
+        'message' => 'まだ登録されていないメールアドレスです。',
+    ],
+];
+echo json_encode($response);
