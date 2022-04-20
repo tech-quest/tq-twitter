@@ -72,11 +72,11 @@ $session = Session::getInstance();
         </div>
         <div class="user-password_box">
           <label for="confirm-register">パスワード</label>
-          <input class="user-register__confirm password" type="text" name="name" />
+          <input class="user-register__confirm password" type="password" name="name" />
         </div>
         <div class="user-password_box">
           <label for="confirm-register">パスワード確認</label>
-          <input class="user-register__confirm confirm-password" type="text" name="name" />
+          <input class="user-register__confirm confirm-password" type="password" name="name" />
         </div>
         <a class="button-password" href="/signin.php">キャンセル</a>
         <input class="user-register__button" type="submit" value="登録する">
@@ -169,7 +169,7 @@ $session = Session::getInstance();
         body
       });
     const json = await response.json();
-    if (!json.data['email']) {
+    if (json.data.status) {
       const userCreate = document.querySelector('.user-create');
       const userCertification = document.querySelector('.user-certification');
       userCreate.classList.add('remove');

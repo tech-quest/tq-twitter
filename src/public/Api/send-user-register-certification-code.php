@@ -6,6 +6,7 @@ use App\Infrastructure\Dao\UserDao;
 use App\Infrastructure\Dao\UserRegisterCertificationCodeDao;
 use App\Domain\ValueObject\Email;
 use App\Domain\ValueObject\Name;
+use App\Domain\ValueObject\SignUpCertificationCode;
 use App\Lib\Session;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -16,37 +17,31 @@ Dotenv::createImmutable(__DIR__ . '/../../')->load();
 $userInput = json_decode(file_get_contents('php://input'), true);
 $userDao = new UserDao();
 $user = $userDao->findByEmail($userInput['email']);
-$email = $userInput['email'];
+$email = new Email($userInput['email']);
+
 if (!is_null($user)) {
-    $status = [
+    $response = [
         'data' => [
-            'email' => 'メールアドレスが登録されています。',
+            'status' => false,
+            'message' => 'メールアドレスが登録されています。',
         ],
     ];
-    echo json_encode($status);
+    echo json_encode($response);
     die();
 }
 
-$session = Session::getInstance();
-$status = [
-    'data' => [
-        'name' => $userInput['name'],
-        'email' => $user['email'],
-    ],
-];
-echo json_encode($status);
-
-$certificationCode = chr(mt_rand(97, 122));
-for ($i = 0; $i < 10; $i++) {
-    $certificationCode .= chr(mt_rand(97, 122));
-}
-$emailCertificationCode = $userInput['email'] . $certificationCode;
-$hashCertificationCode = hash('sha3-512', $emailCertificationCode);
+$signUpCertificationCode = new SignUpCertificationCode($email);
+$certificationCode = $signUpCertificationCode->generateCode();
+$hashCertificationCode = $signUpCertificationCode->generateHash(
+    $certificationCode
+);
 $userRegisterCertificationCodeDao = new UserRegisterCertificationCodeDao();
 $userRegisterCertificationCodeDao->insertRegisterCertification(
     $hashCertificationCode
 );
-$session->setRegisterCertificateEmail(new Email($userInput['email']));
+
+$session = Session::getInstance();
+$session->setRegisterCertificateEmail($email);
 $session->setUserName(new Name($userInput['name']));
 $session->setHashCertificateEmail($hashCertificationCode);
 
@@ -77,8 +72,13 @@ try {
 EOF;
     //送信
     $mail->send();
-
-    // echo 'send';
 } catch (Exception $e) {
-    // echo 'error:' . $mail->ErrorInfo;
 }
+
+$response = [
+    'data' => [
+        'status' => true,
+        'message' => 'まだ登録されていないメールアドレスです。',
+    ],
+];
+echo json_encode($response);

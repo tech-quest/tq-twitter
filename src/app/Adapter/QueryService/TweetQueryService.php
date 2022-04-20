@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Adapter\QueryService;
 
 use DateTime;
@@ -46,6 +47,9 @@ final class TweetQueryService
         $tweetEntityes = [];
 
         foreach ($tweetMappers as $tweetMapper) {
+            $deletedAt = !is_null($tweetMapper['deleted_at'])
+                ? new DateTime($tweetMapper['deleted_at'])
+                : null;
             $tweetEntityes[] = new Tweet(
                 new TweetId($tweetMapper['id']),
                 new UserId($tweetMapper['user_id']),
@@ -53,7 +57,7 @@ final class TweetQueryService
                 new ReplyTweetId($tweetMapper['reply_tweet_id']),
                 new TweetDevice($tweetMapper['device']),
                 new TweetDate($tweetMapper['created_at']),
-                new DateTime($tweetMapper['deleted_at'])
+                $deletedAt
             );
         }
         return $tweetEntityes;
