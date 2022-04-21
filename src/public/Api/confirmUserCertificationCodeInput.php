@@ -20,13 +20,25 @@ $certificationCodeDao = new CertificationCodeDao();
 $userCertificationCode = $certificationCodeDao->findByCertificationCode(
     $hashEmailCertificationCode
 );
+if (is_null($userCertificationCode)) {
+    $response = [
+        'data' => [
+            'status' => false,
+            'message' => '認証コードが違います!',
+        ],
+    ];
+    echo json_encode($response);
+    die();
+}
 $session->setUserId(new UserId($userCertificationCode['user_id']));
 
-$status = [
+$response = [
     'data' => [
+        'status' => true,
+        'message' => '認証に成功しました',
         'userId' => $userCertificationCode['user_id'],
         'certificationCode' => $userCertificationCode['certification_code'],
     ],
 ];
-echo json_encode($status);
+echo json_encode($response);
 die();

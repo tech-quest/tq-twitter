@@ -37,7 +37,7 @@ EOF;
         }
     }
 
-    public function findByCertificationCode(string $certificationCode)
+    public function findByCertificationCode(string $certificationCode): ?array
     {
         $sql = <<<EOF
     SELECT
@@ -55,6 +55,9 @@ EOF;
         );
         $stmt->execute();
         $certificationCode = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($certificationCode === false) {
+            return null;
+        }
         return $certificationCode;
     }
 

@@ -24,7 +24,7 @@ EOF;
         $this->certificationCode = $certificationCode;
     }
 
-    public function sendMail()
+    public function sendMail(): void
     {
         $mail = new PHPMailer(true);
         $mail->SMTPDebug = 2;
@@ -50,7 +50,5 @@ EOF;
         );
         //送信
         $mail->send();
-
-        echo 'send';
     }
 }
