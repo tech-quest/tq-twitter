@@ -145,10 +145,9 @@ $session->clearErrors();
         headers,
         body
       });
-    console.log('response', response);
 
     const json = await response.json();
-    console.log('json', json);
+
     if (json.data['email']) {
       userDetailResult.classList.add('active');
       userDetail.classList.add('active');
