@@ -7,8 +7,8 @@ use App\Lib\Session;
 use App\Domain\ValueObject\Email;
 use App\Infrastructure\Dao\UserDao;
 use App\Infrastructure\Dao\CertificationCodeDao;
-use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use App\Infrastructure\Mail\PasswordCertificationSender;
 
 Dotenv::createImmutable(__DIR__ . '/../../')->load();
 date_default_timezone_set('Asia/Tokyo');
@@ -26,6 +26,7 @@ $certificationCode = chr(mt_rand(97, 122));
 for ($i = 0; $i < 10; $i++) {
     $certificationCode .= chr(mt_rand(97, 122));
 }
+
 $emailCertificationCode = $user['email'] . $certificationCode;
 $hashCertificationCode = hash('sha3-512', $emailCertificationCode);
 $certificationCodeDao = new CertificationCodeDao();
@@ -38,33 +39,11 @@ $session = Session::getInstance();
 $session->setCertificateEmail(new Email($user['email']));
 
 try {
-    $mail = new PHPMailer(true);
-    $mail->SMTPDebug = 2;
-    $mail->isSMTP();
-    $mail->Host = 'smtp.mailtrap.io';
-    $mail->SMTPAuth = true;
-    $mail->Username = $_ENV['MAILTRAP_USERNAME'];
-    $mail->Password = $_ENV['MAILTRAP_PASSWORD'];
-    $mail->SMTPSecure = 'tls';
-    $mail->Port = 2525;
-
-    //Recipients
-    $mail->setFrom('tq-twitter@example.com', 'Mailer');
-    $mail->addAddress('tq-user@example.com', 'Mr To');
-
-    //Content
-    $mail->CharSet = 'UTF-8';
-    $mail->Subject = 'パスワードをリセットしますか？';
-    $mail->Body = <<<EOF
-  ご利用のTwitterアカウント「{$user['name']}」のパスワードをリセットするには、以下の認証コードを使ってプロセスを完了してください。パスワードのリセットにお心当たりがない場合はこのメールを無視してください。
-
-  認証コード : {$certificationCode}
-
-EOF;
-    //送信
-    $mail->send();
-
-    echo 'send';
+    $passwordCertificationSender = new PasswordCertificationSender(
+        $user,
+        $certificationCode
+    );
+    $passwordCertificationSender->sendMail();
 } catch (Exception $e) {
     echo 'error:' . $mail->ErrorInfo;
 }
