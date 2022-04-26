@@ -593,8 +593,73 @@ form label[for='confirm-register'] {
 
 /**-- index --**/
 .wrapper {
+  width: 800px;
+  margin: 0px auto;
+}
+.content {
   display: flex;
 }
 .left-bar {
   width: 275px;
+}
+.input-area {
+  /* padding: 24px 48px 0px 48px; */
+  font-size: 20px;
+}
+.input-border {
+  width: 100%;
+  margin-bottom: 24px;
+  resize: none;
+  outline: none;
+  border: none;
+}
+.tweet-modal {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: rgb(0, 0, 0, 0.4);
+}
+.tweet-modal.show-modal {
+  opacity: 1;
+  visibility: visible;
+}
+.tweet-form {
+  width: 40%;
+  padding: 40px;
+  display: block;
+  background-color: #ffffff;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border-radius: 16px;
+  max-width: 600px;
+}
+.tweet-area {
+  padding-top: 12px;
+  border-top: solid 1px rgb(239, 243, 244);
+  display: flex;
+  justify-content: space-between;
+}
+.send-tweet {
+  padding: 6px 16px 6px 16px;
+  outline: none;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  background-color: rgb(29, 155, 240);
+}
+.send-tweet.hover {
+  background-color: #ffffff;
+}
+.close-modal.close {
+  opacity: 0;
+}
+#inputForm.color {
+  color: red;
 }
