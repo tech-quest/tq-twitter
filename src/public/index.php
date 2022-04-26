@@ -71,6 +71,26 @@ $device = $_SERVER['HTTP_USER_AGENT'];
       </div>
     </main>
   </div>
+    <div class="tweet-button tweet-modal">
+      <div class="tweet-form">
+        <div class="tweet-content">
+          <form action="" method="post">
+            <div class="input-area">
+              <textarea id="inputForm" class="input-border tweet" placeholder="いまどうしてる？"></textarea>
+            </div>
+            <div class="tweet-area">
+              <div class="tweet-area_icon">
+                <p>アイコン画像</p>
+              </div>
+              <div class="tweet-area_button">
+                <input class="send-tweet" type="submit" value="ツイートする">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>
