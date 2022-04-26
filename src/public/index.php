@@ -30,59 +30,60 @@ $session->setDevice(new Device($device));
 
 <body>
   <div class="wrapper">
-    <div class="left-bar">
-      <nav class="nav flex-column">
-        <a class="nav-link active" aria-current="page" href="#">
-          <img src="" alt="" width="30" height="30" class="">
-          ホーム
-        </a>
-        <a class="nav-link" href="#">
-          <img src="" alt="" width="30" height="30" class="">
-          話題を検索
-        </a>
-        <a class="nav-link" href="#">
-          <img src="" alt="" width="30" height="30" class="">
-          通知
-        </a>
-        <a class="nav-link" href="#">
-          <img src="" alt="" width="30" height="30" class="">
-          メッセージ
-        </a>
-        <a class="nav-link" href="#">
-          <img src="" alt="" width="30" height="30" class="">
-          ブックマーク
-        </a>
-        <a class="nav-link" href="#">
-          <img src="" alt="" width="30" height="30" class="">
-          リスト
-        </a>
-        <a class="nav-link" href="#">
-          <img src="" alt="" width="30" height="30" class="">
-          プロフィール
-        </a>
-        <a class="nav-link" href="#">
-          <img src="" alt="" width="30" height="30" class="">
-          もっと見る
-        </a>
-        <a href="/"><input class="radius-pixel-20 btn btn-primary" type="submit" value="ツイートする"></a>
-      </nav>
-    </div>
-    <main>
-      <div class="container">
-        <h1>Topページ</h1>
-        <form method="post" action="tweetComplete.php">
-          <input type="text" name="tweet" required placeholder="いまなにしてる?" />
-          <input type="hidden" name="device" value="<?php echo $device; ?>" />
-          <input type="submit" value="ツイートする" />
-        </form>
-        <?php foreach ($tweets as $tweet): ?>
-          <a href="status.php?id=<?php echo $tweet['id']; ?>">
-            <p><?php echo $tweet['tweet']; ?></p>
+    <div class="content">
+      <div class="left-bar">
+        <nav class="nav flex-column">
+          <a class="nav-link active" aria-current="page" href="#">
+            <img src="" alt="" width="30" height="30" class="">
+            ホーム
           </a>
-        <?php endforeach; ?>
+          <a class="nav-link" href="#">
+            <img src="" alt="" width="30" height="30" class="">
+            話題を検索
+          </a>
+          <a class="nav-link" href="#">
+            <img src="" alt="" width="30" height="30" class="">
+            通知
+          </a>
+          <a class="nav-link" href="#">
+            <img src="" alt="" width="30" height="30" class="">
+            メッセージ
+          </a>
+          <a class="nav-link" href="#">
+            <img src="" alt="" width="30" height="30" class="">
+            ブックマーク
+          </a>
+          <a class="nav-link" href="#">
+            <img src="" alt="" width="30" height="30" class="">
+            リスト
+          </a>
+          <a class="nav-link" href="#">
+            <img src="" alt="" width="30" height="30" class="">
+            プロフィール
+          </a>
+          <a class="nav-link" href="#">
+            <img src="" alt="" width="30" height="30" class="">
+            もっと見る
+          </a>
+          <input class="radius-pixel-20 btn btn-primary tweet-button" type="submit" value="ツイートする">
+        </nav>
       </div>
-    </main>
-  </div>
+      <main>
+        <div class="container">
+          <h1>Topページ</h1>
+          <form method="post" action="tweetComplete.php">
+            <input type="text" name="tweet" required placeholder="いまなにしてる?" />
+            <input type="hidden" name="device" value="<?php echo $device; ?>" />
+            <input type="submit" value="ツイートする" />
+          </form>
+          <?php foreach ($tweets as $tweet): ?>
+            <a href="status.php?id=<?php echo $tweet['id']; ?>">
+              <p><?php echo $tweet['tweet']; ?></p>
+            </a>
+          <?php endforeach; ?>
+        </div>
+      </main>
+    </div>
     <div class="tweet-button tweet-modal">
       <div class="tweet-form">
         <div class="tweet-content">
@@ -106,6 +107,7 @@ $session->setDevice(new Device($device));
 </body>
 
 </html>
+
 <script>
   const tweetButton = document.querySelector('.tweet-button');
   tweetButton.addEventListener('click', async function(event) {
