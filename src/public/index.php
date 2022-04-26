@@ -3,10 +3,22 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\Infrastructure\Dao\TweetDao;
+use App\Lib\Redirect;
+use App\Lib\Session;
+use App\Domain\ValueObject\Device;
+
+$session = Session::getInstance();
+$authUser = $session->auth();
+
+if (is_null($authUser)) {
+    Redirect::handler('/signin.php');
+}
 
 $tweetDao = new TweetDao();
 $tweets = $tweetDao->findAllByTweets();
 $device = $_SERVER['HTTP_USER_AGENT'];
+$session->setUserId($authUser->userId());
+$session->setDevice(new Device($device));
 ?>
 <!DOCTYPE html>
 
