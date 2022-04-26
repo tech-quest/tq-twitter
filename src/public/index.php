@@ -11,7 +11,7 @@ $session = Session::getInstance();
 $authUser = $session->auth();
 
 if (is_null($authUser)) {
-    Redirect::handler('/signin.php');
+  Redirect::handler('/signin.php');
 }
 
 $tweetDao = new TweetDao();
@@ -76,7 +76,7 @@ $session->setDevice(new Device($device));
             <input type="hidden" name="device" value="<?php echo $device; ?>" />
             <input type="submit" value="ツイートする" />
           </form>
-          <?php foreach ($tweets as $tweet): ?>
+          <?php foreach ($tweets as $tweet) : ?>
             <a href="status.php?id=<?php echo $tweet['id']; ?>">
               <p><?php echo $tweet['tweet']; ?></p>
             </a>
@@ -151,13 +151,13 @@ $session->setDevice(new Device($device));
   inputValue.addEventListener('keyup', (event) => {
     const input = inputValue.value;
     console.log(input);
-    if (input.length >= 10) {
+    if (input.length >= 140) {
       inputValue.classList.add('color');
       const sendTweet = document.querySelector('.send-tweet');
       sendTweet.classList.add('hover');
       sendTweet.disabled = true;
     }
-    if (input.length <= 10) {
+    if (input.length <= 140) {
       inputValue.classList.remove('color');
       const sendTweet = document.querySelector('.send-tweet');
       sendTweet.classList.remove('hover');
