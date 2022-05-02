@@ -44,7 +44,6 @@ inputValue.addEventListener(
   'keyup',
   (event) => {
     const input = inputValue.value;
-    console.log(input);
     if (input.length >= 140) {
       inputValue.classList.add('color');
       const sendTweet = document.querySelector('.send-tweet');
