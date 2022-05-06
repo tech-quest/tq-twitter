@@ -11,16 +11,18 @@ use App\Domain\ValueObject\Password;
 
 final class UserQueryService
 {
-    private UserDao $userDao;
+    private $userDao;
 
     public function __construct()
     {
         $this->userDao = new UserDao();
     }
 
-    public function findById(UserId $id): User
+    public function findById(UserId $id): ?User
     {
         $userMapper = $this->userDao->findById($id->value());
+
+        if (is_null($userMapper)) return null;
 
         return new User(
             new UserId($userMapper['id']),

@@ -49,13 +49,14 @@ final class SignInInputValidator
     /**
      * passwordがnullでないかのチェック
      *
-     * @return void
+     * @return string|null
      */
-    private function passwordErrorText()
+    private function passwordErrorText(): ?string
     {
         if (empty($this->password)) {
             return self::ERROR_PASSWORD_NULL_TEXT;
         }
+        return null;
     }
 
     /**

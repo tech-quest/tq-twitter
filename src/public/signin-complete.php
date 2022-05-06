@@ -42,7 +42,7 @@ try {
 
     $session->setAuth($authUser);
 
-    Redirect::handler('/profile.php');
+    Redirect::handler('/editProfile.php');
 } catch (Exception $e) {
     echo $e->getMessage();
     die();

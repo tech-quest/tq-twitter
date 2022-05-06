@@ -6,6 +6,7 @@ use App\Domain\ValueObject\AuthUser;
 use App\Domain\ValueObject\Email;
 use App\Domain\ValueObject\Name;
 use App\Domain\ValueObject\UserID;
+use Exception;
 
 final class Session
 {
