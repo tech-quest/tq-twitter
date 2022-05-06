@@ -2,27 +2,12 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use App\Lib\Session;
-use App\Lib\Redirect;
-use App\UseCase\SearchUser\SearchUserInput;
 use App\Adapter\QueryService\UserQueryService;
-use App\UseCase\SearchUser\SearchUserInteractor;
+use App\UseCase\ShowProfileEdit\ShowProfileEditInteractor;
 
-$session = Session::getInstance();
-$authUser = $session->auth();
-
-if (is_null($authUser)) {
-  Redirect::handler('/signin.php');
-}
-
-
-$input = new SearchUserInput($authUser);
-$userQueryService = new UserQueryService();
-$useCase = new SearchUserInteractor($input, $userQueryService);
+$useCase = new ShowProfileEditInteractor(new UserQueryService());
 $output = $useCase->handler();
 $profileView = $output->profileView();
-
-
 ?>
 
 

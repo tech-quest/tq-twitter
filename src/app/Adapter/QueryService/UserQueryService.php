@@ -22,7 +22,9 @@ final class UserQueryService
     {
         $userMapper = $this->userDao->findById($id->value());
 
-        if (is_null($userMapper)) return null;
+        if (is_null($userMapper)) {
+            return null;
+        }
 
         return new User(
             new UserId($userMapper['id']),
