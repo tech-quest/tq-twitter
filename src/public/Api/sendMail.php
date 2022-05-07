@@ -7,8 +7,7 @@ use App\Lib\Session;
 use App\Domain\ValueObject\Email;
 use App\Infrastructure\Dao\UserDao;
 use App\Infrastructure\Dao\CertificationCodeDao;
-use PHPMailer\PHPMailer\Exception;
-use App\Infrastructure\Mail\PasswordCertificationSender;
+use App\UseCase\PasswordReset\PasswordCertificationSender;
 
 Dotenv::createImmutable(__DIR__ . '/../../')->load();
 date_default_timezone_set('Asia/Tokyo');
