@@ -126,9 +126,9 @@ final class Session
 
     public function certificateEmail(): Email
     {
-        if (isset($_SESSION[self::CERTIFICATE_EMAIL_KEY])) {
+        if (!isset($_SESSION[self::CERTIFICATE_EMAIL_KEY])) {
             throw new Exception('認証用メールアドレスが保存されてません');
         }
-        return new Email($_SESSION[self::CERTIFICATE_EMAIL_KEY]);
+        return $_SESSION[self::CERTIFICATE_EMAIL_KEY];
     }
 }
