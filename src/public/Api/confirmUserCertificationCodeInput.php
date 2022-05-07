@@ -8,11 +8,7 @@ use App\Domain\ValueObject\UserId;
 $session = Session::getInstance();
 $email = $session->certificateEmail();
 date_default_timezone_set('Asia/Tokyo');
-// header('Content-Type: application/json; charset=UTF-8'); //ヘッダー情報の明記。必須。
-/**
- * POST通信でもグローバル変数「$_POST」からは値を参照できない点に注意してください。
- * その代わり、「php://input」より受け取ったデータを参照することができます。
- */
+
 $certificationCode = json_decode(file_get_contents('php://input'), true);
 $emailCertificationCode = $email->value() . $certificationCode['code'];
 $hashEmailCertificationCode = hash('sha3-512', $emailCertificationCode);
