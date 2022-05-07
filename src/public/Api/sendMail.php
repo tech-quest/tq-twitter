@@ -9,6 +9,7 @@ use App\Infrastructure\Dao\UserDao;
 use App\Infrastructure\Dao\CertificationCodeDao;
 use App\UseCase\PasswordReset\PasswordCertificationSender;
 
+$session = Session::getInstance();
 Dotenv::createImmutable(__DIR__ . '/../../')->load();
 date_default_timezone_set('Asia/Tokyo');
 header('Content-Type: application/json; charset=UTF-8'); //ヘッダー情報の明記。必須。
@@ -42,7 +43,7 @@ try {
         $user,
         $certificationCode
     );
-    $passwordCertificationSender->sendMail();
+    $passwordCertificationSender->send();
 } catch (Exception $e) {
     echo 'error:' . $mail->ErrorInfo;
 }
