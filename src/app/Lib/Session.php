@@ -96,7 +96,7 @@ final class Session
 
     public function setCertificateEmail(Email $email): void
     {
-        $_SESSION[self::CERTIFICATE_EMAIL_KEY] = $email->value();
+        $_SESSION[self::CERTIFICATE_EMAIL_KEY] = $email;
     }
 
     public function setHashCertificateEmail(string $hashCertificationCode): void
