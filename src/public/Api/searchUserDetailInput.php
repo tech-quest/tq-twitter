@@ -12,11 +12,11 @@ header('Content-Type: application/json; charset=UTF-8'); //ヘッダー情報の
 $searchInput = json_decode(file_get_contents('php://input'), true);
 
 $userDao = new UserDao();
-$findByEmail = $userDao->findByEmail($searchInput['input']);
+$user = $userDao->findByEmail($searchInput['input']);
 
 $status = [
     'data' => [
-        'email' => $findByEmail['email'],
+        'email' => $user['email'],
     ],
 ];
 echo json_encode($status);
