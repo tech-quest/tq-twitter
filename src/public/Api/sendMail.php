@@ -40,5 +40,5 @@ try {
     );
     $passwordCertificationSender->send();
 } catch (Exception $e) {
-    echo 'error:' . $mail->ErrorInfo;
+    echo 'error:' . $e->getMessage();
 }

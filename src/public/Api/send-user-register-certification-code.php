@@ -8,8 +8,7 @@ use App\Domain\ValueObject\Email;
 use App\Domain\ValueObject\Name;
 use App\Domain\ValueObject\SignUpCertificationCode;
 use App\Lib\Session;
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+use App\UseCase\SignUp\SendCertificationCode\SignUpCertificationSender;
 
 date_default_timezone_set('Asia/Tokyo');
 Dotenv::createImmutable(__DIR__ . '/../../')->load();
@@ -46,33 +45,12 @@ $session->setUserName(new Name($userInput['name']));
 $session->setHashCertificateEmail($hashCertificationCode);
 
 try {
-    $mail = new PHPMailer(true);
-    $mail->SMTPDebug = 0;
-    $mail->isSMTP();
-    $mail->Host = 'smtp.mailtrap.io';
-    $mail->SMTPAuth = true;
-    $mail->Username = $_ENV['MAILTRAP_USERNAME'];
-    $mail->Password = $_ENV['MAILTRAP_PASSWORD'];
-    $mail->SMTPSecure = 'tls';
-    $mail->Port = 2525;
-
-    //Recipients
-    $mail->setFrom('tq-twitter@example.com', 'Mailer');
-    $mail->addAddress('tq-user@example.com', 'Mr To');
-
-    //Content
-    $mail->CharSet = 'UTF-8';
-    $mail->Subject = 'アカウント認証';
-    $mail->Body = <<<EOF
-  以下の認証コードを使ってプロセスを完了してください。
-  アカウントの作成にお心当たりがない場合はこのメールを無視してください。
-
-  認証コード : {$certificationCode}
-
-EOF;
-    //送信
-    $mail->send();
+    $signUpCertificationSender = new SignUpCertificationSender(
+        $certificationCode
+    );
+    $signUpCertificationSender->send();
 } catch (Exception $e) {
+    echo 'error:' . $e->getMessage();
 }
 
 $response = [

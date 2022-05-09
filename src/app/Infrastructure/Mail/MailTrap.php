@@ -29,7 +29,7 @@ final class MailTrap
     private function setUp(): PHPMailer
     {
         $mail = new PHPMailer(true);
-        $mail->SMTPDebug = 2;
+        $mail->SMTPDebug = 0;
         $mail->isSMTP();
         $mail->Host = 'smtp.mailtrap.io';
         $mail->SMTPAuth = true;
