@@ -30,19 +30,17 @@ if (!is_null($user)) {
 }
 
 $signUpCertificationCode = new SignUpCertificationCode($email);
-$certificationCode = $signUpCertificationCode->generateCode();
-$hashCertificationCode = $signUpCertificationCode->generateHash(
-    $certificationCode
-);
+$certificationCode = $signUpCertificationCode->code();
+$hash = $signUpCertificationCode->generateHash();
 $userRegisterCertificationCodeDao = new UserRegisterCertificationCodeDao();
 $userRegisterCertificationCodeDao->insertRegisterCertification(
-    $hashCertificationCode
+    $hash
 );
 
 $session = Session::getInstance();
 $session->setRegisterCertificateEmail($email);
 $session->setUserName(new Name($userInput['name']));
-$session->setHashCertificateEmail($hashCertificationCode);
+$session->setHashCertificateEmail($hash);
 
 try {
     $signUpCertificationSender = new SignUpCertificationSender(
