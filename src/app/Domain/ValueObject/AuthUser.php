@@ -8,7 +8,7 @@ final class AuthUser
     private $userName;
     private $email;
 
-    public function __construct(UserId $userId, string $userName, Email $email)
+    public function __construct(UserId $userId, Name $userName, Email $email)
     {
         $this->userId = $userId;
         $this->userName = $userName;
@@ -20,7 +20,7 @@ final class AuthUser
         return $this->userId;
     }
 
-    public function userName(): string
+    public function userName(): Name
     {
         return $this->userName;
     }
