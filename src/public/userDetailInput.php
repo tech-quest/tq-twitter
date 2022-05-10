@@ -21,7 +21,9 @@ $session->clearErrors();
 <body>
   <div>
     <div class="user-detail">
-      <p><?php echo $errors[0]; ?></p>
+      <?php foreach ($errors as $error): ?>
+        <p><?php echo $error; ?></p>
+      <?php endforeach; ?>
       <div class="user-detail__input">
         <h1>Twitterアカウントを探す</h1>
         <form action="" method="post">
