@@ -1,3 +1,8 @@
+init: 
+	@make destroy
+	@make up
+	@make composer-install
+	@make migrate
 up:
 	./docker-compose-local.sh up -d
 stop:
@@ -10,6 +15,10 @@ migrate:
 	docker exec tq-docker-template_php_1 vendor/bin/phinx migrate -e development
 rollback:
 	docker exec tq-docker-template_php_1 vendor/bin/phinx rollback -e development
-# ex. $ make add-migrate FILENAME=AddUsersTable
-add-migrate:
+rollback-all:
+	docker exec tq-docker-template_php_1 vendor/bin/phinx rollback -e development -t 0
+# e.g. $ make add-migration FILENAME=AddUsersTable
+add-migration:
 	docker exec tq-docker-template_php_1 vendor/bin/phinx create $(FILENAME)
+composer-install:
+	./composer.sh install

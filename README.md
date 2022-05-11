@@ -2,12 +2,18 @@
 
 # 環境構築手順
 
-1. ローカルに git clone する
-2. [Docker]() のインストール
-3. 以下のコマンドで Docker コンテナの起動
+1. ローカルに `$ git clone` する
+2. [Docker](https://www.docker.com/get-started/) のインストール
+3. 環境の初期化を行う
 
 ```bash
-$ ./docker-compose-local.sh up
+$ make init
+```
+
+4. マイグレーション(DB の更新)を実行する
+
+```bash
+$ make migrate
 ```
 
 # ドキュメント
