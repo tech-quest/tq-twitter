@@ -2,7 +2,6 @@ init:
 	@make destroy
 	@make up
 	@make composer-install
-	@make migrate
 up:
 	./docker-compose-local.sh up -d
 stop:
