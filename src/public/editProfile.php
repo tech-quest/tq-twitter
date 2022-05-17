@@ -4,8 +4,9 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\Adapter\QueryService\UserQueryService;
 use App\UseCase\ShowProfileEdit\ShowProfileEditInteractor;
+use App\Adapter\QueryService\ProfileQueryService;
 
-$useCase = new ShowProfileEditInteractor(new UserQueryService());
+$useCase = new ShowProfileEditInteractor(new ProfileQueryService());
 $output = $useCase->handler();
 $profileView = $output->profileView();
 ?>
@@ -25,15 +26,15 @@ $profileView = $output->profileView();
     <p><?php echo $profileView->name(); ?></p>
   </div>
   <div class="profile-introduction">
-    <p></p>
+    <p><?php echo $profileView->introduction(); ?></p>
   </div>
   <div class="profile-location">
-    <p></p>
+    <p><?php echo $profileView->location(); ?></p>
   </div>
   <div class="profile-website">
-    <p></p>
+    <p><?php echo $profileView->website(); ?></p>
   </div>
   <div class="profile-birthday">
-    <p></p>
+    <p><?php echo $profileView->birthday(); ?></p>
   </div>
 </body>
