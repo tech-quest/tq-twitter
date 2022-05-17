@@ -2,20 +2,17 @@
 
 namespace App\UseCase\ShowProfileEdit;
 
-use App\Adapter\QueryService\UserQueryService;
-use App\Domain\Entity\User;
-use App\Domain\ValueObject\ProfileView;
 use App\Lib\Session;
 use App\Lib\Redirect;
-use App\Domain\ValueObject\AuthUser;
+use App\Adapter\QueryService\ProfileQueryService;
 
 final class ShowProfileEditInteractor implements ShowProfileEdit
 {
-    private $userQueryService;
+    private $profileQueryService;
 
-    public function __construct(UserQueryService $userQueryService)
+    public function __construct(ProfileQueryService $profileQueryService)
     {
-        $this->userQueryService = $userQueryService;
+        $this->profileQueryService = $profileQueryService;
     }
 
     public function handler(): ShowProfileEditOutput
@@ -27,19 +24,10 @@ final class ShowProfileEditInteractor implements ShowProfileEdit
             Redirect::handler('/signin.php');
         }
 
-        $user = $this->searchUser($authUser);
+        $profileView = $this->profileQueryService->findById(
+            $authUser->userId()
+        );
 
-        if (is_null($user)) {
-            Redirect::handler('/signin.php');
-        }
-
-        //TODO: 他のテーブルから情報取得しProfileViewに渡す
-        $profileView = new ProfileView($user->name(), null, null, null, null);
         return new ShowProfileEditOutput($profileView);
-    }
-
-    private function searchUser(AuthUser $authUser): ?User
-    {
-        return $this->userQueryService->findById($authUser->userId());
     }
 }
