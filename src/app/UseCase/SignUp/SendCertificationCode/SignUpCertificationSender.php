@@ -3,6 +3,7 @@
 namespace App\UseCase\SignUp\SendCertificationCode;
 
 use App\Infrastructure\Mail\MailTrap;
+use App\Domain\ValueObject\SignUpCertificationCode;
 
 final class SignUpCertificationSender
 {

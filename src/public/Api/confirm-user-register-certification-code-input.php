@@ -25,7 +25,7 @@ $userRegisterCertificationCode = $userRegisterCertificationCodeDao->findByRegist
 $status = [
     'data' => [
         'certificationCode' =>
-            $userRegisterCertificationCode['certification_code'],
+        $userRegisterCertificationCode['certification_code'],
         'name' => $name,
         'email' => $email,
     ],
