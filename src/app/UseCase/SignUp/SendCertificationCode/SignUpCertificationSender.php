@@ -4,6 +4,7 @@ namespace App\UseCase\SignUp\SendCertificationCode;
 
 use App\Infrastructure\Mail\MailTrap;
 use App\Domain\ValueObject\SignUpCertificationCode;
+use App\Adapter\Mail\MailerFactory;
 
 final class SignUpCertificationSender
 {
@@ -27,7 +28,7 @@ EOF;
     public function send(): void
     {
         $body = sprintf(self::BODY_TEMPLATE, $this->certificationCode);
-        $mail = new MailTrap(self::SUBJECT, $body);
+        $mail = MailerFactory::create(self::SUBJECT, $body);
         $mail->send();
     }
 }

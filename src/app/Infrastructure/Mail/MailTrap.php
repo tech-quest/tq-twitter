@@ -3,8 +3,9 @@
 namespace App\Infrastructure\Mail;
 
 use PHPMailer\PHPMailer\PHPMailer;
+use App\Domain\Adapter\Mailer;
 
-final class MailTrap
+final class MailTrap implements Mailer
 {
     public const CHARSET = 'UTF-8';
 
@@ -19,7 +20,7 @@ final class MailTrap
         $this->body = $body;
     }
 
-    public function send()
+    public function send(): void
     {
         $this->mail->Subject = $this->subject;
         $this->mail->Body = $this->body;
