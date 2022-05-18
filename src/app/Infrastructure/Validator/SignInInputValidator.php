@@ -10,6 +10,7 @@ final class SignInInputValidator
     public const ERROR_EMAIL_INVALID_FORMAT = '不正な形式のメールアドレスです';
     public const ERROR_EMAIL_NULL_TEXT = 'Emailが空です';
     public const ERROR_PASSWORD_NULL_TEXT = 'passwordが空です';
+    public const ERROR_EMAIL_PASSWORD_FORMAT = '不正な形式のパスワードです';
 
     private $email;
     private $password;
@@ -47,7 +48,7 @@ final class SignInInputValidator
     }
 
     /**
-     * passwordがnullでないかのチェック
+     * passwordがnullでないか形式が正しいかのチェック
      *
      * @return string|null
      */
@@ -56,6 +57,15 @@ final class SignInInputValidator
         if (empty($this->password)) {
             return self::ERROR_PASSWORD_NULL_TEXT;
         }
+<<<<<<< HEAD
+=======
+
+        $pattern = '/\A(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[a-zA-Z\d]{8,100}+\z/';
+        if (!preg_match($pattern, $this->password)) {
+            return self::ERROR_EMAIL_PASSWORD_FORMAT;
+        }
+
+>>>>>>> main
         return null;
     }
 
