@@ -7,20 +7,24 @@ use DateTime;
 
 final class Birthday
 {
-    private $value;
+    private DateTime $value;
 
-    public function __construct(?DateTime $value)
+    public function __construct(DateTime $value)
     {
+        if ($this->isAfterToday($value)) {
+            throw new Exception('誕生日に未来の日付は指定できません');
+        }
         $this->value = $value;
     }
 
-    public function value(): ?DateTime
+    public function value(): DateTime
+    {
+        return $this->value;
+    }
+
+    private function isAfterToday(DateTime $birthday): bool
     {
         $today = date('Y-m-d');
-        $birthday = date('Y-m-d', $this->value);
-        if (strtotime($today) < strtotime($birthday)) {
-            throw new Exception('誕生日に未来の日付は指定できません');
-        }
-        return $this->value;
+        return (strtotime($today) < strtotime($birthday->format('Y-m-d')));
     }
 }
