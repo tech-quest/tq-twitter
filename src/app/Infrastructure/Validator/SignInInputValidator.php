@@ -57,15 +57,12 @@ final class SignInInputValidator
         if (empty($this->password)) {
             return self::ERROR_PASSWORD_NULL_TEXT;
         }
-<<<<<<< HEAD
-=======
 
         $pattern = '/\A(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[a-zA-Z\d]{8,100}+\z/';
         if (!preg_match($pattern, $this->password)) {
             return self::ERROR_EMAIL_PASSWORD_FORMAT;
         }
 
->>>>>>> main
         return null;
     }
 

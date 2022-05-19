@@ -5,12 +5,8 @@ namespace App\Lib;
 use App\Domain\ValueObject\AuthUser;
 use App\Domain\ValueObject\Email;
 use App\Domain\ValueObject\Name;
-<<<<<<< HEAD
-use App\Domain\ValueObject\UserID;
-=======
 use App\Domain\ValueObject\UserId;
 use App\Domain\ValueObject\Device;
->>>>>>> main
 use Exception;
 
 final class Session
