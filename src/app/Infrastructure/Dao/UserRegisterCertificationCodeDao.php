@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\Dao;
 
+use Exception;
 use App\Infrastructure\Dao\Dao;
 use PDO;
 

@@ -5,7 +5,9 @@ namespace App\Lib;
 use App\Domain\ValueObject\AuthUser;
 use App\Domain\ValueObject\Email;
 use App\Domain\ValueObject\Name;
-use App\Domain\ValueObject\UserID;
+use App\Domain\ValueObject\UserId;
+use App\Domain\ValueObject\Device;
+use Exception;
 
 final class Session
 {
@@ -16,7 +18,7 @@ final class Session
     public const USER_KEY = 'user_id';
     public const NAME_KEY = 'name';
     public const HASH_CERTIFICATE_REGISTER = 'hash_certificate_register';
-
+    public const DEVICE_KEY = 'device';
     private static $instance;
 
     public static function getInstance(): self
@@ -95,7 +97,7 @@ final class Session
 
     public function setCertificateEmail(Email $email): void
     {
-        $_SESSION[self::CERTIFICATE_EMAIL_KEY] = $email->value();
+        $_SESSION[self::CERTIFICATE_EMAIL_KEY] = $email;
     }
 
     public function setHashCertificateEmail(string $hashCertificationCode): void
@@ -108,7 +110,7 @@ final class Session
         $_SESSION[self::CERTIFICATE_REGISTER_EMAIL_KEY] = $email->value();
     }
 
-    public function setUserId(UserID $userId): void
+    public function setUserId(UserId $userId): void
     {
         $_SESSION[self::USER_KEY] = $userId->value();
     }
@@ -118,11 +120,16 @@ final class Session
         $_SESSION[self::NAME_KEY] = $name->value();
     }
 
+    public function setDevice(Device $device): void
+    {
+        $_SESSION[self::DEVICE_KEY] = $device->tweetDevice();
+    }
+
     public function certificateEmail(): Email
     {
-        if (isset($_SESSION[self::CERTIFICATE_EMAIL_KEY])) {
+        if (!isset($_SESSION[self::CERTIFICATE_EMAIL_KEY])) {
             throw new Exception('認証用メールアドレスが保存されてません');
         }
-        return new Email($_SESSION[self::CERTIFICATE_EMAIL_KEY]);
+        return $_SESSION[self::CERTIFICATE_EMAIL_KEY];
     }
 }
