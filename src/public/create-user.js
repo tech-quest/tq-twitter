@@ -88,7 +88,7 @@ sendCertificateButton.addEventListener(
 
     const json = await response.json();
 
-    if (json.data['certificationCode']) {
+    if (json.data.status) {
       const UserCertificationDisplay = document.querySelector(
         '.user-certification__display'
       );
