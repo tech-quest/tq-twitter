@@ -22,13 +22,13 @@ $userRegisterCertificationCode = $userRegisterCertificationCodeDao->findByRegist
     $hashEmailCertificationCode
 );
 
-$status = [
+$response = [
     'data' => [
-        'certificationCode' =>
-        $userRegisterCertificationCode['certification_code'],
+        'status' => $useCaseOutput->isSuccess(),
+        'message' => $useCaseOutput->message(),
         'name' => $name,
         'email' => $email,
     ],
 ];
-echo json_encode($status);
+echo json_encode($response);
 die();
