@@ -15,12 +15,10 @@ date_default_timezone_set('Asia/Tokyo');
  * その代わり、「php://input」より受け取ったデータを参照することができます。
  */
 $certificationCode = json_decode(file_get_contents('php://input'), true);
-$emailCertificationCode = $email . $certificationCode['code'];
-$hashEmailCertificationCode = hash('sha3-512', $emailCertificationCode);
-$userRegisterCertificationCodeDao = new UserRegisterCertificationCodeDao();
-$userRegisterCertificationCode = $userRegisterCertificationCodeDao->findByRegisterCertificationCode(
-    $hashEmailCertificationCode
-);
+$userEmail = new Email($email);
+$useCaseInput = new Input($certificationCode['code'], $userEmail);
+$useCaseInteractor = new Interactor($useCaseInput);
+$useCaseOutput = $useCaseInteractor->handler();
 
 $response = [
     'data' => [
