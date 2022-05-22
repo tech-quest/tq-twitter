@@ -31,17 +31,18 @@ final class Interactor
 
         $signUpCertificationCode = new SignUpCertificationCode($this->input->email());
         $this->insertRegisterCertification($signUpCertificationCode);
-        $this->saveUserInfo();
+        $this->saveUserInfo($signUpCertificationCode);
         $this->sendCertificationCodeMail($signUpCertificationCode);
 
         return new Output(true, self::NOT_REGISTERD_MESSAGE);
     }
 
-    private function saveUserInfo(): void
+    private function saveUserInfo(SignUpCertificationCode $signUpCertificationCode): void
     {
         $session = Session::getInstance();
         $session->setRegisterCertificateEmail($this->input->email());
         $session->setUserName($this->input->name());
+        $session->setHashCertificateEmail($signUpCertificationCode->generateHash());
     }
 
     private function sendCertificationCodeMail(SignUpCertificationCode $signUpCertificationCode)
