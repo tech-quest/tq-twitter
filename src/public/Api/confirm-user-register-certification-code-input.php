@@ -3,6 +3,9 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 
 use App\Infrastructure\Dao\UserRegisterCertificationCodeDao;
 use App\Lib\Session;
+use App\Domain\ValueObject\Email;
+use App\UseCase\SignUp\ConfirmRegisterCertificationCode\Input;
+use App\UseCase\SignUp\ConfirmRegisterCertificationCode\Interactor;
 
 $session = Session::getInstance();
 $name = $_SESSION['name'];
