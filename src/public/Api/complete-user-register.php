@@ -21,18 +21,18 @@ $userDao = new UserDao();
 $result = $userDao->insertUser($name, $email, $passwordHash);
 $userRegisterCertificationCodeDao = new UserRegisterCertificationCodeDao();
 $userRegisterCertificationCodeDao->deleteByRegisterCertificationCode(
-    $hashCertificateRegisterCode
+  $hashCertificateRegisterCode
 );
 
 if ($result === true) {
-    $_SESSION = [];
-    session_destroy();
+  $_SESSION = [];
+  session_destroy();
 }
 
 $status = [
-    'data' => [
-        'result' => $result,
-    ],
+  'data' => [
+    'result' => $result,
+  ],
 ];
 echo json_encode($status);
 die();
