@@ -11,7 +11,7 @@ $session = Session::getInstance();
 $authUser = $session->auth();
 
 if (is_null($authUser)) {
-    Redirect::handler('/signin.php');
+  Redirect::handler('/signin.php');
 }
 
 $tweetDao = new TweetDao();
@@ -40,7 +40,7 @@ $session->setDevice(new Device($device));
             <input type="hidden" name="device" value="<?php echo $device; ?>" />
             <input type="submit" value="ツイートする" />
           </form>
-          <?php foreach ($tweets as $tweet): ?>
+          <?php foreach ($tweets as $tweet) : ?>
             <a href="status.php?id=<?php echo $tweet['id']; ?>">
               <p><?php echo $tweet['tweet']; ?></p>
             </a>
@@ -49,22 +49,29 @@ $session->setDevice(new Device($device));
       </main>
     </div>
     <div class="tweet-button tweet-modal">
-      <div class="tweet-form">
-        <div class="tweet-content">
-          <form action="" method="post">
-            <div class="input-area">
-              <textarea id="inputForm" class="input-border tweet" placeholder="いまどうしてる？"></textarea>
-            </div>
-            <div class="tweet-area">
-              <div class="tweet-area_icon">
+      <div class="tweet-modal__form-wrapper tweet-form">
+        <form action="" method="post">
+          <div class="tweet-modal__input-wrapper input-area">
+            <textarea id="inputForm" class="input-border tweet" placeholder="いまどうしてる？"></textarea>
+          </div>
+          <div class="tweet-modal__footer tweet-area">
+            <div class="tweet-modal__left-section">
+              <div class="tweet-modal__icon tweet-area_icon">
                 <p>アイコン画像</p>
               </div>
-              <div class="tweet-area_button">
+            </div>
+            <div class="tweet-modal__right-section">
+              <div class="tweet-modal__count-wrapper">
+                <span class="current-tweet-count">0</span>
+                <span>/</span>
+                <span>140</span>
+              </div>
+              <div class="tweet-modal__tweet-button-wrapper tweet-area_button">
                 <input class="send-tweet" type="submit" value="ツイートする">
               </div>
             </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>
