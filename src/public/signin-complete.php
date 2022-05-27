@@ -36,7 +36,7 @@ try {
     }
     $_SESSION['message'] = $useCaseOutput->message();
 
-    Redirect::handler('/profile.php');
+    Redirect::handler('/index.php');
 } catch (Exception $e) {
     $errors = [$e->getMessage()];
     $session->setErrors($errors);
