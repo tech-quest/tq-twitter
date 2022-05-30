@@ -18,7 +18,7 @@ final class Interactor
 
     public function handler()
     {
-        $result = $this->insertUserInfo();
+        $result = $this->isExistsUser();
         $this->deleteByRegisterCertificationCode();
         return $result;
     }
@@ -28,7 +28,7 @@ final class Interactor
         return password_hash($this->input->password(), PASSWORD_DEFAULT);
     }
 
-    private function insertUserInfo(): bool
+    private function isExistsUser(): bool
     {
         return $this->userDao->insertUser(
             $this->input->name()->value(),
