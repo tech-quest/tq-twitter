@@ -44,17 +44,18 @@ inputValue.addEventListener(
   'keyup',
   (event) => {
     const input = inputValue.value;
-    if (input.length >= 140) {
+    const sendTweetButton = document.querySelector('.send-tweet');
+    const currentTweetCount = document.querySelector('.current-tweet-count');
+    currentTweetCount.textContent = input.length;
+    console.log('input', input);
+    if (input.length > 140) {
       inputValue.classList.add('color');
-      const sendTweet = document.querySelector('.send-tweet');
-      sendTweet.classList.add('hover');
-      sendTweet.disabled = true;
-    }
-    if (input.length <= 140) {
+      sendTweetButton.classList.add('hover');
+      sendTweetButton.disabled = true;
+    } else {
       inputValue.classList.remove('color');
-      const sendTweet = document.querySelector('.send-tweet');
-      sendTweet.classList.remove('hover');
-      sendTweet.disabled = false;
+      sendTweetButton.classList.remove('hover');
+      sendTweetButton.disabled = false;
     }
   },
   false
