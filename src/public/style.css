@@ -645,6 +645,7 @@ form label[for='confirm-register'] {
   border-top: solid 1px rgb(239, 243, 244);
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .send-tweet {
   padding: 6px 16px 6px 16px;
@@ -662,4 +663,11 @@ form label[for='confirm-register'] {
 }
 #inputForm.color {
   color: red;
+}
+.tweet-modal__right-section {
+  display: flex;
+  align-items: center;
+}
+.tweet-modal__count-wrapper {
+  margin-right: 8px;
 }
