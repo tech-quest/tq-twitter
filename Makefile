@@ -35,7 +35,7 @@ rollback:
 
 # e.g. $ make add-migrate FILENAME=AddUsersTable
 .PHONY: add-migration
-add-migrate:
+add-migration:
 	./docker-compose-local.sh run php vendor/bin/phinx create $(FILENAME)
 
 .PHONY: composer-install 
