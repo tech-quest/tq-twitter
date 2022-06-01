@@ -19,14 +19,19 @@ final class AddTweetsTable extends AbstractMigration
      */
     public function change(): void
     {
-
         $table = $this->table('tweets');
-        $table->addColumn('user_id', 'integer')
+        $table
+            ->addColumn('user_id', 'integer')
             ->addColumn('tweet', 'string', ['limit' => 70])
             ->addColumn('reply_tweet_id', 'integer', ['null' => true])
             ->addColumn('device', 'text')
-            ->addColumn('created_at', 'datetime', ['default' => 'CURRENT_TIMESTAMP'])
-            ->addColumn('updated_at', 'datetime', ['default' => 'CURRENT_TIMESTAMP', 'update' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('created_at', 'datetime', [
+                'default' => 'CURRENT_TIMESTAMP',
+            ])
+            ->addColumn('updated_at', 'datetime', [
+                'default' => 'CURRENT_TIMESTAMP',
+                'update' => 'CURRENT_TIMESTAMP',
+            ])
             // TODO: ユーザー登録機能の実装ができたらこれを実行する
             // ->addForeignKey('user_id', 'users', 'id', ['delete' => 'NO_ACTION', 'update' => 'NO_ACTION'])
             ->create();

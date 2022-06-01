@@ -21,7 +21,9 @@ $session->clearErrors();
 <body>
   <div>
     <div class="user-detail">
-      <p><?php echo $errors[0]; ?></p>
+      <?php foreach ($errors as $error): ?>
+        <p><?php echo $error; ?></p>
+      <?php endforeach; ?>
       <div class="user-detail__input">
         <h1>Twitterアカウントを探す</h1>
         <form action="" method="post">
@@ -126,6 +128,9 @@ $session->clearErrors();
     const input = searchInput.value;
     if (!input) {
       const errorMessage = document.querySelector('.errorMessage');
+      const output = document.querySelector('.output');
+      output.classList.add('active');
+      errorMessage.innerHTML = 'メールアドレスが空です'
       return;
     }
     const obj = {
@@ -144,6 +149,7 @@ $session->clearErrors();
       });
 
     const json = await response.json();
+
     if (json.data['email']) {
       userDetailResult.classList.add('active');
       userDetail.classList.add('active');
@@ -211,13 +217,13 @@ $session->clearErrors();
         body
       });
     const json = await response.json();
-    if (json.data['certificationCode']) {
+    if (json.data.status) {
       const UserCertificationDisplay = document.querySelector('.user-certification__display');
       const userPassword = document.querySelector('.user-password');
       UserCertificationDisplay.classList.add('remove2');
       userPassword.classList.add('show2');
     } else {
-      alert('認証コードを入力してください。');
+      alert(json.data.message);
     }
   }, false);
 

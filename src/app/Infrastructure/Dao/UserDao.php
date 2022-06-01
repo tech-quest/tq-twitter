@@ -30,7 +30,7 @@ EOF;
         return $stmt->execute();
     }
 
-    public function findById($id): ?array
+    public function findById(int $id): ?array
     {
         $sql = "
         SELECT 

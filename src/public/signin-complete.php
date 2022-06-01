@@ -6,10 +6,10 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use App\Lib\Redirect;
 use App\Lib\Session;
 use App\Infrastructure\Validator\SignInInputValidator;
-use App\Infrastructure\Dao\UserDao;
-use App\Domain\ValueObject\AuthUser;
-use App\Domain\ValueObject\UserId;
 use App\Domain\ValueObject\Email;
+use App\Domain\ValueObject\Password;
+use App\UseCase\Signin\SignInInput;
+use App\UseCase\Signin\SignInInteractor;
 
 $session = Session::getInstance();
 
@@ -25,25 +25,23 @@ try {
         Redirect::handler('/signin.php');
     }
 
-    $userDao = new UserDao();
-    $user = $userDao->findByEmail($email);
+    $userEmail = new Email($email);
+    $inputPassword = new Password($password);
+    $useCaseInput = new SignInInput($userEmail, $inputPassword);
+    $useCase = new SignInInteractor($useCaseInput);
+    $useCaseOutput = $useCase->handler();
 
-    if (is_null($user)) {
-        $errors = ['Emailまたはパスワードが違います'];
-        $session->setErrors($errors);
-        Redirect::handler('/signin.php');
+    if (!$useCaseOutput->isSuccess()) {
+        throw new Exception($useCaseOutput->message());
     }
+    $_SESSION['message'] = $useCaseOutput->message();
 
-    $authUser = new AuthUser(
-        new UserId($user['id']),
-        $user['name'],
-        new Email($user['email'])
-    );
-
-    $session->setAuth($authUser);
-
-    Redirect::handler('/profile.php');
+    Redirect::handler('/index.php');
 } catch (Exception $e) {
-    echo $e->getMessage();
+    $errors = [$e->getMessage()];
+    $session->setErrors($errors);
+    $_SESSION['user']['name'] = $name;
+    $_SESSION['user']['email'] = $email;
+    Redirect::handler('/signin.php');
     die();
 }

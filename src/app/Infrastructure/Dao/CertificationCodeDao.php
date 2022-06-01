@@ -4,6 +4,7 @@ namespace App\Infrastructure\Dao;
 
 use App\Infrastructure\Dao\Dao;
 use PDO;
+use Exception;
 
 final class CertificationCodeDao extends Dao
 {
@@ -37,7 +38,7 @@ EOF;
         }
     }
 
-    public function findByCertificationCode(string $certificationCode)
+    public function findByCertificationCode(string $certificationCode): ?array
     {
         $sql = <<<EOF
     SELECT
@@ -55,6 +56,9 @@ EOF;
         );
         $stmt->execute();
         $certificationCode = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($certificationCode === false) {
+            return null;
+        }
         return $certificationCode;
     }
 
