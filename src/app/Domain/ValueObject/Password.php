@@ -17,4 +17,9 @@ final class Password
     {
         return $this->value;
     }
+
+    public function hashAsString(): string
+    {
+        return password_hash($this->value, PASSWORD_DEFAULT);
+    }
 }
