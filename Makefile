@@ -27,20 +27,16 @@ refresh:
 
 .PHONY: migrate
 migrate:
-	docker exec tq-docker-template_php_1 vendor/bin/phinx migrate -e development
+	./docker-compose-local.sh run php vendor/bin/phinx migrate -e development
 
 .PHONY: rollback
 rollback:
-	docker exec tq-docker-template_php_1 vendor/bin/phinx rollback -e development
+	./docker-compose-local.sh run php vendor/bin/phinx rollback -e development
 
-.PHONY: rollback-all
-rollback-all:
-	docker exec tq-docker-template_php_1 vendor/bin/phinx rollback -e development -t 0
-
-# e.g. $ make add-migration FILENAME=AddUsersTable
+# e.g. $ make add-migrate FILENAME=AddUsersTable
 .PHONY: add-migration
 add-migration:
-	docker exec tq-docker-template_php_1 vendor/bin/phinx create $(FILENAME)
+	./docker-compose-local.sh run php vendor/bin/phinx create $(FILENAME)
 
 .PHONY: composer-install 
 composer-install:
