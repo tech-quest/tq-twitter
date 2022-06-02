@@ -10,7 +10,7 @@ use App\UseCase\SignUp\CompleteUserRegister\Output;
 final class Interactor
 {
     private const COMPLETE_MESSAGE = '登録が完了しました。';
-    private const NOT_COMPLETE_MESSAGE = '登録が出来ませんでした。';
+    private const NOT_COMPLETE_MESSAGE = '登録に失敗しました。';
     private Input $input;
 
     public function __construct(Input $input)
@@ -34,13 +34,18 @@ final class Interactor
         return password_hash($this->input->password(), PASSWORD_DEFAULT);
     }
 
-    private function isExistsUser(): bool
+    private function insertUser(): void
     {
-        return $this->userDao->insertUser(
+        $password = new Password($this->input->password());
+        $res = $this->userDao->insertUser(
             $this->input->name()->value(),
             $this->input->email()->value(),
-            $this->createPasswordHash()
+            $password->hashAsString()
         );
+
+        if (!$res) {
+            throw new UserInsertFailedException(self::NOT_COMPLETE_MESSAGE);
+        }
     }
 
     private function deleteByRegisterCertificationCode(): void
