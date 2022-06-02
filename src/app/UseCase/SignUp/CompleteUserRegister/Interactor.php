@@ -6,6 +6,8 @@ use App\Infrastructure\Dao\UserDao;
 use App\Infrastructure\Dao\UserRegisterCertificationCodeDao;
 use App\UseCase\SignUp\CompleteUserRegister\Input;
 use App\UseCase\SignUp\CompleteUserRegister\Output;
+use App\UseCase\SignUp\CompleteUserRegister\Exception\UserInsertFailedException;
+use App\Domain\ValueObject\Password;
 
 final class Interactor
 {
@@ -22,16 +24,13 @@ final class Interactor
 
     public function handler(): Output
     {
-        if ($this->isExistsUser()) {
+        try {
+            $this->insertUser();
             $this->deleteByRegisterCertificationCode();
             return new Output(true, self::COMPLETE_MESSAGE);
+        } catch (UserInsertFailedException $e) {
+            return new Output(false, $e->getMessage());
         }
-
-        return new Output(false, self::NOT_COMPLETE_MESSAGE);
-    }
-    private function createPasswordHash(): string
-    {
-        return password_hash($this->input->password(), PASSWORD_DEFAULT);
     }
 
     private function insertUser(): void
