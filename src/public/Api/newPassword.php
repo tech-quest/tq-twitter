@@ -4,16 +4,16 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 use App\Infrastructure\Dao\UserDao;
 use App\Infrastructure\Dao\CertificationCodeDao;
 use App\Lib\Session;
+use App\Domain\ValueObject\Password;
 
 $session = Session::getInstance();
 date_default_timezone_set('Asia/Tokyo');
 header('Content-Type: application/json; charset=UTF-8');
-$password = json_decode(file_get_contents('php://input'), true);
+$inputs = json_decode(file_get_contents('php://input'), true);
 $id = $_SESSION['user_id'];
-$passwordHash = password_hash($password['newPassword'], PASSWORD_DEFAULT);
+$password = new Password($inputs['newPassword']);
 $user = new UserDao();
-$newPassword = $user->updatePassword($id, $passwordHash);
-
+$newPassword = $user->updatePassword($id, $password->hashAsString());
 $certificationCodeDao = new CertificationCodeDao();
 $result = $certificationCodeDao->deleteByCertificationCode($id);
 
