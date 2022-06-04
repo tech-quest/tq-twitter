@@ -14,9 +14,9 @@ $session = Session::getInstance();
 Dotenv::createImmutable(__DIR__ . '/../../')->load();
 date_default_timezone_set('Asia/Tokyo');
 
-$userEmail = json_decode(file_get_contents('php://input'), true);
+$inputs = json_decode(file_get_contents('php://input'), true);
 $userDao = new UserDao();
-$user = $userDao->findByEmail($userEmail['input']);
+$user = $userDao->findByEmail($inputs['input']);
 
 $certificationCode = chr(mt_rand(97, 122));
 for ($i = 0; $i < 10; $i++) {
@@ -32,6 +32,7 @@ $certificationCodeDao->insertPasswordCertification(
 );
 
 $session->setCertificateEmail(new Email($user['email']));
+$session->setUserEmail(new Email($user['email']));
 
 try {
     $passwordCertificationSender = new PasswordCertificationSender(
