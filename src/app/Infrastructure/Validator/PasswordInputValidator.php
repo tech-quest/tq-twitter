@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Validator;
 
 /**
- * ログインフォーム情報のバリデーター
+ * パスワード入力フォーム情報のバリデーター
  */
 final class PasswordInputValidator
 {
