@@ -21,7 +21,7 @@ $session->clearErrors();
 <body>
   <div>
     <div class="user-detail">
-      <?php foreach ($errors as $error): ?>
+      <?php foreach ($errors as $error) : ?>
         <p><?php echo $error; ?></p>
       <?php endforeach; ?>
       <div class="user-detail__input">
@@ -78,7 +78,12 @@ $session->clearErrors();
       <h4>新しいパスワードを入力してください</h4>
       <form action="" method="post">
         <div class="user-password_box">
-          <input class="user-password__send" type="text" name="name" />
+          <label for="confirm-register">パスワード</label>
+          <input class="user-password__send" type="password" name="name" />
+        </div>
+        <div class="user-password_box">
+          <label for="confirm-register">パスワード確認</label>
+          <input class="user-password__send confirm" type="password" name="name" />
         </div>
         <a class="button-password" href="/signin.php">キャンセル</a>
         <input class="user-password__button" type="submit" value="変更する">
@@ -231,7 +236,20 @@ $session->clearErrors();
   userPasswordButton.addEventListener('click', async function(event) {
     event.preventDefault();
     const userPasswordSend = document.querySelector('.user-password__send');
+    const userConfirmPassword = document.querySelector('.confirm');
+
     const newPassword = userPasswordSend.value;
+    const confirmPassword = userConfirmPassword.value;
+    if (newPassword === '') {
+      alert('パスワードを入力してください。');
+      return;
+    } else if (confirmPassword === '') {
+      alert('パスワード確認を入力してください。');
+      return;
+    } else if (newPassword !== confirmPassword) {
+      alert('パスワードが一致していません。');
+      return;
+    }
     const obj = {
       newPassword,
     };
@@ -248,11 +266,14 @@ $session->clearErrors();
       });
 
     const json = await response.json();
-    if (json.data['result'] === true) {
+
+    if (json.data.status === true) {
       const userPasswordDisplay = document.querySelector('.user-password__display');
       const completePassword = document.querySelector('.complete-password');
       userPasswordDisplay.classList.add('remove3');
       completePassword.classList.add('show3');
+    } else {
+      alert(json.data.message);
     }
   }, false);
 </script>
