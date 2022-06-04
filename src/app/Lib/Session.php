@@ -17,6 +17,7 @@ final class Session
     public const CERTIFICATE_REGISTER_EMAIL_KEY = 'certificate_register_email';
     public const USER_KEY = 'user_id';
     public const NAME_KEY = 'name';
+    public const EMAIL_KEY = 'email';
     public const HASH_CERTIFICATE_REGISTER = 'hash_certificate_register';
     public const DEVICE_KEY = 'device';
     private static $instance;
@@ -118,6 +119,11 @@ final class Session
     public function setUserName(Name $name): void
     {
         $_SESSION[self::NAME_KEY] = $name->value();
+    }
+
+    public function setUserEmail(Email $email): void
+    {
+        $_SESSION[self::EMAIL_KEY] = $email->value();
     }
 
     public function setDevice(Device $device): void
