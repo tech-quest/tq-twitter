@@ -363,7 +363,11 @@ form label.move {
 }
 .user-password__send {
   width: 100%;
-  padding: 18px 0px 18px 0px;
+  font-size: 37px;
+}
+.user-password__send.confirm {
+  width: 100%;
+  font-size: 37px;
 }
 .complete-password {
   width: 550px;
@@ -530,6 +534,12 @@ form label[for='confirm-register'] {
   color: #ffffff;
   background-color: gray;
   border: none;
+}
+.box-top {
+  margin-bottom: 12px;
+}
+.box-top p {
+  font-size: 12px;
 }
 /**-- profile --**/
 .profile-wrapper {
