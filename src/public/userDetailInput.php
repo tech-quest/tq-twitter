@@ -75,11 +75,12 @@ $session->clearErrors();
 
   <div class="user-password user-password__display">
     <div class="user-password__input">
-      <h4>新しいパスワードを入力してください</h4>
+      <h4>パスワードをリセット</h4>
       <form action="" method="post">
-        <div class="user-password_box">
+        <div class="user-password_box box-top">
           <label for="confirm-register">パスワード</label>
           <input class="user-password__send" type="password" name="name" />
+          <p>※半角英数字、大文字を含め8～24文字でご設定ください。</p>
         </div>
         <div class="user-password_box">
           <label for="confirm-register">パスワード確認</label>
@@ -259,7 +260,7 @@ $session->clearErrors();
       'Content-Type': 'application/json'
     };
     const response = await fetch(
-      'Api/newPassword.php', {
+      'Api/resetPassword.php', {
         method: "POST",
         headers,
         body
