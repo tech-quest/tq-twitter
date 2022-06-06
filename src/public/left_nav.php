@@ -27,7 +27,7 @@
         <img src="" alt="" width="30" height="30" class="">
         リスト
       </a>
-      <a class="nav-link" href="#">
+      <a class="nav-link" href="./profile.php">
         <img src="" alt="" width="30" height="30" class="">
         プロフィール
       </a>
