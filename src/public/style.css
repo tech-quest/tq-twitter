@@ -535,6 +535,12 @@ form label[for='confirm-register'] {
   background-color: gray;
   border: none;
 }
+.box-top {
+  margin-bottom: 12px;
+}
+.box-top p {
+  font-size: 12px;
+}
 /**-- profile --**/
 .profile-wrapper {
   width: 650px;
