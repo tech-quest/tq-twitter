@@ -41,3 +41,7 @@ add-migration:
 .PHONY: composer-install 
 composer-install:
 	./composer.sh install
+
+.PHONY: test
+test:
+	./docker-compose-local.sh run php vendor/bin/phpunit test
