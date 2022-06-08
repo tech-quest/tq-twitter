@@ -6,7 +6,6 @@ use App\Infrastructure\Validator\SignInInputValidator;
 
 class SignInInputValidatorTest extends TestCase
 {
-    /** @test */
     public function メールアドレスが正しかったとき()
     {
         $signInInputValidator = new SignInInputValidator(

@@ -2,6 +2,8 @@
 
 namespace App\Infrastructure\Validator;
 
+use App\Domain\ValueObject\Password;
+
 /**
  * パスワード入力フォーム情報のバリデーター
  */
@@ -34,8 +36,7 @@ final class PasswordInputValidator
             return self::ERROR_PASSWORD_NULL_TEXT;
         }
 
-        $pattern = '/\A(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[a-zA-Z\d]{8,24}+\z/';
-        if (!preg_match($pattern, $this->password)) {
+        if (!Password::isValid($this->password)) {
             return self::ERROR_EMAIL_PASSWORD_FORMAT;
         }
 
