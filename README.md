@@ -37,3 +37,17 @@ $ make migrate
 
 1. .env ファイルの MAILTRAP_USERNAME に値を設定
 2. .env ファイルの MAILTRAP_PASSWORD に値を設定
+
+# Docker コンテナの操作
+
+1.  コンテナを止める
+
+```bash
+$ make stop
+```
+
+2. コンテナを立ち上げる
+
+```bash
+$ make up
+```
