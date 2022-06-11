@@ -11,7 +11,7 @@ $session = Session::getInstance();
 $authUser = $session->auth();
 
 if (is_null($authUser)) {
-    Redirect::handler('/signin.php');
+  Redirect::handler('/signin.php');
 }
 
 $tweetDao = new TweetDao();
@@ -40,7 +40,7 @@ $session->setDevice(new Device($device));
             <input type="hidden" name="device" value="<?php echo $device; ?>" />
             <input type="submit" value="ツイートする" />
           </form>
-          <?php foreach ($tweets as $tweet): ?>
+          <?php foreach ($tweets as $tweet) : ?>
             <a href="status.php?id=<?php echo $tweet['id']; ?>">
               <p><?php echo $tweet['tweet']; ?></p>
             </a>
@@ -72,3 +72,4 @@ $session->setDevice(new Device($device));
 
 </html>
 <script src="tweet-modal.js"></script>
+<script src="account-info-modal.js"></script>
