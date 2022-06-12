@@ -18,12 +18,17 @@ final class Interactor
 
     public function handler(): Output
     {
-        $user = $this->userDao->findByEmail($this->input->email()->value());
+        $user = $this->findByUser();
 
         if (is_null($user)) {
             return new Output(false, null);
         }
 
         return new Output(true, $user['email']);
+    }
+
+    private function findByUser()
+    {
+        return $this->userDao->findByEmail($this->input->email()->value());
     }
 }
