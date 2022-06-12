@@ -7,12 +7,12 @@ use App\Lib\Session;
 $session = Session::getInstance();
 $authUser = $session->auth();
 
-$errors = $_SESSION['errors'] ?? [];
-unset($_SESSION['errors']);
-
 if (!is_null($authUser)) {
   Redirect::handler('/index.php');
 }
+
+$errors = $session->errors();
+$session->clearErrors();
 ?>
 <!DOCTYPE html>
 <html lang="ja">
