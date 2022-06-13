@@ -7,16 +7,20 @@ userCreateInput.addEventListener(
     const name = nameInput.value;
     const emailInput = document.querySelector('.email');
     const email = emailInput.value;
+    const click = document.querySelector('.user-create__next');
+    click.disabled = true;
 
     if (name.length > 5 || name.length < 1) {
       const nameErrorMessage = document.querySelector('.name-error__output');
       nameErrorMessage.classList.add('name');
+      click.disabled = false;
       return;
     }
 
     if (email.length === 0) {
       const emailErrorMessage = document.querySelector('.email-error__output');
       emailErrorMessage.classList.add('email');
+      click.disabled = false;
       return;
     }
 
@@ -42,6 +46,7 @@ userCreateInput.addEventListener(
     );
 
     const json = await response.json();
+
     if (json.data.status) {
       const userCreate = document.querySelector('.user-create');
       const userCertification = document.querySelector('.user-certification');
@@ -52,7 +57,6 @@ userCreateInput.addEventListener(
       const output = document.querySelector('.output');
       output.classList.add('active');
       errorMessage.innerHTML = 'メールアドレスが登録されています。';
-
       setTimeout(() => {
         output.classList.remove('active');
       }, 2000);

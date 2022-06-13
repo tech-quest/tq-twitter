@@ -25,7 +25,7 @@ unset($_SESSION['errors']);
     <p><input type="submit" value="次へ"></p>
     <a href="userDetailInput.php">パスワードを忘れた場合はこちら</a>
   </form>
-
+  <p>アカウントをお持ちでない場合は<a href="signup.php">登録</a></p>
 </body>
 
 </html>

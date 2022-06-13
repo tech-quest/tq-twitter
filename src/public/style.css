@@ -363,7 +363,11 @@ form label.move {
 }
 .user-password__send {
   width: 100%;
-  padding: 18px 0px 18px 0px;
+  font-size: 37px;
+}
+.user-password__send.confirm {
+  width: 100%;
+  font-size: 37px;
 }
 .complete-password {
   width: 550px;
@@ -531,6 +535,12 @@ form label[for='confirm-register'] {
   background-color: gray;
   border: none;
 }
+.box-top {
+  margin-bottom: 12px;
+}
+.box-top p {
+  font-size: 12px;
+}
 /**-- profile --**/
 .profile-wrapper {
   width: 650px;
@@ -691,6 +701,7 @@ form label[for='confirm-register'] {
   border-top: solid 1px rgb(239, 243, 244);
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .send-tweet {
   padding: 6px 16px 6px 16px;
@@ -749,4 +760,11 @@ form label[for='confirm-register'] {
   text-align: center;
   border-radius: 20px;
   padding: 10px 0;
+}
+.tweet-modal__right-section {
+  display: flex;
+  align-items: center;
+}
+.tweet-modal__count-wrapper {
+  margin-right: 8px;
 }

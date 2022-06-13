@@ -14,7 +14,7 @@ final class UserDao extends Dao
         parent::__construct();
     }
 
-    public function insertUser(string $name, string $email, string $password)
+    public function insertUser(string $name, string $email, string $password): bool
     {
         $sql = <<<EOF
     INSERT INTO users

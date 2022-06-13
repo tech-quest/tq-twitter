@@ -34,7 +34,7 @@ userRegisterButton.addEventListener(
     });
 
     const json = await response.json();
-    if (json.data['result']) {
+    if (json.data.status) {
       const userPasswordDisplay = document.querySelector(
         '.user-password__display'
       );
