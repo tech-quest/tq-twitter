@@ -3,7 +3,7 @@
 <body>
   <div class="left-bar">
     <nav class="nav flex-column">
-      <a class="nav-link active" aria-current="page" href="#">
+      <a class="nav-link active" aria-current="page" href="./top.php">
         <img src="" alt="" width="30" height="30" class="">
         ホーム
       </a>
@@ -27,7 +27,7 @@
         <img src="" alt="" width="30" height="30" class="">
         リスト
       </a>
-      <a class="nav-link" href="#">
+      <a class="nav-link" href="./profile.php">
         <img src="" alt="" width="30" height="30" class="">
         プロフィール
       </a>
