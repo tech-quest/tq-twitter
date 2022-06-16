@@ -7,6 +7,7 @@ use App\Infrastructure\Dao\UserDao;
 use App\Infrastructure\Dao\CertificationCodeDao;
 use App\Lib\Session;
 use App\Domain\ValueObject\UserId;
+use App\Domain\ValueObject\PasswordResetCertificationCode;
 
 final class Interactor
 {
@@ -32,20 +33,12 @@ final class Interactor
         return new Output(true, self::SUCCESS_MESSAGE);
     }
 
-    private function emailCertificationCode(): string
-    {
-        return $this->input->email()->value() . $this->input->certificationCode();
-    }
-
-    private function hashEmailCertificationCode(): string
-    {
-        return hash('sha3-512', $this->emailCertificationCode());
-    }
-
     private function findByCertificationCode(): ?array
     {
+        $certificationCode = new PasswordResetCertificationCode($this->input->email());
+        $hash = $certificationCode->generateHashFromCode($this->input->certificationCode());
         return $this->certificationCodeDao->findByCertificationCode(
-            $this->hashEmailCertificationCode()
+            $hash
         );
     }
 
