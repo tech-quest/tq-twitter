@@ -609,11 +609,13 @@ form label[for='confirm-register'] {
 .content {
   display: flex;
 }
+.container {
+  width: 445px;
+}
 .left-bar {
   width: 275px;
 }
 .input-area {
-  /* padding: 24px 48px 0px 48px; */
   font-size: 20px;
 }
 .input-border {
@@ -680,4 +682,48 @@ form label[for='confirm-register'] {
 }
 .tweet-modal__count-wrapper {
   margin-right: 8px;
+}
+.sidebar {
+  width: 350px;
+}
+.sidebar-trend {
+  margin-bottom: 16px;
+  padding: 16px 0px;
+  background-color: rgb(247, 249, 249);
+}
+.sidebar-trend__box {
+  margin-bottom: 16px;
+}
+.sidebar-trend .top-text {
+  margin-bottom: 16px;
+  font-weight: 800;
+  font-size: 20px;
+  display: block;
+}
+.sidebar-trend .title {
+  color: #636363;
+}
+.sidebar-user {
+  width: 350px;
+  padding: 16px 0px;
+  background-color: rgb(247, 249, 249);
+}
+.sidebar-user .top-text {
+  margin-bottom: 16px;
+  font-weight: 800;
+  font-size: 20px;
+  display: block;
+}
+.sidebar-user__wrapper {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.sidebar-user__icon {
+  width: 16%;
+}
+.sidebar-user__icon img {
+  width: calc(100% - 5px);
+  border-radius: 50%;
 }
