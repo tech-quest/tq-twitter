@@ -47,6 +47,7 @@ $session->setDevice(new Device($device));
           <?php endforeach; ?>
         </div>
       </main>
+      <?php require_once __DIR__ . '/right-bar.php'; ?>
     </div>
     <div class="tweet-button tweet-modal">
       <div class="tweet-modal__form-wrapper tweet-form">
