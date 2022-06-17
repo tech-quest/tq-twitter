@@ -2,8 +2,9 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\Lib\Redirect;
+use App\Lib\Session;
 
-session_start();
-unset($_SESSION['auth']);
+$session = Session::getInstance();
+$session->clearAuth();
 
 Redirect::handler('/signin.php');

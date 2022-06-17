@@ -96,6 +96,11 @@ final class Session
         unset($_SESSION[self::ERRORS_KEY]);
     }
 
+    public function clearAuth(): void
+    {
+        unset($_SESSION[self::AUTH_KEY]);
+    }
+
     public function setCertificateEmail(Email $email): void
     {
         $_SESSION[self::CERTIFICATE_EMAIL_KEY] = $email;
