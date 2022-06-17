@@ -627,6 +627,9 @@ form label[for='confirm-register'] {
   overflow: hidden;
   border-radius: 50%;
 }
+.account-info__id-wrapper {
+  margin: 0 12px;
+}
 .account-info-modal {
   padding: 12px 0;
   position: absolute;

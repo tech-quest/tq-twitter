@@ -53,7 +53,7 @@ if (is_null($authUser)) {
   <div class="account-info">
     <div class="account-info-wrapper">
       <div class="account-info__icon-image"><img height="40px" width="40px" src="./image/twittericon13.jpeg"></img></div>
-      <div>
+      <div class="account-info__id-wrapper">
         <div><?php echo $authUser->userName()->value(); ?></div>
         <!-- TODO: アカウントIDテーブルを作成する -->
         <div>アカウントID</div>
@@ -62,7 +62,7 @@ if (is_null($authUser)) {
     <div class="account-info-modal">
       <div class="account-info-wrapper">
         <div class="account-info__icon-image"><img height="40px" width="40px" src="./image/twittericon13.jpeg"></img></div>
-        <div>
+        <div class="account-info__id-wrapper">
           <div><?php echo $authUser->userName()->value(); ?></div>
           <div>アカウントID2</div>
         </div>
