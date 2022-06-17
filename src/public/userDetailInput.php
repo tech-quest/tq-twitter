@@ -131,22 +131,28 @@ $session->clearErrors();
   btn.addEventListener('click', async function(event) {
     event.preventDefault();
     const searchInput = document.querySelector('.input');
-    const input = searchInput.value;
-    if (!input) {
+    const email = searchInput.value;
+    if (email.length == 0) {
       const errorMessage = document.querySelector('.errorMessage');
       const output = document.querySelector('.output');
       output.classList.add('active');
       errorMessage.innerHTML = 'メールアドレスが空です'
+
+      setTimeout(() => {
+        output.classList.remove('active');
+      }, 2000)
       return;
     }
+
     const obj = {
-      input,
+      email,
     };
     const body = JSON.stringify(obj);
     const headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     };
+
     const response = await fetch(
       'Api/searchUserDetailInput.php', {
         method: "POST",
@@ -156,14 +162,14 @@ $session->clearErrors();
 
     const json = await response.json();
 
-    if (json.data['email']) {
+    if (json.data.email) {
       userDetailResult.classList.add('active');
       userDetail.classList.add('active');
       const email = document.querySelector('.email');
       const result = document.querySelector('.result');
       result.innerHTML = 'このアカウントに関する以下の情報が見つかりました。'
-      email.innerHTML = json.data['email'];
-    } else {
+      email.innerHTML = json.data.email;
+    } else if (json.data.email == null) {
       const errorMessage = document.querySelector('.errorMessage');
       const output = document.querySelector('.output');
       output.classList.add('active');
@@ -186,9 +192,9 @@ $session->clearErrors();
     userCertification.classList.add('show');
 
     const searchInput = document.querySelector('.input');
-    const input = searchInput.value;
+    const email = searchInput.value;
     const obj = {
-      input,
+      email,
     };
     const body = JSON.stringify(obj);
     const headers = {

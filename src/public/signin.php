@@ -1,8 +1,18 @@
 <?php
-session_start();
+require_once __DIR__ . '/../vendor/autoload.php';
 
-$errors = $_SESSION['errors'] ?? [];
-unset($_SESSION['errors']);
+use App\Lib\Redirect;
+use App\Lib\Session;
+
+$session = Session::getInstance();
+$authUser = $session->auth();
+
+if (!is_null($authUser)) {
+  Redirect::handler('/index.php');
+}
+
+$errors = $session->errors();
+$session->clearErrors();
 ?>
 <!DOCTYPE html>
 <html lang="ja">
