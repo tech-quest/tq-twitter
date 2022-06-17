@@ -1,17 +1,3 @@
-<?php
-
-require_once __DIR__ . '/../vendor/autoload.php';
-
-use App\Lib\Redirect;
-use App\Lib\Session;
-
-$session = Session::getInstance();
-$authUser = $session->auth();
-
-if (is_null($authUser)) {
-    Redirect::handler('/signin.php');
-}
-?>
 <!DOCTYPE html>
 <div class="sidebar">
     <div class="sidebar-search">
