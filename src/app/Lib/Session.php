@@ -98,7 +98,11 @@ final class Session
 
     public function clearAuth(): void
     {
-        unset($_SESSION[self::AUTH_KEY]);
+        $_SESSION = [];
+        if (isset($_COOKIE[session_name()])) {
+            setcookie(session_name(), '', time() - 4200, '/');
+        }
+        session_destroy();
     }
 
     public function setCertificateEmail(Email $email): void
