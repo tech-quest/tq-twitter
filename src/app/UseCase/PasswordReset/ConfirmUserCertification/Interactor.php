@@ -3,11 +3,10 @@
 namespace App\UseCase\PasswordReset\ConfirmUserCertification;
 
 use App\UseCase\PasswordReset\ConfirmUserCertification\Input;
-use App\Infrastructure\Dao\UserDao;
 use App\Infrastructure\Dao\CertificationCodeDao;
 use App\Lib\Session;
 use App\Domain\ValueObject\UserId;
-use App\Domain\ValueObject\PasswordResetCertificationCode;
+use App\Domain\ValueObject\Certification;
 
 final class Interactor
 {
@@ -35,7 +34,7 @@ final class Interactor
 
     private function findByCertificationCode(): ?array
     {
-        $certificationCode = new PasswordResetCertificationCode($this->input->email());
+        $certificationCode = new Certification($this->input->email());
         $hash = $certificationCode->generateHashFromCode($this->input->certificationCode());
         return $this->certificationCodeDao->findByCertificationCode(
             $hash
