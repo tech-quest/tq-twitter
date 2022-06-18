@@ -3,14 +3,9 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\Lib\Session;
-use App\Lib\Redirect;
 
 $session = Session::getInstance();
 $authUser = $session->auth();
-
-if (is_null($authUser)) {
-  Redirect::handler('/signin.php');
-}
 
 ?>
 
