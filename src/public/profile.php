@@ -13,7 +13,7 @@ $session = Session::getInstance();
 $authUser = $session->auth();
 
 if (is_null($authUser)) {
-    Redirect::handler('/signin.php');
+  Redirect::handler('/signin.php');
 }
 
 $input = new SearchTweetsInput($authUser);
@@ -31,6 +31,7 @@ $userName = $user->name()->value();
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
   <link rel="stylesheet" href="style.css">
   <title>Document</title>
 </head>
@@ -76,7 +77,7 @@ $userName = $user->name()->value();
     </div>
   </div>
   </div>
-  <?php foreach ($tweets as $tweet): ?>
+  <?php foreach ($tweets as $tweet) : ?>
     <div class="d-flex justify-content-center">
       <div class="p-2 bd-highlight mt-3">
         <?php echo $tweet->tweetBody()->value(); ?>
@@ -93,8 +94,8 @@ $userName = $user->name()->value();
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <form method="post" action="tweetDelete.php" class="dropdown-item">
                   <input type="hidden" name="id" value="<?php echo $tweet
-                      ->tweetId()
-                      ->value(); ?>">
+                                                          ->tweetId()
+                                                          ->value(); ?>">
                   <input type="submit" value="削除">
                 </form>
               </div>
