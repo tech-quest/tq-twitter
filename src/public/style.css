@@ -687,8 +687,13 @@ form label[for='confirm-register'] {
 .content {
   display: flex;
 }
+.container {
+  width: 445px;
+}
+.left-bar {
+  width: 275px;
+}
 .input-area {
-  /* padding: 24px 48px 0px 48px; */
   font-size: 20px;
 }
 .input-border {

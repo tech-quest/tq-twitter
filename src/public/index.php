@@ -27,6 +27,7 @@ $session->setDevice(new Device($device));
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
   <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
@@ -48,6 +49,7 @@ $session->setDevice(new Device($device));
           <?php endforeach; ?>
         </div>
       </main>
+      <?php require_once __DIR__ . '/right-bar.php'; ?>
     </div>
     <div class="tweet-button tweet-modal">
       <div class="tweet-modal__form-wrapper tweet-form">
