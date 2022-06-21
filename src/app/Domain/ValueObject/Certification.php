@@ -20,7 +20,7 @@ final class Certification
         return $this->hashEmailWithCode($this->code);
     }
 
-    public function generateHashFromCode(string $code): string
+    public function generateHashByVerificationCode(string $code): string
     {
         return $this->hashEmailWithCode($code);
     }

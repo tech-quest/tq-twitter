@@ -30,7 +30,7 @@ final class Interactor
     private function findByRegisterCertificationCode(): bool
     {
         $certificationCode = new Certification($this->input->email());
-        $hash = $certificationCode->generateHashFromCode($this->input->code());
+        $hash = $certificationCode->generateHashByVerificationCode($this->input->code());
         $code = $this->userRegisterCertificationCodeDao->findByRegisterCertificationCode(
             $hash
         );

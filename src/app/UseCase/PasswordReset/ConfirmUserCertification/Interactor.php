@@ -35,7 +35,7 @@ final class Interactor
     private function findByCertificationCode(): ?array
     {
         $certificationCode = new Certification($this->input->email());
-        $hash = $certificationCode->generateHashFromCode($this->input->certificationCode());
+        $hash = $certificationCode->generateHashByVerificationCode($this->input->certificationCode());
         return $this->certificationCodeDao->findByCertificationCode(
             $hash
         );
