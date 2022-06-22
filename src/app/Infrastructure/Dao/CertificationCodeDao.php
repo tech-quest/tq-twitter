@@ -4,6 +4,7 @@ namespace App\Infrastructure\Dao;
 
 use App\Infrastructure\Dao\Dao;
 use PDO;
+use Exception;
 
 final class CertificationCodeDao extends Dao
 {

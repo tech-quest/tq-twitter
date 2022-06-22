@@ -21,7 +21,7 @@ $session->clearErrors();
 <body>
   <div>
     <div class="user-detail">
-      <?php foreach ($errors as $error): ?>
+      <?php foreach ($errors as $error) : ?>
         <p><?php echo $error; ?></p>
       <?php endforeach; ?>
       <div class="user-detail__input">
@@ -75,10 +75,16 @@ $session->clearErrors();
 
   <div class="user-password user-password__display">
     <div class="user-password__input">
-      <h4>新しいパスワードを入力してください</h4>
+      <h4>パスワードをリセット</h4>
       <form action="" method="post">
+        <div class="user-password_box box-top">
+          <label for="confirm-register">パスワード</label>
+          <input class="user-password__send" type="password" name="name" />
+          <p>※半角英数字、大文字を含め8～24文字でご設定ください。</p>
+        </div>
         <div class="user-password_box">
-          <input class="user-password__send" type="text" name="name" />
+          <label for="confirm-register">パスワード確認</label>
+          <input class="user-password__send confirm" type="password" name="name" />
         </div>
         <a class="button-password" href="/signin.php">キャンセル</a>
         <input class="user-password__button" type="submit" value="変更する">
@@ -125,22 +131,28 @@ $session->clearErrors();
   btn.addEventListener('click', async function(event) {
     event.preventDefault();
     const searchInput = document.querySelector('.input');
-    const input = searchInput.value;
-    if (!input) {
+    const email = searchInput.value;
+    if (email.length == 0) {
       const errorMessage = document.querySelector('.errorMessage');
       const output = document.querySelector('.output');
       output.classList.add('active');
       errorMessage.innerHTML = 'メールアドレスが空です'
+
+      setTimeout(() => {
+        output.classList.remove('active');
+      }, 2000)
       return;
     }
+
     const obj = {
-      input,
+      email,
     };
     const body = JSON.stringify(obj);
     const headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     };
+
     const response = await fetch(
       'Api/searchUserDetailInput.php', {
         method: "POST",
@@ -150,14 +162,14 @@ $session->clearErrors();
 
     const json = await response.json();
 
-    if (json.data['email']) {
+    if (json.data.email) {
       userDetailResult.classList.add('active');
       userDetail.classList.add('active');
       const email = document.querySelector('.email');
       const result = document.querySelector('.result');
       result.innerHTML = 'このアカウントに関する以下の情報が見つかりました。'
-      email.innerHTML = json.data['email'];
-    } else {
+      email.innerHTML = json.data.email;
+    } else if (json.data.email == null) {
       const errorMessage = document.querySelector('.errorMessage');
       const output = document.querySelector('.output');
       output.classList.add('active');
@@ -180,9 +192,9 @@ $session->clearErrors();
     userCertification.classList.add('show');
 
     const searchInput = document.querySelector('.input');
-    const input = searchInput.value;
+    const email = searchInput.value;
     const obj = {
-      input,
+      email,
     };
     const body = JSON.stringify(obj);
     const headers = {
@@ -231,7 +243,20 @@ $session->clearErrors();
   userPasswordButton.addEventListener('click', async function(event) {
     event.preventDefault();
     const userPasswordSend = document.querySelector('.user-password__send');
+    const userConfirmPassword = document.querySelector('.confirm');
+
     const newPassword = userPasswordSend.value;
+    const confirmPassword = userConfirmPassword.value;
+    if (newPassword === '') {
+      alert('パスワードを入力してください。');
+      return;
+    } else if (confirmPassword === '') {
+      alert('パスワード確認を入力してください。');
+      return;
+    } else if (newPassword !== confirmPassword) {
+      alert('パスワードが一致していません。');
+      return;
+    }
     const obj = {
       newPassword,
     };
@@ -241,18 +266,21 @@ $session->clearErrors();
       'Content-Type': 'application/json'
     };
     const response = await fetch(
-      'Api/newPassword.php', {
+      'Api/resetPassword.php', {
         method: "POST",
         headers,
         body
       });
 
     const json = await response.json();
-    if (json.data['result'] === true) {
+
+    if (json.data.status === true) {
       const userPasswordDisplay = document.querySelector('.user-password__display');
       const completePassword = document.querySelector('.complete-password');
       userPasswordDisplay.classList.add('remove3');
       completePassword.classList.add('show3');
+    } else {
+      alert(json.data.message);
     }
   }, false);
 </script>

@@ -2,6 +2,8 @@
 
 namespace App\Domain\ValueObject;
 
+use Exception;
+
 final class Device
 {
     const IPHONE = 'iPhone';
@@ -35,6 +37,7 @@ final class Device
         if ($this->windows()) {
             return self::WINDOWS;
         }
+        throw new Exception('想定外の値が渡されました');
     }
 
     private function iPhone(): bool

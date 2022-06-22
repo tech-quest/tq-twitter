@@ -2,6 +2,8 @@
 
 namespace App\UseCase\SearchTweets;
 
+use App\Domain\Entity\Tweet;
+
 final class SearchTweetsOutput
 {
     private $tweets;

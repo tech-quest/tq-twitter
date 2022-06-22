@@ -1,8 +1,18 @@
 <?php
-session_start();
+require_once __DIR__ . '/../vendor/autoload.php';
 
-$errors = $_SESSION['errors'] ?? [];
-unset($_SESSION['errors']);
+use App\Lib\Redirect;
+use App\Lib\Session;
+
+$session = Session::getInstance();
+$authUser = $session->auth();
+
+if (!is_null($authUser)) {
+  Redirect::handler('/index.php');
+}
+
+$errors = $session->errors();
+$session->clearErrors();
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -25,7 +35,7 @@ unset($_SESSION['errors']);
     <p><input type="submit" value="次へ"></p>
     <a href="userDetailInput.php">パスワードを忘れた場合はこちら</a>
   </form>
-
+  <p>アカウントをお持ちでない場合は<a href="signup.php">登録</a></p>
 </body>
 
 </html>

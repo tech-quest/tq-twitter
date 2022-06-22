@@ -2,12 +2,18 @@
 
 # 環境構築手順
 
-1. ローカルに git clone する
-2. [Docker]() のインストール
-3. 以下のコマンドで Docker コンテナの起動
+1. ローカルに `$ git clone` する
+2. [Docker](https://www.docker.com/get-started/) のインストール
+3. 環境の初期化を行う
 
 ```bash
-$ ./docker-compose-local.sh up
+$ make init
+```
+
+4. マイグレーション(DB の更新)を実行する
+
+```bash
+$ make migrate
 ```
 
 # ドキュメント
@@ -31,3 +37,17 @@ $ ./docker-compose-local.sh up
 
 1. .env ファイルの MAILTRAP_USERNAME に値を設定
 2. .env ファイルの MAILTRAP_PASSWORD に値を設定
+
+# Docker コンテナの操作
+
+1.  コンテナを止める
+
+```bash
+$ make stop
+```
+
+2. コンテナを立ち上げる
+
+```bash
+$ make up
+```

@@ -2,6 +2,8 @@
 
 namespace App\Infrastructure\Validator;
 
+use App\Domain\ValueObject\Password;
+
 /**
  * ログインフォーム情報のバリデーター
  */
@@ -10,6 +12,7 @@ final class SignInInputValidator
     public const ERROR_EMAIL_INVALID_FORMAT = '不正な形式のメールアドレスです';
     public const ERROR_EMAIL_NULL_TEXT = 'Emailが空です';
     public const ERROR_PASSWORD_NULL_TEXT = 'passwordが空です';
+    public const ERROR_EMAIL_PASSWORD_FORMAT = '不正な形式のパスワードです';
 
     private $email;
     private $password;
@@ -47,15 +50,21 @@ final class SignInInputValidator
     }
 
     /**
-     * passwordがnullでないかのチェック
+     * passwordがnullでないか形式が正しいかのチェック
      *
-     * @return void
+     * @return string|null
      */
-    private function passwordErrorText()
+    private function passwordErrorText(): ?string
     {
         if (empty($this->password)) {
             return self::ERROR_PASSWORD_NULL_TEXT;
         }
+
+        if (!Password::isValid($this->password)) {
+            return self::ERROR_EMAIL_PASSWORD_FORMAT;
+        }
+
+        return null;
     }
 
     /**
