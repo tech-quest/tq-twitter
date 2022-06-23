@@ -25,7 +25,7 @@ $session->clearErrors();
 </head>
 
 <body>
-  <?php foreach ($errors as $error): ?>
+  <?php foreach ($errors as $error) : ?>
     <p><?php echo $error; ?></p>
   <?php endforeach; ?>
   <h1>Twitterにログイン</h1>
