@@ -24,6 +24,7 @@ final class AddCertificationsTable extends AbstractMigration
         $table
             ->addColumn('user_id', 'integer')
             ->addColumn('certification_code', 'string')
+            ->addColumn('expire_datetime', 'datetime')
             ->addColumn('created_at', 'datetime', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('updated_at', 'datetime', ['default' => 'CURRENT_TIMESTAMP', 'update' => 'CURRENT_TIMESTAMP'])
             ->addForeignKey('user_id', 'users', 'id', ['delete' => 'NO_ACTION', 'update' => 'NO_ACTION'])
