@@ -5,6 +5,7 @@ namespace App\UseCase\SignUp\ConfirmRegisterCertificationCode;
 use App\Infrastructure\Dao\UserRegisterCertificationCodeDao;
 use App\UseCase\SignUp\ConfirmRegisterCertificationCode\Input;
 use App\UseCase\SignUp\ConfirmRegisterCertificationCode\Output;
+use App\Domain\ValueObject\Certification;
 
 final class Interactor
 {
@@ -26,20 +27,12 @@ final class Interactor
         return new Output(true, self::CONFIRM_MESSAGE);
     }
 
-    private function createCertificationCode(): string
-    {
-        return $this->input->email()->value() . $this->input->code();
-    }
-
-    private function createHashEmailCertificationCode(): string
-    {
-        return hash('sha3-512', $this->createCertificationCode());
-    }
-
     private function findByRegisterCertificationCode(): bool
     {
+        $certificationCode = new Certification($this->input->email());
+        $hash = $certificationCode->generateHashByVerificationCode($this->input->code());
         $code = $this->userRegisterCertificationCodeDao->findByRegisterCertificationCode(
-            $this->createHashEmailCertificationCode()
+            $hash
         );
         return is_null($code);
     }
