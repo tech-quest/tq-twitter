@@ -96,7 +96,7 @@ final class Session
         unset($_SESSION[self::ERRORS_KEY]);
     }
 
-    public function clearAuth(): void
+    public function destroy(): void
     {
         $_SESSION = [];
         if (isset($_COOKIE[session_name()])) {
