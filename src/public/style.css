@@ -727,6 +727,7 @@ form label[for='confirm-register'] {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.2s;
+  background-color: white;
 }
 .account-info-modal.show-modal {
   opacity: 1;
