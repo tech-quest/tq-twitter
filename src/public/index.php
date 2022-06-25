@@ -34,7 +34,7 @@ $session->setDevice(new Device($device));
   <div class="wrapper">
     <div class="content">
       <?php require_once __DIR__ . '/left_nav.php'; ?>
-      <main>
+      <main class="main">
         <div class="container">
           <h1>Topページ</h1>
           <form method="post" action="tweetComplete.php">
@@ -78,7 +78,7 @@ $session->setDevice(new Device($device));
       </div>
     </div>
   </div>
+  <script src="tweet-modal.js"></script>
 </body>
 
 </html>
-<script src="tweet-modal.js"></script>
