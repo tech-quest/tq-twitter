@@ -5,11 +5,11 @@ namespace App\UseCase\SignUp\SendUserRegisterCertificationCode;
 use App\Infrastructure\Dao\UserDao;
 use App\UseCase\SignUp\SendUserRegisterCertificationCode\Input;
 use App\UseCase\SignUp\SendUserRegisterCertificationCode\Output;
-use App\Domain\ValueObject\SignUpCertificationCode;
 use App\Infrastructure\Dao\UserRegisterCertificationCodeDao;
 use App\UseCase\SignUp\SendCertificationCode\SignUpCertificationSender;
 use Exception;
 use App\Lib\Session;
+use App\Domain\ValueObject\Certification;
 
 final class Interactor
 {
@@ -29,7 +29,7 @@ final class Interactor
             return new Output(false, self::REGISTERD_MESSAGE);
         }
 
-        $signUpCertificationCode = new SignUpCertificationCode($this->input->email());
+        $signUpCertificationCode = new Certification($this->input->email());
         $this->insertRegisterCertification($signUpCertificationCode);
         $this->saveUserInfo($signUpCertificationCode);
         $this->sendCertificationCodeMail($signUpCertificationCode);
@@ -37,28 +37,28 @@ final class Interactor
         return new Output(true, self::NOT_REGISTERD_MESSAGE);
     }
 
-    private function saveUserInfo(SignUpCertificationCode $signUpCertificationCode): void
+    private function saveUserInfo(Certification $Certification): void
     {
         $session = Session::getInstance();
         $session->setRegisterCertificateEmail($this->input->email());
         $session->setUserName($this->input->name());
-        $session->setHashCertificateEmail($signUpCertificationCode->generateHash());
+        $session->setHashCertificateEmail($Certification->generateHash());
     }
 
-    private function sendCertificationCodeMail(SignUpCertificationCode $signUpCertificationCode)
+    private function sendCertificationCodeMail(Certification $Certification)
     {
         try {
-            $signUpCertificationSender = new SignUpCertificationSender($signUpCertificationCode->code());
+            $signUpCertificationSender = new SignUpCertificationSender($Certification->code());
             return $signUpCertificationSender->send();
         } catch (Exception $e) {
             return 'error:' . $e->getMessage();
         }
     }
 
-    private function insertRegisterCertification(SignUpCertificationCode $signUpCertificationCode): void
+    private function insertRegisterCertification(Certification $Certification): void
     {
         $userRegisterCodeDao = new UserRegisterCertificationCodeDao();
-        $userRegisterCodeDao->insertRegisterCertification($signUpCertificationCode->generateHash());
+        $userRegisterCodeDao->insertRegisterCertification($Certification->generateHash());
     }
 
     private function existsUserByEmail(): bool

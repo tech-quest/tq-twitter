@@ -2,8 +2,10 @@
 
 namespace App\Domain\ValueObject;
 
-final class SignUpCertificationCode
+final class Certification
 {
+    private const HASH_ALGORITHM = 'sha3-512';
+
     private string $code;
     private Email $email;
 
@@ -15,13 +17,23 @@ final class SignUpCertificationCode
 
     public function generateHash(): string
     {
-        $emailCertificationCode = $this->email->value() . $this->code;
-        return hash('sha3-512', $emailCertificationCode);
+        return $this->hashEmailWithCode($this->code);
+    }
+
+    public function generateHashByVerificationCode(string $code): string
+    {
+        return $this->hashEmailWithCode($code);
     }
 
     public function code(): string
     {
         return $this->code;
+    }
+
+    private function hashEmailWithCode(string $code): string
+    {
+        $emailCertificationCode = $this->email->value() . $code;
+        return hash(self::HASH_ALGORITHM, $emailCertificationCode);
     }
 
     private function generateCode(): string
