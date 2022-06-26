@@ -40,8 +40,6 @@ try {
 } catch (Exception $e) {
     $errors = [$e->getMessage()];
     $session->setErrors($errors);
-    $_SESSION['user']['name'] = $name;
-    $_SESSION['user']['email'] = $email;
     Redirect::handler('/signin.php');
     die();
 }
