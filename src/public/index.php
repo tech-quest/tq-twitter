@@ -82,3 +82,4 @@ $session->setDevice(new Device($device));
 
 </html>
 <script src="tweet-modal.js"></script>
+<script src="account-info-modal.js"></script>

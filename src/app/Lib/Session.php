@@ -96,6 +96,15 @@ final class Session
         unset($_SESSION[self::ERRORS_KEY]);
     }
 
+    public function destroy(): void
+    {
+        $_SESSION = [];
+        if (isset($_COOKIE[session_name()])) {
+            setcookie(session_name(), '', time() - 4200, '/');
+        }
+        session_destroy();
+    }
+
     public function setCertificateEmail(Email $email): void
     {
         $_SESSION[self::CERTIFICATE_EMAIL_KEY] = $email;

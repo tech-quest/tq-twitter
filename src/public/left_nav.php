@@ -1,3 +1,13 @@
+<?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use App\Lib\Session;
+
+$session = Session::getInstance();
+$authUser = $session->auth();
+?>
+
 <header class="left-bar">
   <h1 class="left-bar__logo">
     <a href="/top.php">
@@ -61,4 +71,26 @@
       </button>
     </div>
   </nav>
+  <div class="account-info">
+    <div class="account-info-wrapper">
+      <div class="account-info__icon-image"><img height="40px" width="40px" src="./image/twittericon13.jpeg"></img></div>
+      <div class="account-info__id-wrapper">
+        <div><?php echo $authUser->userName()->value(); ?></div>
+        <!-- TODO: アカウントIDテーブルを作成する -->
+        <div>アカウントID</div>
+      </div>
+    </div>
+    <div class="account-info-modal">
+      <div class="account-info-wrapper">
+        <div class="account-info__icon-image"><img height="40px" width="40px" src="./image/twittericon13.jpeg"></img></div>
+        <div class="account-info__id-wrapper">
+          <div><?php echo $authUser->userName()->value(); ?></div>
+          <div>アカウントID2</div>
+        </div>
+      </div>
+
+      <div class="account-info-modal__add-existing-account">既存のアカウントを追加</div>
+      <div class="account-info-modal__logout"><a href="logout.php">ログアウト</a></div>
+    </div>
+  </div>
 </header>
