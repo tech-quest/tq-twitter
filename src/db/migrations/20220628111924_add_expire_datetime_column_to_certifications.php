@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-final class AddCertificationsTable extends AbstractMigration
+final class AddExpireDatetimeColumnToCertifications extends AbstractMigration
 {
     /**
      * Change Method.
@@ -19,14 +19,8 @@ final class AddCertificationsTable extends AbstractMigration
      */
     public function change(): void
     {
-
         $table = $this->table('certifications');
-        $table
-            ->addColumn('user_id', 'integer')
-            ->addColumn('certification_code', 'string')
-            ->addColumn('created_at', 'datetime', ['default' => 'CURRENT_TIMESTAMP'])
-            ->addColumn('updated_at', 'datetime', ['default' => 'CURRENT_TIMESTAMP', 'update' => 'CURRENT_TIMESTAMP'])
-            ->addForeignKey('user_id', 'users', 'id', ['delete' => 'NO_ACTION', 'update' => 'NO_ACTION'])
-            ->create();
+        $table->addColumn('expire_datetime', 'datetime')
+            ->update();
     }
 }
