@@ -9,6 +9,7 @@ use App\Domain\ValueObject\Email;
 use App\UseCase\PasswordReset\PasswordCertificationSender;
 use Exception;
 use App\Lib\Session;
+use App\Domain\ValueObject\Certification;
 
 final class Interactor
 {
@@ -23,37 +24,16 @@ final class Interactor
 
     public function handler()
     {
-        $certificationCode = $this->code();
-        $emailCertificationCode = $this->emailCode($certificationCode);
-        $hashCertificationCode = $this->hashCode($emailCertificationCode);
+        $certification = new Certification($this->input->email());
+        $hashCertificationCode = $certification->generateHash();
         $this->insertPasswordCertification($hashCertificationCode);
         $this->saveUserInfo();
-        $this->sendCertificationCodeMail($certificationCode);
+        $this->sendCertificationCodeMail($certification->Code());
     }
 
     private function findByUser(): ?array
     {
         return $this->userDao->findByEmail($this->input->email()->value());
-    }
-
-    private function code(): string
-    {
-        $certificationCode = chr(mt_rand(97, 122));
-        for ($i = 0; $i < 10; $i++) {
-            $certificationCode .= chr(mt_rand(97, 122));
-        }
-        return $certificationCode;
-    }
-
-    private function emailCode($certificationCode): string
-    {
-        $user = $this->findByUser();
-        return $user['email'] . $certificationCode;
-    }
-
-    private function hashCode($emailCertificationCode): string
-    {
-        return hash('sha3-512', $emailCertificationCode);
     }
 
     private function insertPasswordCertification($hashCertificationCode): void

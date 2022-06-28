@@ -697,6 +697,56 @@ form label[for='confirm-register'] {
 }
 .left-bar {
   width: 275px;
+  display: flex;
+  justify-content: space-between;
+  flex-flow: column;
+  height: 100vh;
+}
+.account-info {
+  position: relative;
+}
+.account-info-wrapper {
+  display: flex;
+  padding: 12px 16px;
+}
+.account-info__icon-image {
+  overflow: hidden;
+  border-radius: 50%;
+}
+.account-info__id-wrapper {
+  margin: 0 12px;
+}
+.account-info-modal {
+  padding: 12px 0;
+  position: absolute;
+  bottom: 88px;
+  /* border: 1px solid; */
+  border-radius: 16px;
+  box-shadow: rgb(101 119 134 / 20%) 0px 0px 15px,
+    rgb(101 119 134 / 15%) 0px 0px 3px 1px;
+  width: 300px;
+  min-width: 260px;
+  min-height: 30px;
+  max-width: 360px;
+  max-height: 480px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s;
+  background-color: white;
+}
+.account-info-modal.show-modal {
+  opacity: 1;
+  visibility: visible;
+}
+.account-info-modal__icon-image {
+  overflow: hidden;
+  border-radius: 50%;
+}
+.account-info-modal__add-existing-account {
+  padding: 16px;
+}
+.account-info-modal__logout {
+  padding: 16px;
 }
 .input-area {
   font-size: 20px;
@@ -758,6 +808,47 @@ form label[for='confirm-register'] {
 }
 #inputForm.color {
   color: red;
+}
+.logout-wrapper {
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100vw;
+  height: 100vh;
+}
+.logout-form-wrapper {
+  width: 320px;
+  height: 200px;
+  background-color: rgba(255, 255, 255, 1);
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  border-radius: 20px;
+  padding: 32px;
+}
+.logout-form {
+  position: absolute;
+}
+.logout-area_button {
+  background-color: rgb(15, 20, 25);
+  margin-bottom: 12px;
+  padding: 0 24px 0 24px;
+  text-align: center;
+  border-radius: 20px;
+  margin: 24px 0 12px 0;
+  padding: 10px 0;
+}
+.logout-link {
+  color: rgba(255, 255, 255, 1);
+}
+.logout-cancel_button {
+  border: 1px solid;
+  border-color: rgb(207, 217, 222);
+  background-color: rgba(0, 0, 0, 0);
+  margin-bottom: 12px;
+  padding: 0 24px 0 24px;
+  text-align: center;
+  border-radius: 20px;
+  padding: 10px 0;
 }
 .tweet-modal__right-section {
   display: flex;

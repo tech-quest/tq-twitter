@@ -51,7 +51,7 @@ $userName = $user->name()->value();
             <img src="./image/twittericon13.jpeg"></img>
           </div>
           <div class="profile-content002__edit">
-            <p>プロフィールを編集</p>
+            <p><a href="./editProfile.php">プロフィールを編集</a></p>
           </div>
         </div>
         <div class="profile-content003">
