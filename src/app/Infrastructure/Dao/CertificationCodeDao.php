@@ -15,14 +15,15 @@ final class CertificationCodeDao extends Dao
 
     public function insertPasswordCertification(
         $user_id,
-        $certificationCode
+        $certificationCode,
+        $expiredMinutes
     ): void {
         $sql = <<<EOF
     INSERT INTO 
       certifications
-    (user_id, certification_code)
+    (user_id, certification_code, expire_datetime)
     VALUES
-    (:user_id, :certification_code)
+    (:user_id, :certification_code, NOW() + INTERVAL :expired_minutes MINUTE)
 EOF;
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
@@ -30,6 +31,11 @@ EOF;
             ':certification_code',
             $certificationCode,
             PDO::PARAM_STR
+        );
+        $stmt->bindValue(
+            ':expired_minutes',
+            $expiredMinutes,
+            PDO::PARAM_INT
         );
 
         $res = $stmt->execute();

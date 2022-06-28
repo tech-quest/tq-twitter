@@ -48,7 +48,7 @@ EOF;
     /**
      * ツイートの全件取得
      *
-     * @return void
+     * @return array
      */
     public function findAllByTweets(): array
     {

@@ -13,6 +13,7 @@ use App\Domain\ValueObject\Certification;
 
 final class Interactor
 {
+    private const CERTIFICATION_EXPIRED_MINUTES = 5;
     private Input $input;
 
     public function __construct(Input $input)
@@ -41,7 +42,8 @@ final class Interactor
         $certificationCodeDao = new CertificationCodeDao();
         $certificationCodeDao->insertPasswordCertification(
             $user['id'],
-            $hashCertificationCode
+            $hashCertificationCode,
+            self::CERTIFICATION_EXPIRED_MINUTES
         );
     }
 
