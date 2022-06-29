@@ -5,14 +5,16 @@ use App\Lib\Redirect;
 use App\Lib\Session;
 
 $session = Session::getInstance();
-$authUser = $session->auth();
+$authUser = $session->auth();;
 
 if (!is_null($authUser)) {
     Redirect::handler('/index.php');
 }
-
 $errors = $session->errors();
+$email = $session->inputEmail();
+var_dump($email);
 $session->clearErrors();
+
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -30,7 +32,7 @@ $session->clearErrors();
     <?php endforeach; ?>
     <h1>Twitterにログイン</h1>
     <form action="signin-complete.php" method="post">
-        <p><input type="text" name="email" placeholder="Email"></p>
+        <p><input type="text" name="email" placeholder="Email" value="<?php echo $email ?? ''; ?>"></p>
         <p><input type="password" name="password" placeholder="password"></p>
         <p><input type="submit" value="次へ"></p>
         <a href="userDetailInput.php">パスワードを忘れた場合はこちら</a>
