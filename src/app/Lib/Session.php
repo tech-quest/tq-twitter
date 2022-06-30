@@ -18,7 +18,6 @@ final class Session
     public const USER_KEY = 'user_id';
     public const NAME_KEY = 'name';
     public const EMAIL_KEY = 'email';
-
     public const INPUT_EMAIL_KEY = 'input_email';
     public const HASH_CERTIFICATE_REGISTER = 'hash_certificate_register';
     public const DEVICE_KEY = 'device';
@@ -96,6 +95,11 @@ final class Session
     public function clearErrors(): void
     {
         unset($_SESSION[self::ERRORS_KEY]);
+    }
+
+    public function clearInputEmail(): void
+    {
+        unset($_SESSION[self::INPUT_EMAIL_KEY]);
     }
 
     public function destroy(): void

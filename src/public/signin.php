@@ -5,14 +5,15 @@ use App\Lib\Redirect;
 use App\Lib\Session;
 
 $session = Session::getInstance();
-$authUser = $session->auth();;
+$authUser = $session->auth();
 
 if (!is_null($authUser)) {
     Redirect::handler('/index.php');
 }
+
 $errors = $session->errors();
 $email = $session->inputEmail();
-var_dump($email);
+$session->clearInputEmail();
 $session->clearErrors();
 
 ?>
