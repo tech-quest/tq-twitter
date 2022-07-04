@@ -21,8 +21,7 @@ try {
     $errors = $signInInputError->allErrors();
 
     if (!empty($errors)) {
-        $session->setErrors($errors);
-        Redirect::handler('/signin.php');
+        throw new Exception('不正な値が入力されました。');
     }
 
     $userEmail = new Email($email);
@@ -38,8 +37,9 @@ try {
 
     Redirect::handler('/index.php');
 } catch (Exception $e) {
-    $errors = [$e->getMessage()];
+    // TODO: バリデーションの例外とユースケースの例外を別々で処理するようにする
     $session->setErrors($errors);
+    $session->setInputEmail($email);
+
     Redirect::handler('/signin.php');
-    die();
 }

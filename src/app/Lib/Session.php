@@ -18,6 +18,7 @@ final class Session
     public const USER_KEY = 'user_id';
     public const NAME_KEY = 'name';
     public const EMAIL_KEY = 'email';
+    public const INPUT_EMAIL_KEY = 'input_email';
     public const HASH_CERTIFICATE_REGISTER = 'hash_certificate_register';
     public const DEVICE_KEY = 'device';
     private static $instance;
@@ -96,6 +97,11 @@ final class Session
         unset($_SESSION[self::ERRORS_KEY]);
     }
 
+    public function clearInputEmail(): void
+    {
+        unset($_SESSION[self::INPUT_EMAIL_KEY]);
+    }
+
     public function destroy(): void
     {
         $_SESSION = [];
@@ -133,6 +139,16 @@ final class Session
     public function setUserEmail(Email $email): void
     {
         $_SESSION[self::EMAIL_KEY] = $email->value();
+    }
+
+    public function inputEmail(): ?string
+    {
+        return $_SESSION[self::INPUT_EMAIL_KEY] ?? null;
+    }
+
+    public function setInputEmail(string $email): void
+    {
+        $_SESSION[self::INPUT_EMAIL_KEY] = $email;
     }
 
     public function setDevice(Device $device): void
