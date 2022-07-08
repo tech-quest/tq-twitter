@@ -2,9 +2,9 @@
 
 namespace App\Infrastructure\Dao;
 
-use App\Infrastructure\Dao\Dao;
 use PDO;
 use Exception;
+use App\Domain\Entity\PasswordResetCertificationOnSave;
 
 final class CertificationCodeDao extends Dao
 {
@@ -13,28 +13,25 @@ final class CertificationCodeDao extends Dao
         parent::__construct();
     }
 
-    public function insertPasswordCertification(
-        $user_id,
-        $certificationCode,
-        $expiredMinutes
-    ): void {
+    public function insertPasswordCertification(PasswordResetCertificationOnSave $certification): void
+    {
         $sql = <<<EOF
     INSERT INTO 
       certifications
     (user_id, certification_code, expire_datetime)
     VALUES
-    (:user_id, :certification_code, NOW() + INTERVAL :expired_minutes MINUTE)
+    (:user_id, :certification_code, :expired_datetime)
 EOF;
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindValue(':user_id', $certification->userId()->value(), PDO::PARAM_INT);
         $stmt->bindValue(
             ':certification_code',
-            $certificationCode,
+            $certification->code()->value(),
             PDO::PARAM_STR
         );
         $stmt->bindValue(
-            ':expired_minutes',
-            $expiredMinutes,
+            ':expired_datetime',
+            $certification->expiredDatetime()->value(),
             PDO::PARAM_INT
         );
 

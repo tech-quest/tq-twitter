@@ -26,6 +26,22 @@ final class UserQueryService
             return null;
         }
 
+        return $this->createUserEntity($userMapper);
+    }
+
+    public function findByEmail(Email $email): ?User
+    {
+        $userMapper = $this->userDao->findByEmail($email->value());
+
+        if (is_null($userMapper)) {
+            return null;
+        }
+
+        return $this->createUserEntity($userMapper);
+    }
+
+    private function createUserEntity(array $userMapper)
+    {
         return new User(
             new UserId($userMapper['id']),
             new Name($userMapper['name']),

@@ -2,68 +2,73 @@
 
 namespace App\UseCase\PasswordReset\SendResetPasswordCertification;
 
-use App\Infrastructure\Dao\UserDao;
-use App\UseCase\PasswordReset\SendResetPasswordCertification\Input;
-use App\Infrastructure\Dao\CertificationCodeDao;
-use App\Domain\ValueObject\Email;
-use App\UseCase\PasswordReset\PasswordCertificationSender;
 use Exception;
+use DateTime;
 use App\Lib\Session;
-use App\Domain\ValueObject\Certification;
+use App\UseCase\PasswordReset\PasswordCertificationSender;
+use App\Adapter\QueryService\UserQueryService;
+use App\Infrastructure\Dao\CertificationCodeDao;
+use App\Domain\ValueObject\CertificationCode;
+use App\Domain\ValueObject\FutureDateTimeInDB;
+use App\Domain\Entity\User;
+use App\Domain\Entity\PasswordResetCertificationOnSave;
 
 final class Interactor
 {
     private const CERTIFICATION_EXPIRED_MINUTES = 5;
     private Input $input;
+    private UserQueryService $userQueryService;
 
     public function __construct(Input $input)
     {
-        $this->userDao = new UserDao();
         $this->input = $input;
+        $this->userQueryService = new UserQueryService();
     }
 
     public function handler()
     {
-        $certification = new Certification($this->input->email());
-        $hashCertificationCode = $certification->generateHash();
-        $this->insertPasswordCertification($hashCertificationCode);
-        $this->saveUserInfo();
-        $this->sendCertificationCodeMail($certification->Code());
+        $user = $this->findUser();
+        $expiredDatetime = $this->generateExpiredDateTime();
+        $certification = new PasswordResetCertificationOnSave(
+            $user->id(),
+            new CertificationCode(),
+            new FutureDateTimeInDB($expiredDatetime->format(FutureDateTimeInDB::DEFAULT_FORMAT))
+        );
+        $this->insertPasswordCertification($certification);
+        $this->saveUserInfo($user);
+        $this->sendCertificationCodeMail($user, $certification);
     }
 
-    private function findByUser(): ?array
+    private function generateExpiredDateTime(): DateTime
     {
-        return $this->userDao->findByEmail($this->input->email()->value());
+        $now = new DateTime('now');
+        return $now->modify(sprintf('+%d minute', self::CERTIFICATION_EXPIRED_MINUTES));
     }
 
-    private function insertPasswordCertification($hashCertificationCode): void
+    private function findUser(): ?User
     {
-        $user = $this->findByUser();
+        return $this->userQueryService->findByEmail($this->input->email());
+    }
+
+    private function insertPasswordCertification(PasswordResetCertificationOnSave $certification): void
+    {
         $certificationCodeDao = new CertificationCodeDao();
         $certificationCodeDao->insertPasswordCertification(
-            $user['id'],
-            $hashCertificationCode,
-            self::CERTIFICATION_EXPIRED_MINUTES
+            $certification
         );
     }
 
-    private function saveUserInfo()
+    private function saveUserInfo(User $user)
     {
-        $user = $this->findByUser();
         $session = Session::getInstance();
-        $session->setCertificateEmail(new Email($user['email']));
-        $session->setUserEmail(new Email($user['email']));
+        $session->setCertificateEmail($user->email());
+        $session->setUserEmail($user->email());
     }
 
-    private function sendCertificationCodeMail($certificationCode)
+    private function sendCertificationCodeMail(User $user, PasswordResetCertificationOnSave $certification)
     {
-        $user = $this->findByUser();
-
         try {
-            $passwordCertificationSender = new PasswordCertificationSender(
-                $user,
-                $certificationCode
-            );
+            $passwordCertificationSender = new PasswordCertificationSender($user, $certification);
             return $passwordCertificationSender->send();
         } catch (Exception $e) {
             return 'error:' . $e->getMessage();

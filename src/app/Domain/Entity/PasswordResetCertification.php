@@ -3,15 +3,16 @@
 namespace App\Domain\Entity;
 
 use App\Domain\ValueObject\UserId;
+use App\Domain\ValueObject\CertificationCode;
 use App\Domain\ValueObject\DateTimeInDB;
 
 final class PasswordResetCertification
 {
   private UserId $userId;
-  private string $code;
+  private CertificationCode $code;
   private DateTimeInDB $expiredDatetime;
 
-  public function __construct(UserId $userId, string $code, DateTimeInDB $expiredDatetime)
+  public function __construct(UserId $userId, CertificationCode $code, DateTimeInDB $expiredDatetime)
   {
     $this->userId = $userId;
     $this->code = $code;
@@ -23,7 +24,7 @@ final class PasswordResetCertification
     return $this->userId;
   }
 
-  public function code(): string
+  public function code(): CertificationCode
   {
     return $this->code;
   }
