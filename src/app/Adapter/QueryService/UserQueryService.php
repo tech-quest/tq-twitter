@@ -8,8 +8,9 @@ use App\Domain\ValueObject\UserId;
 use App\Domain\ValueObject\Name;
 use App\Domain\ValueObject\Email;
 use App\Domain\ValueObject\Password;
+use App\Domain\Adapter\UserQueryServiceInterface;
 
-final class UserQueryService
+final class UserQueryService implements UserQueryServiceInterface
 {
     private $userDao;
 
@@ -32,5 +33,19 @@ final class UserQueryService
             new Email($userMapper['email']),
             new Password($userMapper['password'])
         );
+    }
+
+    public function findByEmail(Email $email): ?User
+    {
+        $userMapper = $this->userDao->findByEmail($email->value());
+
+        return is_null($userMapper)
+            ? null
+            : new User(
+                new UserId($userMapper['id']),
+                new Name($userMapper['name']),
+                new Email($userMapper['email']),
+                new Password($userMapper['password'])
+            );
     }
 }

@@ -1,7 +1,7 @@
 <?php
+
 namespace App\UseCase\Signin;
 
-use App\Infrastructure\Dao\UserDao;
 use App\UseCase\Signin\SignInInput;
 use App\UseCase\Signin\SignInOutput;
 use App\Domain\Entity\User;
@@ -11,6 +11,7 @@ use App\Domain\ValueObject\Email;
 use App\Domain\ValueObject\Password;
 use App\Domain\ValueObject\AuthUser;
 use App\Lib\Session;
+use App\Domain\Adapter\UserQueryServiceInterface;
 
 /**
  * ログインユースケース
@@ -33,18 +34,18 @@ final class SignInInteractor
     private $input;
 
     /**
-     * @var UserDao
+     * @var UserQueryServiceInterface
      */
-    private $userDao;
+    private $userQuery;
 
     /**
      * コンストラクタ
      *
      * @param SignInInput $input
      */
-    public function __construct(SignInInput $input)
+    public function __construct(SignInInput $input, UserQueryServiceInterface $userQuery)
     {
-        $this->userDao = new UserDao();
+        $this->userQuery = $userQuery;
         $this->input = $input;
     }
 
@@ -56,9 +57,9 @@ final class SignInInteractor
      */
     public function handler(): SignInOutput
     {
-        $user = $this->findUser();
+        $user = $this->userQuery->findByEmail($this->input->email());
 
-        if ($this->notExistsUser($user)) {
+        if (is_null($user)) {
             return new SignInOutput(false, self::FAILED_MESSAGE);
         }
 
@@ -69,42 +70,6 @@ final class SignInInteractor
         $this->saveSession($user);
 
         return new SignInOutput(true, self::SUCCESS_MESSAGE);
-    }
-
-    /**
-     *
-     *
-     * @return array | null
-     */
-    private function findUser(): ?User
-    {
-        $email = $this->input->email();
-        $userMapper = $this->userDao->findByEmail($email->value());
-
-        return $this->isExistsUser($userMapper)
-            ? null
-            : new User(
-                new UserId($userMapper['id']),
-                new Name($userMapper['name']),
-                new Email($userMapper['email']),
-                new Password($userMapper['password'])
-            );
-    }
-
-    private function isExistsUser(?array $user): bool
-    {
-        return is_null($user);
-    }
-
-    /**
-     * ユーザーが存在しない場合
-     *
-     * @param array|null $user
-     * @return boolean
-     */
-    private function notExistsUser(?User $user): bool
-    {
-        return is_null($user);
     }
 
     /**
@@ -132,7 +97,6 @@ final class SignInInteractor
         $userId = $user->id();
         $userName = $user->name();
         $userEmail = $user->email();
-        $userPassword = $user->password();
 
         $authUser = new AuthUser(
             new UserId($userId->value()),
