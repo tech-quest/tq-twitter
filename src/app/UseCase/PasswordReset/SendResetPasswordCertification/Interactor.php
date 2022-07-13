@@ -7,7 +7,7 @@ use DateTime;
 use App\Lib\Session;
 use App\UseCase\PasswordReset\PasswordCertificationSender;
 use App\Adapter\QueryService\UserQueryService;
-use App\Infrastructure\Dao\CertificationCodeDao;
+use App\Adapter\Repository\PasswordResetCertificationRepository;
 use App\Domain\ValueObject\CertificationCode;
 use App\Domain\ValueObject\FutureDateTimeInDB;
 use App\Domain\Entity\User;
@@ -17,11 +17,13 @@ final class Interactor
 {
     private const CERTIFICATION_EXPIRED_MINUTES = 5;
     private Input $input;
+    private PasswordResetCertificationRepository $certificationRepository;
     private UserQueryService $userQueryService;
 
     public function __construct(Input $input)
     {
         $this->input = $input;
+        $this->certificationRepository = new PasswordResetCertificationRepository();
         $this->userQueryService = new UserQueryService();
     }
 
@@ -31,7 +33,7 @@ final class Interactor
         $expiredDatetime = $this->generateExpiredDateTime();
         $certification = new PasswordResetCertificationOnSave(
             $user->id(),
-            new CertificationCode(),
+            new CertificationCode($this->generateCode(), $this->input->email()),
             new FutureDateTimeInDB($expiredDatetime->format(FutureDateTimeInDB::DEFAULT_FORMAT))
         );
         $this->insertPasswordCertification($certification);
@@ -52,10 +54,7 @@ final class Interactor
 
     private function insertPasswordCertification(PasswordResetCertificationOnSave $certification): void
     {
-        $certificationCodeDao = new CertificationCodeDao();
-        $certificationCodeDao->insertPasswordCertification(
-            $certification
-        );
+        $this->certificationRepository->create($certification);
     }
 
     private function saveUserInfo(User $user)
@@ -73,5 +72,19 @@ final class Interactor
         } catch (Exception $e) {
             return 'error:' . $e->getMessage();
         }
+    }
+
+    private function generateCode(): string
+    {
+        $certificationCode = $this->randChr();
+        for ($i = 0; $i < 10; $i++) {
+            $certificationCode .= $this->randChr();
+        }
+        return $certificationCode;
+    }
+
+    private function randChr(): string
+    {
+        return chr(mt_rand(97, 122));
     }
 }

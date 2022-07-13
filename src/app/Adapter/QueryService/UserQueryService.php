@@ -32,7 +32,6 @@ final class UserQueryService
     public function findByEmail(Email $email): ?User
     {
         $userMapper = $this->userDao->findByEmail($email->value());
-
         if (is_null($userMapper)) {
             return null;
         }
@@ -40,7 +39,7 @@ final class UserQueryService
         return $this->createUserEntity($userMapper);
     }
 
-    private function createUserEntity(array $userMapper)
+    private function createUserEntity(array $userMapper): User
     {
         return new User(
             new UserId($userMapper['id']),

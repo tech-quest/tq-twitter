@@ -20,6 +20,7 @@ final class Session
     public const EMAIL_KEY = 'email';
     public const INPUT_EMAIL_KEY = 'input_email';
     public const HASH_CERTIFICATE_REGISTER = 'hash_certificate_register';
+    public const PASSWORD_CERTIFICATION_CODE = 'password_certification_code';
     public const DEVICE_KEY = 'device';
     private static $instance;
 
@@ -121,6 +122,11 @@ final class Session
         $_SESSION[self::HASH_CERTIFICATE_REGISTER] = $hashCertificationCode;
     }
 
+    public function setPasswordCertificationCode(string $certificationCode): void
+    {
+        $_SESSION[self::PASSWORD_CERTIFICATION_CODE] = $certificationCode;
+    }
+
     public function setRegisterCertificateEmail(Email $email): void
     {
         $_SESSION[self::CERTIFICATE_REGISTER_EMAIL_KEY] = $email->value();
@@ -162,5 +168,13 @@ final class Session
             throw new Exception('認証用メールアドレスが保存されてません');
         }
         return $_SESSION[self::CERTIFICATE_EMAIL_KEY];
+    }
+
+    public function passwordCertificationCode(): string
+    {
+        if (!isset($_SESSION[self::PASSWORD_CERTIFICATION_CODE])) {
+            throw new Exception('認証コードが保存されてません');
+        }
+        return $_SESSION[self::PASSWORD_CERTIFICATION_CODE];
     }
 }

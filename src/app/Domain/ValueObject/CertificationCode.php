@@ -8,9 +8,12 @@ final class CertificationCode
 
     private string $value;
 
-    public function __construct()
+    private Email $email;
+
+    public function __construct(string $value, Email $email)
     {
-        $this->value = $this->generateCode();
+        $this->value = $value;
+        $this->email = $email;
     }
 
     public function value(): string
@@ -20,31 +23,7 @@ final class CertificationCode
 
     public function generateHash(): string
     {
-        return $this->hashEmailWithCode($this->value);
-    }
-
-    public function generateHashByVerificationCode(string $code): string
-    {
-        return $this->hashEmailWithCode($code);
-    }
-
-    private function hashEmailWithCode(string $code): string
-    {
-        $emailCertificationCode = $this->email->value() . $code;
+        $emailCertificationCode = $this->email->value() . $this->value;
         return hash(self::HASH_ALGORITHM, $emailCertificationCode);
-    }
-
-    private function generateCode(): string
-    {
-        $certificationCode = $this->randChr();
-        for ($i = 0; $i < 10; $i++) {
-            $certificationCode .= $this->randChr();
-        }
-        return $certificationCode;
-    }
-
-    private function randChr(): string
-    {
-        return chr(mt_rand(97, 122));
     }
 }

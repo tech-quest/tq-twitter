@@ -12,7 +12,7 @@ final class FutureDateTimeInDB
 {
   const INVALID_MESSAGE = '日時の形式が正しくありません';
   const INVALID_DATETIME_MESSAGE = '日時は現在より未来の値を設定してください';
-  const DEFAULT_FORMAT = 'YYYY-MM-DD HH:MI:SS';
+  const DEFAULT_FORMAT = 'Y-m-d H:i:s';
 
   /** @var string */
   private string $value;
@@ -48,7 +48,7 @@ final class FutureDateTimeInDB
   private function isInvalidFormat(string $value): bool
   {
     $datetime = DateTime::createFromFormat(self::DEFAULT_FORMAT, $value);
-    return $datetime && $datetime->format(self::DEFAULT_FORMAT) === $value;
+    return !$datetime || $datetime->format(self::DEFAULT_FORMAT) != $value;
   }
 
   /**

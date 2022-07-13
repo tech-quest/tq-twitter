@@ -21,7 +21,7 @@ EOF;
     public function __construct(User $user, PasswordResetCertificationOnSave $certification)
     {
         $this->user = $user;
-        $this->certificationCode = $certification;
+        $this->certification = $certification;
     }
 
     public function send(): void

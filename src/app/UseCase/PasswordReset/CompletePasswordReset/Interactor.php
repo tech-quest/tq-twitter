@@ -2,8 +2,8 @@
 
 namespace App\UseCase\PasswordReset\CompletePasswordReset;
 
+use App\Adapter\Repository\PasswordResetCertificationRepository;
 use App\Infrastructure\Dao\UserDao;
-use App\Infrastructure\Dao\CertificationCodeDao;
 use App\Infrastructure\Validator\PasswordInputValidator;
 use App\UseCase\PasswordReset\CompletePasswordReset\Input;
 
@@ -12,11 +12,12 @@ final class Interactor
     private const ILLEGAL_PASSWORD_MESSAGE = '不正な形式のパスワードです';
     private const NEW_PASSWORD_MESSAGE = 'パスワードを変更しました';
     private Input $input;
+    private PasswordResetCertificationRepository $certificationRepository;
 
     public function __construct(Input $input)
     {
         $this->userDao = new UserDao();
-        $this->certificationCodeDao = new CertificationCodeDao();
+        $this->certificationRepository = new PasswordResetCertificationRepository();
         $this->input = $input;
     }
 
@@ -27,7 +28,7 @@ final class Interactor
         }
 
         $this->updatePassword();
-        $this->deleteByCertificationCode();
+        $this->deleteCertification();
         return new Output(true, self::NEW_PASSWORD_MESSAGE);
     }
 
@@ -42,8 +43,8 @@ final class Interactor
         $this->userDao->updatePassword($this->input->userId()->value(), $this->input->newPassword()->hashAsString());
     }
 
-    private function deleteByCertificationCode(): void
+    private function deleteCertification(): void
     {
-        $this->certificationCodeDao->deleteByCertificationCode($this->input->userId()->value());
+        $this->certificationRepository->delete($this->input->certificationCode());
     }
 }

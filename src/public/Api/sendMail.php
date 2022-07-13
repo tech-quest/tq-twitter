@@ -12,7 +12,6 @@ use App\Domain\ValueObject\Email;
 $session = Session::getInstance();
 Dotenv::createImmutable(__DIR__ . '/../../')->load();
 date_default_timezone_set('Asia/Tokyo');
-
 $inputs = json_decode(file_get_contents('php://input'), true);
 $email = new Email($inputs['email']);
 $useCaseInput = new Input($email);

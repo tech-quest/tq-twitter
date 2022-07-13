@@ -5,6 +5,7 @@ use App\Lib\Session;
 use App\Domain\ValueObject\Password;
 use App\Domain\ValueObject\UserId;
 use App\Domain\ValueObject\Email;
+use App\Domain\ValueObject\CertificationCode;
 use App\UseCase\PasswordReset\CompletePasswordReset\Input;
 use App\UseCase\PasswordReset\CompletePasswordReset\Interactor;
 
@@ -17,7 +18,8 @@ $email = $_SESSION['email'];
 $password = new Password($inputs['newPassword']);
 $userId = new UserId($id);
 $userEmail = new Email($email);
-$useCaseInput = new Input($password, $userId, $userEmail);
+$certificationCode = new CertificationCode($session->passwordCertificationCode(), $userEmail);
+$useCaseInput = new Input($password, $userId, $userEmail, $certificationCode);
 $useCaseInteractor = new Interactor($useCaseInput);
 $useCaseOutput = $useCaseInteractor->handler();
 
