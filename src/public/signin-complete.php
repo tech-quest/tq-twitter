@@ -1,6 +1,7 @@
 <?php
 
-use App\Adapter\QueryService\UserQueryService;
+use App\Adapter\User\Query\UserQueryService;
+
 
 ini_set('display_errors', 'on');
 

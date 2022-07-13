@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Adapter\QueryService;
+namespace App\Adapter\User\Query;
 
 use App\Domain\Entity\User;
 use App\Infrastructure\Dao\UserDao;
@@ -27,12 +27,7 @@ final class UserQueryService implements UserQueryServiceInterface
             return null;
         }
 
-        return new User(
-            new UserId($userMapper['id']),
-            new Name($userMapper['name']),
-            new Email($userMapper['email']),
-            new Password($userMapper['password'])
-        );
+        return UserFactory::create($userMapper);
     }
 
     public function findByEmail(Email $email): ?User
@@ -41,11 +36,6 @@ final class UserQueryService implements UserQueryServiceInterface
 
         return is_null($userMapper)
             ? null
-            : new User(
-                new UserId($userMapper['id']),
-                new Name($userMapper['name']),
-                new Email($userMapper['email']),
-                new Password($userMapper['password'])
-            );
+            : UserFactory::create($userMapper);
     }
 }
