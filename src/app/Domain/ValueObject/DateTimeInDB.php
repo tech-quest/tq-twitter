@@ -11,7 +11,7 @@ use DateTime;
 final class DateTimeInDB
 {
   const INVALID_MESSAGE = '日時の形式が正しくありません';
-  const DEFAULT_FORMAT = 'YYYY-MM-DD HH:MI:SS';
+  const DEFAULT_FORMAT = 'Y-m-d H:i:s';
 
   /** @var string */
   private string $value;
@@ -43,7 +43,7 @@ final class DateTimeInDB
    */
   private function isInvalidFormat(string $value): bool
   {
-    $timeObj = DateTime::createFromFormat(self::DEFAULT_FORMAT, $value);
-    return $timeObj && $timeObj->format(self::DEFAULT_FORMAT) === $value;
+    $datetime = DateTime::createFromFormat(self::DEFAULT_FORMAT, $value);
+    return !$datetime || $datetime->format(self::DEFAULT_FORMAT) != $value;
   }
 }

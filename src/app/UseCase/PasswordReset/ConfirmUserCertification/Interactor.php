@@ -37,7 +37,7 @@ final class Interactor
             return new Output(false, self::FAILURE_MESSAGE);
         }
 
-        if ($this->isExpired($certification->expiredDatetime()->value())) {
+        if ($certification->isExpired()) {
             $this->deleteCertification();
             return new Output(false, self::EXPIRED_MESSAGE);
         }
@@ -69,11 +69,5 @@ final class Interactor
     private function deleteCertification(): void
     {
         $this->certificationRepository->delete($this->input->certificationCode());
-    }
-
-    private function isExpired(string $expiredDatetime): bool
-    {
-        $now = new \DateTime();
-        return $expiredDatetime < $now->format('Y-m-d H:i:s');
     }
 }
