@@ -1,4 +1,8 @@
 <?php
+
+use App\Adapter\User\Query\UserQueryService;
+
+
 ini_set('display_errors', 'on');
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -27,7 +31,7 @@ try {
     $userEmail = new Email($email);
     $inputPassword = new Password($password);
     $useCaseInput = new SignInInput($userEmail, $inputPassword);
-    $useCase = new SignInInteractor($useCaseInput);
+    $useCase = new SignInInteractor($useCaseInput, new UserQueryService());
     $useCaseOutput = $useCase->handler();
 
     if (!$useCaseOutput->isSuccess()) {

@@ -6,7 +6,7 @@ use Exception;
 use DateTime;
 use App\Lib\Session;
 use App\UseCase\PasswordReset\PasswordCertificationSender;
-use App\Adapter\QueryService\UserQueryService;
+use App\Domain\Adapter\UserQueryServiceInterface;
 use App\Adapter\Repository\PasswordResetCertificationRepository;
 use App\Domain\ValueObject\CertificationCode;
 use App\Domain\ValueObject\FutureDateTimeInDB;
@@ -18,13 +18,13 @@ final class Interactor
     private const CERTIFICATION_EXPIRED_MINUTES = 5;
     private Input $input;
     private PasswordResetCertificationRepository $certificationRepository;
-    private UserQueryService $userQueryService;
+    private UserQueryServiceInterface $userQuery;
 
-    public function __construct(Input $input)
+    public function __construct(Input $input, UserQueryServiceInterface $userQuery)
     {
         $this->input = $input;
         $this->certificationRepository = new PasswordResetCertificationRepository();
-        $this->userQueryService = new UserQueryService();
+        $this->userQuery = new $userQuery;
     }
 
     public function handler()
@@ -49,7 +49,7 @@ final class Interactor
 
     private function findUser(): ?User
     {
-        return $this->userQueryService->findByEmail($this->input->email());
+        return $this->userQuery->findByEmail($this->input->email());
     }
 
     private function insertPasswordCertification(PasswordResetCertificationOnSave $certification): void
