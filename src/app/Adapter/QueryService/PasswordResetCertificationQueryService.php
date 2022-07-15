@@ -33,7 +33,6 @@ final class PasswordResetCertificationQueryService
   {
     return new PasswordResetCertification(
       new UserId($mapper['user_id']),
-      new HashedCertificationCode($mapper['certification_code']),
       new DateTimeInDB($mapper['expire_datetime'])
     );
   }

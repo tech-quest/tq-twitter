@@ -6,7 +6,6 @@ use App\UseCase\PasswordReset\ConfirmUserCertification\Input;
 use App\Adapter\QueryService\PasswordResetCertificationQueryService;
 use App\Adapter\Repository\PasswordResetCertificationRepository;
 use App\Lib\Session;
-use App\Domain\ValueObject\UserId;
 use App\Domain\Entity\PasswordResetCertification;
 
 final class Interactor
