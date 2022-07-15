@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Adapter\Repository;
+namespace App\Adapter\PasswordResetCertification\Repository;
 
 use App\Infrastructure\Dao\PasswordResetCertificationDao;
+use App\Domain\Adapter\PasswordResetCertificationRepositoryInterface;
 use App\Domain\ValueObject\CertificationCode;
 use App\Domain\Entity\PasswordResetCertificationOnSave;
 
-final class PasswordResetCertificationRepository
+final class PasswordResetCertificationRepository implements PasswordResetCertificationRepositoryInterface
 {
   private PasswordResetCertificationDao $certificationDao;
 

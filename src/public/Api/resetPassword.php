@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 use App\Lib\Session;
+use App\Adapter\PasswordResetCertification\Repository\PasswordResetCertificationRepository;
 use App\Domain\ValueObject\Password;
 use App\Domain\ValueObject\UserId;
 use App\Domain\ValueObject\Email;
@@ -20,7 +21,7 @@ $userId = new UserId($id);
 $userEmail = new Email($email);
 $certificationCode = new CertificationCode($session->passwordCertificationCode(), $userEmail);
 $useCaseInput = new Input($password, $userId, $userEmail, $certificationCode);
-$useCaseInteractor = new Interactor($useCaseInput);
+$useCaseInteractor = new Interactor($useCaseInput, new PasswordResetCertificationRepository());
 $useCaseOutput = $useCaseInteractor->handler();
 
 $response = [

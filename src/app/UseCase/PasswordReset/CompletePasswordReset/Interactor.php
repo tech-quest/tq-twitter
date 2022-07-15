@@ -2,22 +2,22 @@
 
 namespace App\UseCase\PasswordReset\CompletePasswordReset;
 
-use App\Adapter\Repository\PasswordResetCertificationRepository;
 use App\Infrastructure\Dao\UserDao;
 use App\Infrastructure\Validator\PasswordInputValidator;
 use App\UseCase\PasswordReset\CompletePasswordReset\Input;
+use App\Domain\Adapter\PasswordResetCertificationRepositoryInterface;
 
 final class Interactor
 {
     private const ILLEGAL_PASSWORD_MESSAGE = '不正な形式のパスワードです';
     private const NEW_PASSWORD_MESSAGE = 'パスワードを変更しました';
     private Input $input;
-    private PasswordResetCertificationRepository $certificationRepository;
+    private PasswordResetCertificationRepositoryInterface $certificationRepository;
 
-    public function __construct(Input $input)
+    public function __construct(Input $input, PasswordResetCertificationRepositoryInterface $certificationRepository)
     {
         $this->userDao = new UserDao();
-        $this->certificationRepository = new PasswordResetCertificationRepository();
+        $this->certificationRepository = $certificationRepository;
         $this->input = $input;
     }
 

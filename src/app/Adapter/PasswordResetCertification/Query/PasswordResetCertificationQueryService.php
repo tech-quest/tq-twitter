@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Adapter\QueryService;
+namespace App\Adapter\PasswordResetCertification\Query;
 
+use App\Adapter\PasswordResetCertification\PasswordResetCertificationFactory;
 use App\Infrastructure\Dao\PasswordResetCertificationDao;
+use App\Domain\Adapter\PasswordResetCertificationQueryServiceInterface;
 use App\Domain\ValueObject\CertificationCode;
-use App\Domain\ValueObject\HashedCertificationCode;
-use App\Domain\ValueObject\Email;
-use App\Domain\ValueObject\UserId;
-use App\Domain\ValueObject\DateTimeInDB;
 use App\Domain\Entity\PasswordResetCertification;
 
-final class PasswordResetCertificationQueryService
+final class PasswordResetCertificationQueryService implements PasswordResetCertificationQueryServiceInterface
 {
   private PasswordResetCertificationDao $certificationDao;
 
@@ -26,14 +24,6 @@ final class PasswordResetCertificationQueryService
       return null;
     }
 
-    return $this->generatePasswordResetCertificationEntity($mapper);
-  }
-
-  private function generatePasswordResetCertificationEntity(array $mapper): PasswordResetCertification
-  {
-    return new PasswordResetCertification(
-      new UserId($mapper['user_id']),
-      new DateTimeInDB($mapper['expire_datetime'])
-    );
+    return PasswordResetCertificationFactory::create($mapper);
   }
 }

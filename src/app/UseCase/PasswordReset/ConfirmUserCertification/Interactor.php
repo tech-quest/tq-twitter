@@ -3,10 +3,10 @@
 namespace App\UseCase\PasswordReset\ConfirmUserCertification;
 
 use App\UseCase\PasswordReset\ConfirmUserCertification\Input;
-use App\Adapter\QueryService\PasswordResetCertificationQueryService;
-use App\Adapter\Repository\PasswordResetCertificationRepository;
 use App\Lib\Session;
 use App\Domain\Entity\PasswordResetCertification;
+use App\Domain\Adapter\PasswordResetCertificationQueryServiceInterface;
+use App\Domain\Adapter\PasswordResetCertificationRepositoryInterface;
 
 final class Interactor
 {
@@ -18,15 +18,15 @@ final class Interactor
 
     private Input $input;
 
-    private PasswordResetCertificationQueryService $certificationQueryService;
+    private PasswordResetCertificationQueryServiceInterface $certificationQuery;
 
-    private PasswordResetCertificationRepository $certificationRepository;
+    private PasswordResetCertificationRepositoryInterface $certificationRepository;
 
-    public function __construct(Input $input)
+    public function __construct(Input $input, PasswordResetCertificationQueryServiceInterface $certificationQuery, PasswordResetCertificationRepositoryInterface $certificationRepository)
     {
         $this->input = $input;
-        $this->certificationQueryService = new PasswordResetCertificationQueryService();
-        $this->certificationRepository = new PasswordResetCertificationRepository();
+        $this->certificationQuery = $certificationQuery;
+        $this->certificationRepository = $certificationRepository;
     }
 
     public function handler(): Output
@@ -48,7 +48,7 @@ final class Interactor
 
     private function findByCertificationCode(): ?PasswordResetCertification
     {
-        return $this->certificationQueryService->findByCertificationCode(
+        return $this->certificationQuery->findByCertificationCode(
             $this->input->certificationCode()
         );
     }
