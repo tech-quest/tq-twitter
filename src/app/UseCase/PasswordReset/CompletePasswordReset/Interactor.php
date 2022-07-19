@@ -5,6 +5,7 @@ namespace App\UseCase\PasswordReset\CompletePasswordReset;
 use App\Infrastructure\Dao\UserDao;
 use App\Infrastructure\Validator\PasswordInputValidator;
 use App\UseCase\PasswordReset\CompletePasswordReset\Input;
+use App\UseCase\PasswordReset\CompletePasswordReset\Output;
 use App\Domain\Adapter\PasswordResetCertificationRepositoryInterface;
 
 final class Interactor

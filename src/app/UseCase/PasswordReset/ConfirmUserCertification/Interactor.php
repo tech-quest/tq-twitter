@@ -3,6 +3,7 @@
 namespace App\UseCase\PasswordReset\ConfirmUserCertification;
 
 use App\UseCase\PasswordReset\ConfirmUserCertification\Input;
+use App\UseCase\PasswordReset\ConfirmUserCertification\Output;
 use App\Lib\Session;
 use App\Domain\Entity\PasswordResetCertification;
 use App\Domain\Adapter\PasswordResetCertificationQueryServiceInterface;
