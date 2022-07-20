@@ -2,7 +2,7 @@
 
 namespace App\Domain\ValueObject;
 
-use Exception;
+use App\Domain\ValueObject\Exception\OutOfRangeException;
 
 final class TweetBody
 {
@@ -13,7 +13,7 @@ final class TweetBody
     public function __construct(string $value)
     {
         if (strlen($value) < self::MIN_LENGTH || self::MAX_LENGTH < strlen($value)) {
-            throw new Exception('1文字以上、140文字以内で投稿してください');
+            throw new OutOfRangeException('1文字以上、140文字以内で投稿してください');
         }
 
         $this->value = $value;
