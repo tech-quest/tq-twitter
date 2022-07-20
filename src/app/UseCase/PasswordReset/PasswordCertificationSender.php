@@ -3,6 +3,8 @@
 namespace App\UseCase\PasswordReset;
 
 use App\Infrastructure\Mail\MailTrap;
+use App\Domain\Entity\User;
+use App\Domain\Entity\PasswordResetCertificationOnSave;
 
 final class PasswordCertificationSender
 {
@@ -13,24 +15,21 @@ final class PasswordCertificationSender
   認証コード : %s
 
 EOF;
-    // TODO: Userエンティティで受け取る
-    private $user;
+    private User $user;
+    private PasswordResetCertificationOnSave $certification;
 
-    // TODO: ValueObjectで受け取る
-    private $certificationCode;
-
-    public function __construct(array $user, string $certificationCode)
+    public function __construct(User $user, PasswordResetCertificationOnSave $certification)
     {
         $this->user = $user;
-        $this->certificationCode = $certificationCode;
+        $this->certification = $certification;
     }
 
     public function send(): void
     {
         $body = sprintf(
             self::BODY_TEMPLATE,
-            $this->user['name'],
-            $this->certificationCode
+            $this->user->name()->value(),
+            $this->certification->code()->value(),
         );
         $mail = new MailTrap(self::SUBJECT, $body);
         $mail->send();

@@ -3,10 +3,11 @@
 namespace App\UseCase\PasswordReset\ConfirmUserCertification;
 
 use App\UseCase\PasswordReset\ConfirmUserCertification\Input;
-use App\Infrastructure\Dao\CertificationCodeDao;
+use App\UseCase\PasswordReset\ConfirmUserCertification\Output;
 use App\Lib\Session;
-use App\Domain\ValueObject\UserId;
-use App\Domain\ValueObject\Certification;
+use App\Domain\Entity\PasswordResetCertification;
+use App\Domain\Adapter\PasswordResetCertificationQueryServiceInterface;
+use App\Domain\Adapter\PasswordResetCertificationRepositoryInterface;
 
 final class Interactor
 {
@@ -18,10 +19,15 @@ final class Interactor
 
     private Input $input;
 
-    public function __construct(Input $input)
+    private PasswordResetCertificationQueryServiceInterface $certificationQuery;
+
+    private PasswordResetCertificationRepositoryInterface $certificationRepository;
+
+    public function __construct(Input $input, PasswordResetCertificationQueryServiceInterface $certificationQuery, PasswordResetCertificationRepositoryInterface $certificationRepository)
     {
-        $this->certificationCodeDao = new CertificationCodeDao();
         $this->input = $input;
+        $this->certificationQuery = $certificationQuery;
+        $this->certificationRepository = $certificationRepository;
     }
 
     public function handler(): Output
@@ -31,40 +37,37 @@ final class Interactor
             return new Output(false, self::FAILURE_MESSAGE);
         }
 
-        if ($this->isExpired($certification['expire_datetime'])) {
-            $this->deleteByUserId($certification['user_id']);
+        if ($certification->isExpired()) {
+            $this->deleteCertification();
             return new Output(false, self::EXPIRED_MESSAGE);
         }
 
-        $this->saveUserInfo();
+        $this->saveUserInfo($certification);
+        $this->saveCerificationCode();
         return new Output(true, self::SUCCESS_MESSAGE);
     }
 
-    private function findByCertificationCode(): ?array
+    private function findByCertificationCode(): ?PasswordResetCertification
     {
-        $certificationCode = new Certification($this->input->email());
-        $hash = $certificationCode->generateHashByVerificationCode($this->input->certificationCode());
-        return $this->certificationCodeDao->findByCertificationCode(
-            $hash
+        return $this->certificationQuery->findByCertificationCode(
+            $this->input->certificationCode()
         );
     }
 
-    private function saveUserInfo()
+    private function saveUserInfo(PasswordResetCertification $certification): void
     {
-        $userCertificationCode = $this->findByCertificationCode();
         $session = Session::getInstance();
-        $session->setUserId(new UserId($userCertificationCode['user_id']));
+        $session->setUserId($certification->userId());
     }
 
-    private function deleteByUserId(int $userId): void
+    private function saveCerificationCode(): void
     {
-        // TODO: User IDで削除対象を判別しているので関数名を修正する
-        $this->certificationCodeDao->deleteByCertificationCode($userId);
+        $session = Session::getInstance();
+        $session->setPasswordCertificationCode($this->input->certificationCode()->value());
     }
 
-    private function isExpired(string $expiredDatetime): bool
+    private function deleteCertification(): void
     {
-        $now = new \DateTime();
-        return $expiredDatetime < $now->format('Y-m-d H:i:s');
+        $this->certificationRepository->delete($this->input->certificationCode());
     }
 }

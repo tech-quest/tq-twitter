@@ -7,6 +7,7 @@ use App\Infrastructure\Dao\UserDao;
 use App\Domain\ValueObject\UserId;
 use App\Domain\ValueObject\Email;
 use App\Domain\Adapter\UserQueryServiceInterface;
+use App\Adapter\User\UserFactory;
 
 final class UserQueryService implements UserQueryServiceInterface
 {

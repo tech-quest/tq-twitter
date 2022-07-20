@@ -2,71 +2,89 @@
 
 namespace App\UseCase\PasswordReset\SendResetPasswordCertification;
 
-use App\Infrastructure\Dao\UserDao;
-use App\UseCase\PasswordReset\SendResetPasswordCertification\Input;
-use App\Infrastructure\Dao\CertificationCodeDao;
-use App\Domain\ValueObject\Email;
-use App\UseCase\PasswordReset\PasswordCertificationSender;
 use Exception;
+use DateTime;
 use App\Lib\Session;
-use App\Domain\ValueObject\Certification;
+use App\UseCase\PasswordReset\PasswordCertificationSender;
+use App\Domain\Adapter\UserQueryServiceInterface;
+use App\Domain\ValueObject\CertificationCode;
+use App\Domain\ValueObject\FutureDateTimeInDB;
+use App\Domain\Entity\User;
+use App\Domain\Entity\PasswordResetCertificationOnSave;
+use App\Domain\Adapter\PasswordResetCertificationRepositoryInterface;
 
 final class Interactor
 {
     private const CERTIFICATION_EXPIRED_MINUTES = 5;
     private Input $input;
+    private PasswordResetCertificationRepositoryInterface $certificationRepository;
+    private UserQueryServiceInterface $userQuery;
 
-    public function __construct(Input $input)
+    public function __construct(Input $input, UserQueryServiceInterface $userQuery, PasswordResetCertificationRepositoryInterface $certificationRepository)
     {
-        $this->userDao = new UserDao();
         $this->input = $input;
+        $this->certificationRepository = $certificationRepository;
+        $this->userQuery = new $userQuery;
     }
 
     public function handler()
     {
-        $certification = new Certification($this->input->email());
-        $hashCertificationCode = $certification->generateHash();
-        $this->insertPasswordCertification($hashCertificationCode);
-        $this->saveUserInfo();
-        $this->sendCertificationCodeMail($certification->Code());
-    }
-
-    private function findByUser(): ?array
-    {
-        return $this->userDao->findByEmail($this->input->email()->value());
-    }
-
-    private function insertPasswordCertification($hashCertificationCode): void
-    {
-        $user = $this->findByUser();
-        $certificationCodeDao = new CertificationCodeDao();
-        $certificationCodeDao->insertPasswordCertification(
-            $user['id'],
-            $hashCertificationCode,
-            self::CERTIFICATION_EXPIRED_MINUTES
+        $user = $this->findUser();
+        $expiredDatetime = $this->generateExpiredDateTime();
+        $certification = new PasswordResetCertificationOnSave(
+            $user->id(),
+            new CertificationCode($this->generateCode(), $this->input->email()),
+            new FutureDateTimeInDB($expiredDatetime->format(FutureDateTimeInDB::DEFAULT_FORMAT))
         );
+        $this->insertPasswordCertification($certification);
+        $this->saveUserInfo($user);
+        $this->sendCertificationCodeMail($user, $certification);
     }
 
-    private function saveUserInfo()
+    private function generateExpiredDateTime(): DateTime
     {
-        $user = $this->findByUser();
+        $now = new DateTime('now');
+        return $now->modify(sprintf('+%d minute', self::CERTIFICATION_EXPIRED_MINUTES));
+    }
+
+    private function findUser(): ?User
+    {
+        return $this->userQuery->findByEmail($this->input->email());
+    }
+
+    private function insertPasswordCertification(PasswordResetCertificationOnSave $certification): void
+    {
+        $this->certificationRepository->create($certification);
+    }
+
+    private function saveUserInfo(User $user)
+    {
         $session = Session::getInstance();
-        $session->setCertificateEmail(new Email($user['email']));
-        $session->setUserEmail(new Email($user['email']));
+        $session->setCertificateEmail($user->email());
+        $session->setUserEmail($user->email());
     }
 
-    private function sendCertificationCodeMail($certificationCode)
+    private function sendCertificationCodeMail(User $user, PasswordResetCertificationOnSave $certification)
     {
-        $user = $this->findByUser();
-
         try {
-            $passwordCertificationSender = new PasswordCertificationSender(
-                $user,
-                $certificationCode
-            );
+            $passwordCertificationSender = new PasswordCertificationSender($user, $certification);
             return $passwordCertificationSender->send();
         } catch (Exception $e) {
             return 'error:' . $e->getMessage();
         }
+    }
+
+    private function generateCode(): string
+    {
+        $certificationCode = $this->randChr();
+        for ($i = 0; $i < 10; $i++) {
+            $certificationCode .= $this->randChr();
+        }
+        return $certificationCode;
+    }
+
+    private function randChr(): string
+    {
+        return chr(mt_rand(97, 122));
     }
 }

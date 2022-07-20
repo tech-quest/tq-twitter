@@ -2,40 +2,38 @@
 
 namespace App\Infrastructure\Dao;
 
-use App\Infrastructure\Dao\Dao;
 use PDO;
 use Exception;
+use App\Domain\ValueObject\CertificationCode;
+use App\Domain\Entity\PasswordResetCertificationOnSave;
 
-final class CertificationCodeDao extends Dao
+final class PasswordResetCertificationDao extends Dao
 {
     public function __construct()
     {
         parent::__construct();
     }
 
-    public function insertPasswordCertification(
-        $user_id,
-        $certificationCode,
-        $expiredMinutes
-    ): void {
+    public function insertPasswordCertification(PasswordResetCertificationOnSave $certification): void
+    {
         $sql = <<<EOF
     INSERT INTO 
-      certifications
+        password_reset_certifications
     (user_id, certification_code, expire_datetime)
     VALUES
-    (:user_id, :certification_code, NOW() + INTERVAL :expired_minutes MINUTE)
+    (:user_id, :certification_code, :expired_datetime)
 EOF;
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindValue(':user_id', $certification->userId()->value(), PDO::PARAM_INT);
         $stmt->bindValue(
             ':certification_code',
-            $certificationCode,
+            $certification->code()->generateHash(),
             PDO::PARAM_STR
         );
         $stmt->bindValue(
-            ':expired_minutes',
-            $expiredMinutes,
-            PDO::PARAM_INT
+            ':expired_datetime',
+            $certification->expiredDatetime()->value(),
+            PDO::PARAM_STR
         );
 
         $res = $stmt->execute();
@@ -50,9 +48,9 @@ EOF;
     SELECT
       *
     FROM
-      certifications
+        password_reset_certifications
     WHERE
-      certification_code = :certification_code
+        certification_code = :certification_code
 EOF;
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(
@@ -68,16 +66,16 @@ EOF;
         return $certificationCode;
     }
 
-    public function deleteByCertificationCode(int $userId)
+    public function delete(CertificationCode $certificationCode)
     {
         $sql = <<<EOF
-  DELETE FROM
-    certifications
-  WHERE
-    user_id = :user_id
+    DELETE FROM
+        password_reset_certifications
+    WHERE
+        certification_code = :certification_code
 EOF;
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':user_id', $userId, PDO::PARAM_INT);
+        $stmt->bindValue(':certification_code', $certificationCode->generateHash(), PDO::PARAM_STR);
         return $stmt->execute();
     }
 }

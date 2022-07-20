@@ -3,13 +3,14 @@
 namespace App\UseCase\PasswordReset\ConfirmUserCertification;
 
 use App\Domain\ValueObject\Email;
+use App\Domain\ValueObject\CertificationCode;
 
 final class Input
 {
     private Email $email;
-    private string $certificationCode;
+    private CertificationCode $certificationCode;
 
-    public function __construct(Email $email, string $certificationCode)
+    public function __construct(Email $email, CertificationCode $certificationCode)
     {
         $this->email = $email;
         $this->certificationCode = $certificationCode;
@@ -20,7 +21,7 @@ final class Input
         return $this->email;
     }
 
-    public function certificationCode(): string
+    public function certificationCode(): CertificationCode
     {
         return $this->certificationCode;
     }

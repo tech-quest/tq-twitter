@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Adapter\User\Query;
+namespace App\Adapter\User;
 
 use App\Domain\Entity\User;
 use App\Domain\ValueObject\UserId;
