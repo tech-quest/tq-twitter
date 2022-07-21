@@ -12,7 +12,7 @@ final class SignInInputValidator
     public const ERROR_EMAIL_INVALID_FORMAT = '不正な形式のメールアドレスです';
     public const ERROR_EMAIL_NULL_TEXT = 'Emailが空です';
     public const ERROR_PASSWORD_NULL_TEXT = 'passwordが空です';
-    public const ERROR_EMAIL_PASSWORD_FORMAT = '不正な形式のパスワードです';
+    public const ERROR_PASSWORD_INVALID_FORMAT = '不正な形式のパスワードです';
 
     private $email;
     private $password;
@@ -61,7 +61,7 @@ final class SignInInputValidator
         }
 
         if (!Password::isValid($this->password)) {
-            return self::ERROR_EMAIL_PASSWORD_FORMAT;
+            return self::ERROR_PASSWORD_INVALID_FORMAT;
         }
 
         return null;
