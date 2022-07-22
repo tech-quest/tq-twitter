@@ -33,7 +33,7 @@ final class TweetQueryService implements TweetQueryServiceInterface
             new ReplyTweetId($tweetMapper['reply_tweet_id']),
             new TweetDevice($tweetMapper['device']),
             new TweetDate($tweetMapper['created_at']),
-            new DateTime($tweetMapper['deleted_at'])
+            $tweetMapper['deleted_at'] ? new DateTime($tweetMapper['deleted_at']) : null
         );
     }
 
