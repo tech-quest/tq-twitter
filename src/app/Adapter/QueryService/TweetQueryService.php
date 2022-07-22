@@ -4,6 +4,7 @@ namespace App\Adapter\QueryService;
 
 use DateTime;
 use App\Infrastructure\Dao\TweetDao;
+use App\Domain\Adapter\TweetQueryServiceInterface;
 use App\Domain\Entity\Tweet;
 use App\Domain\ValueObject\TweetId;
 use App\Domain\ValueObject\UserId;
@@ -12,7 +13,7 @@ use App\Domain\ValueObject\ReplyTweetId;
 use App\Domain\ValueObject\TweetDevice;
 use App\Domain\ValueObject\TweetDate;
 
-final class TweetQueryService
+final class TweetQueryService implements TweetQueryServiceInterface
 {
     private $tweetDao;
 

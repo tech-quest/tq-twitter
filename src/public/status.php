@@ -4,11 +4,12 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use App\UseCase\GetTweetDetail\GetTweetDetailInteractor;
 use App\UseCase\GetTweetDetail\GetTweetDetailInput;
 use App\Domain\ValueObject\TweetId;
+use App\Adapter\QueryService\TweetQueryService;
 
 $tweetId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
 $input = new GetTweetDetailInput(new TweetId($tweetId));
-$useCase = new GetTweetDetailInteractor($input);
+$useCase = new GetTweetDetailInteractor($input, new TweetQueryService());
 $output = $useCase->handler();
 $tweet = $output->tweet();
 ?>
@@ -26,13 +27,13 @@ $tweet = $output->tweet();
       <h1>ツイート詳細ページ</h1>
       <div class="tweet-status">
         <p class="tweet-status__tweet"><?php echo $tweet
-            ->tweetBody()
-            ->value(); ?></p>
+                                          ->tweetBody()
+                                          ->value(); ?></p>
         <p class="tweet-status__date"><?php echo $tweet->createdAt()->date() .
-            '・' .
-            'Twitter for' .
-            ' ' .
-            $tweet->device()->value(); ?></p>
+                                        '・' .
+                                        'Twitter for' .
+                                        ' ' .
+                                        $tweet->device()->value(); ?></p>
       </div>
       <div class="tweet-button">
         <span class="share-link">Reply</span>
